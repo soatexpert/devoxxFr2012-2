@@ -23,40 +23,34 @@
  */
 package fr.soat.devoxx.game.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.tools.TilesUtil;
+
 /**
  * @author aurelien
- *
+ * 
  */
 @Controller
 @RequestMapping(value = "/admin/user")
 public class AdminUserController {
-    
-    private static Logger LOGGER = LoggerFactory.getLogger(AdminUserController.class);
 
-    @RequestMapping(value = "/")
-    public String showAllUser(Model model) {
-		// String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
-		// try {
-		// AllUserResponseDto allUsers = adminUserService.getAllUsers();
-		// model.addAttribute("allUserResponses", allUsers.getUserResponses());
-		// forward = TilesUtil.DFR_ADMIN_SHOWALLUSERS_PAGE;
-		// } catch (UserServiceException e) {
-		// model.addAttribute("error", "admin.error.user.getall");
-		// LOGGER.info("Error while fetching all users", e);
-		// }
-		// return forward;
-		return "";
-    }
+	@Autowired
+	UserServices userServices;
 
-    @RequestMapping(value = "/{userId}")
-    public String showUser(@PathVariable Long userId, Model model) {
+	@RequestMapping(value = "/admin/user")
+	public String showAllUser(Model model) {
+		model.addAttribute("allUserResponses", userServices.getUsers());
+		return TilesUtil.DFR_ADMIN_SHOWALLUSERS_PAGE;
+	}
+
+	@RequestMapping(value = "/{userId}")
+	public String showUser(@PathVariable Long userId, Model model) {
 		// String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
 		// try {
 		// UserResponseDto userResponse = adminUserService.getUser(userId);
@@ -78,10 +72,10 @@ public class AdminUserController {
 		// }
 		// return forward;
 		return "";
-    }
+	}
 
-    @RequestMapping(value = "/{userId}/delete")
-    public String removeUser(@PathVariable Long userId, Model model) {
+	@RequestMapping(value = "/{userId}/delete")
+	public String removeUser(@PathVariable Long userId, Model model) {
 		// String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
 		// try {
 		// adminUserService.deleteUser(userId);
@@ -93,5 +87,5 @@ public class AdminUserController {
 		// }
 		// return forward;
 		return "";
-    }
+	}
 }

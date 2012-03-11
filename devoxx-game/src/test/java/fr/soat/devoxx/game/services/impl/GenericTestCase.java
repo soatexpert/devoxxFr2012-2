@@ -4,12 +4,15 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
+import junit.framework.TestCase;
+
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/applicationContextTest.xml" })
-public class GenericTestCase {
+public class GenericTestCase extends TestCase {
 
 	static IDataSet dataSet;
 	static {
@@ -44,4 +47,10 @@ public class GenericTestCase {
 	// DatabaseDataSourceConnection(dataSource);
 	// DatabaseOperation.DELETE_ALL.execute(dbConn, dataSet);
 	// }
+
+	
+	@Test
+	public void testDatasource() {
+		assertNotNull(dataSource);
+	}
 }

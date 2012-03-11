@@ -9,13 +9,13 @@
 		</tr>
 		<c:forEach items="${allUserResponses}" var="userResponse">
 			<tr>
-				<td>${userResponse.name}</td>
-				<td>${userResponse.mail}</td>
+				<td>${userResponse.userName}</td>
+				<td>${userResponse.userForname}</td>
 				<td>
-				<a href='<c:url value="/admin/user/${userResponse.name}" />' class="ui-btn">
+				<a href='<c:url value="/admin/user/${userResponse.userName}" />' class="ui-btn">
 				<spring:message code="admin.btn.show" text="Show" /></a>
 				&nbsp;
-				<a href='<c:url value="/admin/user/${userResponse.name}/delete" />' class="ui-btn">
+				<a href='<c:url value="/admin/user/${userResponse.userName}/delete" />' class="ui-btn">
 	            <spring:message code="admin.btn.delete" text="Remove" /></a>
 				</td>
 			</tr>

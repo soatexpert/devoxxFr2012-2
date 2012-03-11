@@ -17,7 +17,7 @@
 	<security:http pattern="/img/**" security="none" />
 	<security:http pattern="/js/**" security="none" />
 
-	<security:http auto-config="true">
+	<security:http>
 		<security:openid-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/auth/login?error=true">
 			<security:attribute-exchange>
 				<security:openid-attribute name="email" type="http://axschema.org/contact/email" required="true" count="1" />
@@ -28,9 +28,11 @@
 		</security:openid-login>
 		<security:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<security:logout invalidate-session="true" logout-success-url="/auth/login" logout-url="/auth/logout" />
+<!-- 		<security:remember-me token-repository-ref="tokenRepo" /> -->
 	</security:http>
 
 	<bean id="openIdUserService" class="fr.soat.devoxx.game.security.OpenIdUserDetailsService" />
+<!-- 	<bean id="tokenRepo" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl" /> -->
 
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="openIdUserService">
