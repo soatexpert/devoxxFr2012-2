@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<!-- USER -->
+	<USER ID="1" NAME="khanh" FORNAME=""/>
+	<USER ID="2" NAME="francois" FORNAME=""/>
+	<USER ID="3" NAME="mathieu" FORNAME=""/>
+	<USER ID="4" NAME="francois" FORNAME=""/>
+	<USER ID="5" NAME="aurelien" FORNAME=""/>	
+</dataset>

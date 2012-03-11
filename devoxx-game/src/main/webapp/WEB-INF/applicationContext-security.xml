@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+          http://www.springframework.org/schema/tx 
+          http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.1.xsd
+          http://www.springframework.org/schema/context 
+          http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<security:http pattern="/auth/login*" security="none" />
+	<security:http pattern="/login*" security="none" />
+	<security:http pattern="/css/**" security="none" />
+	<security:http pattern="/index/**" security="none" />
+	<security:http pattern="/img/**" security="none" />
+	<security:http pattern="/js/**" security="none" />
+
+	<security:http auto-config="true">
+		<security:openid-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/auth/login?error=true">
+			<security:attribute-exchange>
+				<security:openid-attribute name="email" type="http://axschema.org/contact/email" required="true" count="1" />
+				<security:openid-attribute name="firstname" type="http://axschema.org/namePerson/first" />
+				<security:openid-attribute name="lastname" type="http://axschema.org/namePerson/last" />
+				<security:openid-attribute name="fullname" type="http://axschema.org/namePerson" />
+			</security:attribute-exchange>
+		</security:openid-login>
+		<security:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		<security:logout invalidate-session="true" logout-success-url="/auth/login" logout-url="/auth/logout" />
+	</security:http>
+
+	<bean id="openIdUserService" class="fr.soat.devoxx.game.security.OpenIdUserDetailsService" />
+
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="openIdUserService">
+		</security:authentication-provider>
+	</security:authentication-manager>
+</beans>
