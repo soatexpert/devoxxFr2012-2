@@ -105,7 +105,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.6.9.Final</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
