@@ -21,46 +21,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fr.soat.devoxx.game.forms;
+package fr.soat.devoxx.game.model;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author aurelien
  *
  */
-public class UserForm {
+@Entity
+@Table(name = "USER_ROLES")
+public class UserRoles {
     
-    private String userForname;
-
-    private String userEmail;
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long userRolesId;
     
-    @NotNull
-    @Pattern(regexp = "[a-zA-Z_]+[\\ ]*[,;]{0,1}([\\ ]*[a-zA-Z_]+[\\ ]*[,;]{0,1})*")
-    private String userRoles;
+    @Column(unique = true, nullable = false, name = "ROLE_NAME")
+    String roleName;    
 
-    public String getUserForname() {
-        return userForname;
+    public UserRoles() {
     }
 
-    public void setUserForname(String userForname) {
-        this.userForname = userForname;
+    public UserRoles(String roleName) {
+        this.roleName = roleName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public Long getUserRolesId() {
+        return userRolesId;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserRolesId(Long userRolesId) {
+        this.userRolesId = userRolesId;
     }
 
-    public String getUserRoles() {
-        return userRoles;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setUserRoles(String userRoles) {
-        this.userRoles = userRoles;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }    
 }

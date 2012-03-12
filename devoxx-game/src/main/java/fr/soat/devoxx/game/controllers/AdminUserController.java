@@ -23,6 +23,9 @@
  */
 package fr.soat.devoxx.game.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -37,10 +40,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.forms.UserForm;
 import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.UserRoles;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
 
@@ -68,11 +73,9 @@ public class AdminUserController {
         String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
         try {
             User user = userServices.getUser(userId);
-
             model.addAttribute("userResponse", user);
-            String email = Strings.isNullOrEmpty(user.getUserEmail()) ? "" : user.getUserEmail().trim().toLowerCase();
-            model.addAttribute("mailHash", DigestUtils.md5Hex(email));
-
+            model.addAttribute("mailHash", getEmailHash(user.getUserEmail()));
+            model.addAttribute("userRolesComma", joinUserRoles(user));
             forward = TilesUtil.DFR_ADMIN_SHOWUSER_PAGE;
         } catch (RuntimeException e) {
             //TODO RuntimeException :( gérer des exceptions métiers coté userServices
@@ -86,7 +89,9 @@ public class AdminUserController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public String updateUser(@PathVariable Long userId, Model model) {
         User user = userServices.getUser(userId);
-        model.addAttribute("userResponse", user);
+        model.addAttribute("userResponse", user);   
+        model.addAttribute("mailHash", getEmailHash(user.getUserEmail()));
+        model.addAttribute("userRolesComma", joinUserRoles(user));
         model.addAttribute("userForm", new UserForm());
         
         return TilesUtil.DFR_ADMIN_UPDATEUSER_PAGE;
@@ -106,7 +111,7 @@ public class AdminUserController {
             user.setUserId(userId);
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
-            user.setAdmin(userForm.isAdmin());
+//            user.setAdmin(userForm.isAdmin());
             
             userServices.updateUser(user);
         } catch (RuntimeException e) {
@@ -133,5 +138,18 @@ public class AdminUserController {
             LOGGER.info("Error while deleting user", e);
         }
         return forward;
+    }
+    
+    private static String joinUserRoles(User user) {
+        List<String> userRolesStr = new ArrayList<String>();
+        for (UserRoles role : user.getUserRoles()) {
+            userRolesStr.add(role.getRoleName());
+        }
+        return Joiner.on(", ").join(userRolesStr);
+    }
+    
+    private static String getEmailHash(String email) {
+        String n_email = Strings.isNullOrEmpty(email) ? "" : email.trim().toLowerCase();
+        return DigestUtils.md5Hex(n_email);
     }
 }

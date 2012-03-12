@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.security;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +20,7 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.UserRoles;
 import fr.soat.devoxx.game.services.UserServices;
 
 /**
@@ -73,7 +77,7 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         
         if(null == user) {
             user = new User();
-            user.setAdmin(false);
+            user.addUserRole(new UserRoles("ROLE_USER"));
             user.setUserName(urlId);
             user.setUserForname(fullName);
             user.setUserEmail(email);
@@ -86,10 +90,14 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         }
 
         OpenIdUserDetails openIdUser;
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
+        /*List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
         if (user.isAdmin()) {
             grantedAuthorities.addAll(AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
-        }
+        }*/
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+        for (UserRoles role : user.getUserRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }        
         openIdUser = new OpenIdUserDetails(urlId, grantedAuthorities);
         openIdUser.setUser(user);
         

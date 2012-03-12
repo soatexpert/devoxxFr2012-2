@@ -11,7 +11,7 @@
             <div>Username : ${userResponse.userName}</div>
             <div>Name : ${userResponse.userForname}</div>
             <div>Mail : ${userResponse.userEmail}</div>
-            <div>Admin? : ${userResponse.admin}</div>
+            <div>Role : ${userRolesComma}</div>
         </td>
     </tr>
 </table>

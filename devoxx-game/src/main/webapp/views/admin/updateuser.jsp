@@ -16,9 +16,7 @@
             <div>Name : <form:input path="userForname" value="${userResponse.userForname}" /></div>    
             <div>Mail : <form:input path="userForname" value="${userResponse.userEmail}" /></div>
 			<div>
-				Admin :
-				<form:radiobutton path="isAdmin" value="true" /><spring:message code="admin.label.yes" text="Yes" />
-				<form:radiobutton path="isAdmin" value="false" /><spring:message code="admin.label.no" text="No" />
+				Admin : <form:input path="userRoles" value="${userRolesComma}" />
 			</div>
 		</td>
     </tr>

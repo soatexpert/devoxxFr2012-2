@@ -1,14 +1,20 @@
 package fr.soat.devoxx.game.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,7 +32,7 @@ public class User implements Serializable, UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userId;
 
-    @Column(name = "NAME", unique = true)
+    @Column(name = "NAME", unique = true, nullable = false)
     String userName;
 
     @Column(name = "FORNAME")
@@ -34,12 +40,13 @@ public class User implements Serializable, UserDetails {
 
     @Column(name = "EMAIL")
     String userEmail;
-    
-    @Column(columnDefinition = "BOOLEAN", nullable = false)
-    private boolean admin = false;
 
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
+    List<UserRoles> userRoles = new ArrayList<UserRoles>();
 
     public Long getUserId() {
         return userId;
@@ -99,19 +106,31 @@ public class User implements Serializable, UserDetails {
 
     public boolean isEnabled() {
         return true;
+    }    
+
+    public List<BundleUserQuestions> getBundleUserQuestions() {
+        return bundleUserQuestions;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public void setBundleUserQuestions(List<BundleUserQuestions> bundleUserQuestions) {
+        this.bundleUserQuestions = bundleUserQuestions;
     }
 
-    public void setAdmin(boolean isAdmin) {
-        this.admin = isAdmin;
+    public List<UserRoles> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRoles> userRoles) {
+        this.userRoles = userRoles;
+    }
+    
+    public void addUserRole(UserRoles userRole) {
+        this.userRoles.add(userRole);
     }
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", userName=" + userName + ", userForname=" + userForname + ", userEmail=" + userEmail + ", admin=" + admin
+        return "User [userId=" + userId + ", userName=" + userName + ", userForname=" + userForname + ", userEmail=" + userEmail
                 + ", bundleUserQuestions=" + bundleUserQuestions + "]";
     }
 }
