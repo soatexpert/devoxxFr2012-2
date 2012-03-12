@@ -27,6 +27,10 @@
 		<servlet-name>spring-mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>spring.profiles.active</param-name>
+            <param-value>prod</param-value>
+        </init-param>
 	</servlet>
 
 	<servlet-mapping>
