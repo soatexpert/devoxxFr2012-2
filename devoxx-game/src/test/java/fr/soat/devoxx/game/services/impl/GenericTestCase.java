@@ -27,7 +27,7 @@ public class GenericTestCase extends TestCase {
 	static IDataSet dataSet;
 	static {
 		try {
-			dataSet = new FlatXmlDataSetBuilder().build(new File("devoxx-game//src/test/resources/dataset.xml"));
+			dataSet = new FlatXmlDataSetBuilder().build(new File("./src/test/resources/dataset.xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
