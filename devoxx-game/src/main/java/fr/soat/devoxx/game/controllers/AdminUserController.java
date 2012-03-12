@@ -85,7 +85,10 @@ public class AdminUserController {
     
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public String updateUser(@PathVariable Long userId, Model model) {
+        User user = userServices.getUser(userId);
+        model.addAttribute("userResponse", user);
         model.addAttribute("userForm", new UserForm());
+        
         return TilesUtil.DFR_ADMIN_UPDATEUSER_PAGE;
     }
     

@@ -36,7 +36,7 @@ public class UserForm {
     private String userEmail;
     
     @NotNull
-    private boolean isAdmin;
+    private boolean admin;
 
     public String getUserForname() {
         return userForname;
@@ -55,11 +55,11 @@ public class UserForm {
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return admin;
     }
 
     public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+        this.admin = isAdmin;
     }
     
 }
