@@ -56,7 +56,7 @@
         <bean id="dataSource"
               class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-            <property name="url" value="jdbc:cloudbees://devoxx-game" />
+            <property name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/devoxx-game" />
             <property name="username" value="soat-devoxx" />
             <property name="password" value="soat" />
         </bean>
