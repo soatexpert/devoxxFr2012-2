@@ -4,7 +4,9 @@
 
 <div id="advancement">Question 1/ 3</div>
 <div id="elapsed-time">Temps écoulé : 10 secondes</div>
-<f:form method="post" action="<c:url value='/game/next' />">
+
+<f:form method="post" action="next">
+<input type="hidden" id="questionId" value="${question.idQuestion}"/>
 <fieldset data-role="controlgroup">
 	<legend>${question.questionLabel}</legend>
 	    <c:forEach items="${question.choices}" var="answer" varStatus="status">
