@@ -36,7 +36,7 @@ public class User implements Serializable, UserDetails {
     String userEmail;
     
     @Column(columnDefinition = "BOOLEAN", nullable = false)
-    private boolean admin;
+    private boolean admin = false;
 
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
@@ -111,7 +111,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", userName=" + userName + ", userForname=" + userForname + ", userEmail=" + userEmail + ", isAdmin=" + admin
+        return "User [userId=" + userId + ", userName=" + userName + ", userForname=" + userForname + ", userEmail=" + userEmail + ", admin=" + admin
                 + ", bundleUserQuestions=" + bundleUserQuestions + "]";
     }
 }
