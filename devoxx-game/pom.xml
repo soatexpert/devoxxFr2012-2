@@ -149,7 +149,7 @@
          <groupId>mysql</groupId>
          <artifactId>mysql-connector-java</artifactId>
          <version>${mysql.version}</version>
-         <scope>runtime</scope>
+         <!--<scope>runtime</scope>-->
       </dependency>
 
       <dependency>
@@ -195,12 +195,12 @@
          <scope>test</scope>
       </dependency>
 
-      <dependency>
-         <groupId>mysql</groupId>
-         <artifactId>mysql-connector-java</artifactId>
-         <version>${mysql.version}</version>
-         <scope>test</scope>
-      </dependency>
+      <!--<dependency>-->
+         <!--<groupId>mysql</groupId>-->
+         <!--<artifactId>mysql-connector-java</artifactId>-->
+         <!--<version>${mysql.version}</version>-->
+         <!--<scope>test</scope>-->
+      <!--</dependency>-->
 
    </dependencies>
 
