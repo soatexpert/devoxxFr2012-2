@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,81 +19,99 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "USER")
 public class User implements Serializable, UserDetails {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ID")
-	long userId;
-	
-	@Column(name = "NAME")
-	String userName;
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long userId;
 
-	@Column(name = "FORNAME")
-	String userForname;
+    @Column(name = "NAME", unique = true)
+    String userName;
 
-	private boolean isAdmin;
+    @Column(name = "FORNAME")
+    String userForname;
 
-	@OneToMany
-	List<BundleUserQuestions> bundleUserQuestions;
+    @Column(name = "EMAIL")
+    String userEmail;
+    
+    @Column(columnDefinition = "BOOLEAN", nullable = false)
+    private boolean isAdmin;
 
-	public long getUserId() {
-		return userId;
-	}
+    @OneToMany
+    List<BundleUserQuestions> bundleUserQuestions;
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getUserForname() {
-		return userForname;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setUserForname(String userForname) {
-		this.userForname = userForname;
-	}
+    public String getUserForname() {
+        return userForname;
+    }
 
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
+    public void setUserForname(String userForname) {
+        this.userForname = userForname;
+    }
 
-	public String getPassword() {
-		return userName;
-	}
+    public String getUserEmail() {
+        return userEmail;
+    }
 
-	public String getUsername() {
-		return userName;
-	}
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
-	public boolean isAccountNonExpired() {
-		return false;
-	}
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
-	public boolean isAccountNonLocked() {
-		return false;
-	}
+    public String getPassword() {
+        return userName;
+    }
 
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
+    public String getUsername() {
+        return userName;
+    }
 
-	public boolean isEnabled() {
-		return true;
-	}
+    public boolean isAccountNonExpired() {
+        return false;
+    }
 
-	public boolean isAdmin() {
-		return isAdmin;
-	}
+    public boolean isAccountNonLocked() {
+        return false;
+    }
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
 
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", userName=" + userName + ", userForname=" + userForname + ", userEmail=" + userEmail + ", isAdmin=" + isAdmin
+                + ", bundleUserQuestions=" + bundleUserQuestions + "]";
+    }
 }

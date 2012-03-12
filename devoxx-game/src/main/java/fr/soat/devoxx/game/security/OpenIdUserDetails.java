@@ -26,37 +26,29 @@ package fr.soat.devoxx.game.security;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
-public class OpenIdUserDetails extends User {
+import fr.soat.devoxx.game.model.User;
+
+public class OpenIdUserDetails extends org.springframework.security.core.userdetails.User {
 
 	private static final long serialVersionUID = 7055496430992973297L;
-	private String email;
-	private String name;
+	private User user;
 
 	public OpenIdUserDetails(String username, Collection<? extends GrantedAuthority> authorities) {
 		super(username, "notused", authorities);
-	}
+	}	
 
-	public String getEmail() {
-		return email;
-	}
+	public User getUser() {
+        return user;
+    }
+	
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Override
+    @Override
 	public String toString() {
-		return "CustomUserDetails [username=" + getUsername() + ",email=" + email + ", name=" + name + ", toString()=" + super.toString() + "]";
+		return "CustomUserDetails [username=" + getUsername() + ", user=" + user.toString() + ", toString()=" + super.toString() + "]";
 	}
 
 }

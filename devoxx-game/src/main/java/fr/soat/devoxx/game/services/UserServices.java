@@ -2,8 +2,6 @@ package fr.soat.devoxx.game.services;
 
 import java.util.List;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.User;
 
@@ -11,7 +9,9 @@ public interface UserServices {
 
 	public List<User> getUsers();
 
-	public void createUser(User user) ;
+	public void createUser(User user);
+	
+	public void updateUser(User user);
 	
 	public void deleteUser(User user);
 	
@@ -23,6 +23,6 @@ public interface UserServices {
 
 	public List<Question> geQuestions();
 
-	public UserDetails getUserByName(String username);
+	public User getUserByName(String username);
 
 }

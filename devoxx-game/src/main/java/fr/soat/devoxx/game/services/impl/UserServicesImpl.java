@@ -3,7 +3,6 @@ package fr.soat.devoxx.game.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +26,12 @@ public class UserServicesImpl implements UserServices {
 	public void createUser(User user) {
 		userDao.getEntityManager().persist(user);
 	}
+	
+	@Override
+	@Transactional
+    public void updateUser(User user) {
+	    userDao.getEntityManager().merge(user);        
+    }
 
 	@Transactional
 	public void deleteUser(User user) {
@@ -51,15 +56,14 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Transactional
-	public UserDetails getUserByName(String username) {
-		List resultList = userDao.getEntityManager().createQuery("from User u where u.userName = ?1").setParameter(1, username).getResultList();
-		if (resultList.size() != 0)
+	public User getUserByName(String username) {
+		User u = (User) userDao.getEntityManager().createQuery("from User u where u.userName = ?1").setParameter(1, username).getSingleResult();
+		/*if (resultList.size() != 0)
 			return (UserDetails) resultList.get(0);
 		User u = new User();
 		u.setUserName(username);
 		u.setAdmin(false);
-		createUser(u);
+		createUser(u);*/
 		return u;
 	}
-
 }
