@@ -1,15 +1,9 @@
 package fr.soat.devoxx.game.services;
 
-import java.util.List;
-
-<<<<<<< HEAD
-=======
 import fr.soat.devoxx.game.model.BundleUserQuestions;
-import org.springframework.security.core.userdetails.UserDetails;
-
->>>>>>> integration des ecrans pour le jeu sur mobile
-import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.User;
+
+import java.util.List;
 
 public interface UserServices {
 
