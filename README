@@ -1,0 +1,10 @@
+Nécessite :
+- tomcat 6
+- MySQL 
+
+
+Pour tourner les TU en local :
+mvn test -Dspring.profiles.active="dev"
+
+
+En configuration cible, TUs sur la bdd cible en utilisant le spring bean "prod"
