@@ -27,19 +27,23 @@ public interface TilesUtil {
 	
 	/* IndexController Pages */
 	public static final String DFR_INDEX_PAGE = "devoxxfr.index";
+
 	/* AdminController Pages */
 	public static final String DFR_ADMIN_INDEX_PAGE = "devoxxfr.admin.index";
-	/* AdminUserController Pages */
+
+    /* AdminUserController Pages */
 	public static final String DFR_ADMIN_SHOWALLUSERS_PAGE = "devoxxfr.admin.showallusers";
 	public static final String DFR_ADMIN_SHOWUSER_PAGE = "devoxxfr.admin.showuser";
 	public static final String DFR_ADMIN_UPDATEUSER_PAGE = "devoxxfr.admin.updateuser";
-	/* AdminQuestionController Pages */
+    /* AdminQuestionController Pages */
 	public static final String DFR_ADMIN_SHOWQUESTION_PAGE = "devoxxfr.admin.showquestion";
-	/* AuthController Pages */
+    /* AuthController Pages */
 	public static final String DFR_AUTH_LOGIN_PAGE = "devoxxfr.auth.login";
-	/* Common pages */
+    /* Common pages */
 	public static final String DFR_NOT_FOUND_PAGE = "devoxxfr.notfound";
-	/* Errors */
-	public static final String DFR_ERRORS_ERRORMSG_PAGE = "devoxxfr.errors.errormsg"; 
-	
+    /* Errors */
+	public static final String DFR_ERRORS_ERRORMSG_PAGE = "devoxxfr.errors.errormsg";
+
+    public static final String DFR_GAME_INDEX_PAGE = "devoxxfr.game.index";
+    public static final String DFR_GAME_PLAY_PAGE = "devoxxfr.game.play";
 }

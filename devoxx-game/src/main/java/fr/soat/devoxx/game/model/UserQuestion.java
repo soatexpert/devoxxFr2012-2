@@ -19,4 +19,8 @@ public class UserQuestion {
 
 	@OneToOne
 	QuestionChoice reponse;
+
+    public UserQuestion(Question question) {
+        this.question = question;
+    }
 }

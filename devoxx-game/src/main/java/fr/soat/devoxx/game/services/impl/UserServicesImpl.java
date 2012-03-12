@@ -1,7 +1,10 @@
 package fr.soat.devoxx.game.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.soat.devoxx.game.model.BundleUserQuestions;
+import fr.soat.devoxx.game.model.UserQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,19 +41,27 @@ public class UserServicesImpl implements UserServices {
 		userDao.getEntityManager().remove(user);
 	}
 
-	public List<Question> getQuestionList() {
-		return null;
+    public BundleUserQuestions getQuestionBundle() {
+        List<UserQuestion> questions = new ArrayList<UserQuestion>();
+
+        questions.add(new UserQuestion(new Question()));
+
+        BundleUserQuestions bundle = new BundleUserQuestions(
+                questions,
+                null
+        );
+        return bundle;
+    }
+
+    public int getPosition() {
+		return 10;
 	}
 
-	public int getPosition() {
-		return 0;
-	}
+    public int nbOfUsers() {
+        return 100;
+    }
 
-	public List<Question> geQuestions() {
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 	public List<User> getUsers() {
 		return userDao.getEntityManager().createQuery("from User").getResultList();
 	}
