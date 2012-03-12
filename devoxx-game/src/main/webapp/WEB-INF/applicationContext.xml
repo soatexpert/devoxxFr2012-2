@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -8,8 +7,6 @@
           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
           http://www.springframework.org/schema/tx 
           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-          http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.1.xsd
           http://www.springframework.org/schema/context 
           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 		
@@ -26,20 +23,42 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost/devoxx" />
-		<property name="username" value="devoxx" />
-		<property name="password" value="devoxx" />
-	</bean>
+	<!--<bean id="dataSource"-->
+		<!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+		<!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+		<!--<property name="url" value="jdbc:mysql://localhost/devoxx" />-->
+		<!--<property name="username" value="root" />-->
+		<!--<property name="password" value="Sic21pes" />-->
+	<!--</bean>-->
 
 	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="myEmf" />
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager" />
 
-   <context:component-scan base-package="fr.soat.devoxx.game"/>
+    <context:component-scan base-package="fr.soat.devoxx.game"/>
+
+    <beans profile="prod">
+        <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/devoxx-game" />
+            <property name="username" value="soat-devoxx" />
+            <property name="password" value="soat" />
+        </bean>
+    </beans>
+
+    <beans profile="dev">
+        <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://localhost/devoxx-game" />
+            <property name="username" value="root" />
+            <property name="password" value="" />
+        </bean>
+    </beans>
+
+
 
 
 </beans>

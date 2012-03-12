@@ -11,6 +11,10 @@
             /WEB-INF/spring-mvc-dispatcher-servlet.xml
         </param-value>
 	</context-param>
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>prod</param-value>
+    </context-param>
 
 	<!-- Spring Security (Must be called before any filters !!!) -->
 	<filter>

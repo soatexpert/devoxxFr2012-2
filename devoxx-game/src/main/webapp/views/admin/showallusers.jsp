@@ -4,6 +4,7 @@
 	<table class="jtable" id="allUsersTable">
 		<tr>
 			<th><spring:message code="admin.user.name" text="Username" /></th>
+			<th><spring:message code="admin.user.fullname" text="Name" /></th>
 			<th><spring:message code="admin.user.mail" text="Email" /></th>
 			<th><spring:message code="admin.label.action" text="Action" /></th>
 		</tr>
@@ -11,11 +12,15 @@
 			<tr>
 				<td>${userResponse.userName}</td>
 				<td>${userResponse.userForname}</td>
+				<td>${userResponse.userEmail}</td>
 				<td>
-				<a href='<c:url value="/admin/user/${userResponse.userName}" />' class="ui-btn">
+				<a href='<c:url value="/admin/user/${userResponse.userId}" />' class="ui-btn">
 				<spring:message code="admin.btn.show" text="Show" /></a>
 				&nbsp;
-				<a href='<c:url value="/admin/user/${userResponse.userName}/delete" />' class="ui-btn">
+				<a href='<c:url value="/admin/user/${userResponse.userId}/update" />' class="ui-btn">
+                <spring:message code="admin.btn.modify" text="Modify" /></a>
+                &nbsp;
+				<a href='<c:url value="/admin/user/${userResponse.userId}/delete" />' class="ui-btn">
 	            <spring:message code="admin.btn.delete" text="Remove" /></a>
 				</td>
 			</tr>

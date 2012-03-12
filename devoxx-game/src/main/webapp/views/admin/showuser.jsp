@@ -8,9 +8,10 @@
             </div>
     	</td>
         <td>            
-            <div>Name : ${userResponse.name}</div>
-            <div>Mail : ${userResponse.mail}</div>
-            <div>Token : ${userResponse.token}</div>
+            <div>Username : ${userResponse.userName}</div>
+            <div>Name : ${userResponse.userForname}</div>
+            <div>Mail : ${userResponse.userEmail}</div>
+            <div>Admin? : ${userResponse.isAdmin}</div>
         </td>
     </tr>
 </table>

@@ -52,6 +52,13 @@
         <put-attribute name="pageTitle" type="string" value="DevoxxFr - Show All Users" />
         <put-attribute name="content" value="admin.showallusers.content" />
     </definition>
+    
+    <!-- Définition de la vue show all users '/admin/user/X/update' -->
+    <definition name="admin.updateuser.content" template="/views/admin/updateuser.jsp" />
+    <definition name="devoxxfr.admin.updateuser" extends="common.layout">
+        <put-attribute name="pageTitle" type="string" value="DevoxxFr - Update User" />
+        <put-attribute name="content" value="admin.updateuser.content" />
+    </definition>
 
     <!-- Définition de la vue Not Found -->
     <definition name="notfound.content" template="/views/common/404.jsp" />

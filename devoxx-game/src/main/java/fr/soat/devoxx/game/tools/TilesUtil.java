@@ -32,6 +32,7 @@ public interface TilesUtil {
 	/* AdminUserController Pages */
 	public static final String DFR_ADMIN_SHOWALLUSERS_PAGE = "devoxxfr.admin.showallusers";
 	public static final String DFR_ADMIN_SHOWUSER_PAGE = "devoxxfr.admin.showuser";
+	public static final String DFR_ADMIN_UPDATEUSER_PAGE = "devoxxfr.admin.updateuser";
 	/* AdminQuestionController Pages */
 	public static final String DFR_ADMIN_SHOWQUESTION_PAGE = "devoxxfr.admin.showquestion";
 	/* AuthController Pages */
@@ -39,6 +40,6 @@ public interface TilesUtil {
 	/* Common pages */
 	public static final String DFR_NOT_FOUND_PAGE = "devoxxfr.notfound";
 	/* Errors */
-	public static final String DFR_ERRORS_ERRORMSG_PAGE = "devoxxfr.errors.errormsg";
+	public static final String DFR_ERRORS_ERRORMSG_PAGE = "devoxxfr.errors.errormsg"; 
 	
 }

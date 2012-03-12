@@ -43,7 +43,7 @@ public class AdminQuestionController {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminQuestionController.class);
     
-    @Autowired
+//    @Autowired
 	// AdminQuestionService adminQuestionService;
     
     @RequestMapping(value = "/")
