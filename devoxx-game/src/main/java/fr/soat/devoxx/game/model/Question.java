@@ -26,4 +26,35 @@ public class Question {
 	@OneToOne
 	QuestionChoice goodChoice;
 
+    public Integer getIdQuestion() {
+        return idQuestion;
+    }
+
+    public void setIdQuestion(Integer idQuestion) {
+        this.idQuestion = idQuestion;
+    }
+
+    public String getQuestionLabel() {
+        return questionLabel;
+    }
+
+    public void setQuestionLabel(String questionLabel) {
+        this.questionLabel = questionLabel;
+    }
+
+    public List<QuestionChoice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<QuestionChoice> choices) {
+        this.choices = choices;
+    }
+
+    public QuestionChoice getGoodChoice() {
+        return goodChoice;
+    }
+
+    public void setGoodChoice(QuestionChoice goodChoice) {
+        this.goodChoice = goodChoice;
+    }
 }

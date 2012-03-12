@@ -18,4 +18,9 @@ public class BundleUserQuestions {
 
 	@OneToOne
 	public QuestionsPack questionsPack;
+
+    public BundleUserQuestions(List<UserQuestion> userQuestions, QuestionsPack questionsPack) {
+        this.userQuestions = userQuestions;
+        this.questionsPack = questionsPack;
+    }
 }

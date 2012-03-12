@@ -31,7 +31,6 @@
 		</property>
 	</bean>
 
-
 	<!--<bean id="dataSource"-->
 		<!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
 		<!--&lt;!&ndash;<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>&ndash;&gt;-->

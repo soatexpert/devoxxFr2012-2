@@ -1,0 +1,44 @@
+#home .ui-icon {
+    background: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/53-house.png") 50% 50%/24px 20px no-repeat transparent;
+}
+
+#play .ui-icon, #play-btn .ui-icon {
+    background: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/130-dice.png") 50% 50%/24px 20px no-repeat transparent;
+}
+
+#rules .ui-icon {
+    background: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/184-warning.png") 50% 50%/24px 20px no-repeat transparent;
+}
+
+#about .ui-icon {
+    background: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/123-id-card.png") 50% 50%/24px 20px no-repeat transparent;
+}
+
+
+
+#button,#navfooter .ui-btn .ui-icon {
+border-radius: 0 !important;
+box-shadow: none !important;
+height: 30px !important;
+margin-left: -15px !important;
+width: 30px !important;
+margin-top:-5px;
+ }
+
+#question .ui-controlgroup-label {
+	font-weight: bold;
+	font-size: 20px;
+margin-top:20px;
+}
+
+form {
+	clear : both;
+}
+
+#advancement {
+	float: left;
+}
+
+#elapsed-time {
+	float: right;
+}

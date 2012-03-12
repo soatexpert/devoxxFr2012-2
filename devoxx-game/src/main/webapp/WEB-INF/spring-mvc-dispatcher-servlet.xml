@@ -23,7 +23,7 @@
     <mvc:resources mapping="/img/**" location="/img/" />
     
     <!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource requests to the container's default Servlet -->
-    <mvc:default-servlet-handler/> 
+    <mvc:default-servlet-handler />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

@@ -11,4 +11,19 @@ public class QuestionChoice {
 
 	String choiceLabel;
 
+    public Long getQuestionChoiceId() {
+        return questionChoiceId;
+    }
+
+    public void setQuestionChoiceId(Long questionChoiceId) {
+        this.questionChoiceId = questionChoiceId;
+    }
+
+    public String getChoiceLabel() {
+        return choiceLabel;
+    }
+
+    public void setChoiceLabel(String choiceLabel) {
+        this.choiceLabel = choiceLabel;
+    }
 }
