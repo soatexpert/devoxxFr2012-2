@@ -79,10 +79,16 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         
         if(null == user) {
             user = new User();
-            UserRoles role = userRolesServices.getUserRoleByName("ROLE_USER");
-            if(null == role) {
+            UserRoles role;
+            try {
+                role = userRolesServices.getUserRoleByName("ROLE_USER");
+            } catch (RuntimeException e) {
+                LOGGER.debug("No Roles found");
                 role = new UserRoles("ROLE_USER");
             }
+            if(null == role) {
+                role = new UserRoles("ROLE_USER");
+            }            
             user.addUserRole(role);
             user.setUserName(urlId);
             user.setUserForname(fullName);
