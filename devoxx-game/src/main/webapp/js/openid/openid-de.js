@@ -14,11 +14,6 @@ var providers_large = {
 		name : 'Yahoo',
 		url : 'http://me.yahoo.com/'
 	},
-	aol : {
-		name : 'AOL',
-		label : 'Bitte den AOL Benutzernamen eingeben.',
-		url : 'http://openid.aol.com/{username}'
-	},
 	myopenid : {
 		name : 'MyOpenID',
 		label : 'Bitte den MyOpenID Benutzernamen eingeben.',
@@ -28,65 +23,15 @@ var providers_large = {
 		name : 'OpenID',
 		label : 'Bitte OpenID eingeben.',
 		url : null
+	},
+	aol : {
+		name : 'AOL',
+		label : 'Bitte den AOL Benutzernamen eingeben.',
+		url : 'http://openid.aol.com/{username}'
 	}
 };
 
 var providers_small = {
-	livejournal : {
-		name : 'LiveJournal',
-		label : 'Bitte den LiveJournal Benutzernamen eingeben.',
-		url : 'http://{username}.livejournal.com/'
-	},
-	/* flickr: {
-		name: 'Flickr',        
-		label: 'Bitte den Flickr Benutzernamen eingeben.',
-		url: 'http://flickr.com/{username}/'
-	}, */
-	/* technorati: {
-		name: 'Technorati',
-		label: 'Bitte den Technorati Benutzernamen eingeben.',
-		url: 'http://technorati.com/people/technorati/{username}/'
-	}, */
-	wordpress : {
-		name : 'Wordpress',
-		label : 'Bitte den Wordpress.com Benutzernamen eingeben.',
-		url : 'http://{username}.wordpress.com/'
-	},
-	blogger : {
-		name : 'Blogger',
-		label : 'Ihr Blogger Konto',
-		url : 'http://{username}.blogspot.com/'
-	},
-	verisign : {
-		name : 'Verisign',
-		label : 'Ihr Verisign Benutzername',
-		url : 'http://{username}.pip.verisignlabs.com/'
-	},
-	/* vidoop: {
-		name: 'Vidoop',
-		label: 'Ihr Vidoop Benutzername',
-		url: 'http://{username}.myvidoop.com/'
-	}, */
-	/* launchpad: {
-		name: 'Launchpad',
-		label: 'Ihr Launchpad Benutzername',
-		url: 'https://launchpad.net/~{username}'
-	}, */
-	claimid : {
-		name : 'ClaimID',
-		label : 'Ihr ClaimID Benutzername',
-		url : 'http://claimid.com/{username}'
-	},
-	clickpass : {
-		name : 'ClickPass',
-		label : 'Bitte den ClickPass Benutzernamen eingeben',
-		url : 'http://clickpass.com/public/{username}'
-	},
-	google_profile : {
-		name : 'Google Profile',
-		label : 'Bitte den Google Profile Benutzernamen eingeben',
-		url : 'http://www.google.com/profiles/{username}'
-	}
 };
 
 openid.locale = 'de';

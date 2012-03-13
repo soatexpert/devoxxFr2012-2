@@ -14,12 +14,7 @@ var providers_large = {
   yahoo : {
     name : 'Yahoo',
     url : 'http://me.yahoo.com/'
-  },
-  aol : {
-    name : 'AOL',
-    label : 'Entrez votre nom d\'écran AOL.',
-    url : 'http://openid.aol.com/{username}'
-  },
+  },  
   myopenid : {
     name : 'MyOpenID',
     label : 'Entrez votre nom d\'utilisateur MyOpenID.',
@@ -29,68 +24,16 @@ var providers_large = {
     name : 'OpenID',
     label : 'Entrez votre OpenID.',
     url : null
+  },
+  aol : {
+    name : 'AOL',
+    label : 'Entrez votre nom d\'écran AOL.',
+    url : 'http://openid.aol.com/{username}'
   }
 };
 
 var providers_small = {
-  livejournal : {
-    name : 'LiveJournal',
-    label : 'Entrez votre nom d\'utilisateur Livejournal.',
-    url : 'http://{username}.livejournal.com/'
-  },
-  /*
-  flickr: {
-    name: 'Flickr',
-    label : 'Entrez votre nom d\'utilisateur Flickr.',
-    url: 'http://flickr.com/{username}/'
-  },
-  technorati: {
-    name: 'Technorati',
-    label : 'Entrez votre nom d\'utilisateur Technorati.',
-    url: 'http://technorati.com/people/technorati/{username}/'
-  },
-  */
-  wordpress : {
-    name : 'Wordpress',
-    label : 'Entrez votre nom d\'utilisateur Wordpress.',
-    url : 'http://{username}.wordpress.com/'
-  },
-  blogger : {
-    name : 'Blogger',
-    label : 'Entrez votre compte Blogger',
-    label : 'Your Blogger account',
-    url : 'http://{username}.blogspot.com/'
-  },
-  verisign : {
-    name : 'Verisign',
-    label : 'Entrez votre nom d\'utilisateur Verisign',
-    url : 'http://{username}.pip.verisignlabs.com/'
-  },
-  /* vidoop: {
-    name: 'Vidoop',
-    label : 'Entrez votre nom d\'utilisateur Vidoop',
-    url: 'http://{username}.myvidoop.com/'
-  }, */
-  /* launchpad: {
-    name: 'Launchpad',
-    label : 'Entrez votre nom d\'utilisateur Launchpad',
-    url: 'https://launchpad.net/~{username}'
-  }, */
-  claimid : {
-    name : 'ClaimID',
-    label : 'Entrez votre nom d\'utilisateur ClaimID',
-    url : 'http://claimid.com/{username}'
-  },
-  clickpass : {
-    name : 'ClickPass',
-    label : 'Entrez votre nom d\'utilisateur ClickPass',
-    url : 'http://clickpass.com/public/{username}'
-  },
-  google_profile : {
-    name : 'Google Profile',
-    label : 'Entrez votre nom de Profil Google',
-    url : 'http://www.google.com/profiles/{username}'
-  }
+  
 };
 
 openid.locale = 'fr';
