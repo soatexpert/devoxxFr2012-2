@@ -79,6 +79,19 @@ public class GameController {
         }
     }
 
+    @RequestMapping(value = "/pause")
+    public String pause(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
+                               @RequestParam("questionId") Long questionId,
+                               @RequestParam("answer") Long answer,
+                               Model model) {
+        try {
+            answerQuestion(questionId, answer, userGameInformation);
+        } catch(AlreadyAnsweredException e) {
+            // dans tous les cas on redirige vers l'index
+        }
+        return index(model);
+    }
+
     private void answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) {
        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
             if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {

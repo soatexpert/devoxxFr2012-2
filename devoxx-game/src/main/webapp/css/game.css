@@ -14,7 +14,12 @@
     background-image: url("/img/glyphish-icons/icons/123-id-card.png");
 }
 
-
+.center-wrapper{
+    text-align: center;
+}
+.center-wrapper * {
+    margin: 0 auto;
+}
 
 #navfooter .ui-btn .ui-icon,#play-btn .ui-icon {
     border-radius: 0 !important;

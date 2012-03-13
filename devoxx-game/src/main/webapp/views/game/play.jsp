@@ -31,12 +31,14 @@ var now = Date.now();
         </c:forEach>
 </fieldset>
 
+<div class="center-wrapper">
 <c:choose>
     <c:when test="${(nbOfQuestionLeft-1) == 0}"><input type="submit" value="Terminer" data-inline="true"/></c:when>
     <c:otherwise>
-        <a href="<c:url value='/game/index'/>" data-role="button" data-inline="true">Faire une pause</a>
-        <input type="submit" value="Question suivante" data-inline="true"/>
+        <a href="<c:url value='/game/pause'/>" data-role="button" data-inline="true">Faire une pause</a>
+        <input type="submit" value="Continuer" data-inline="true"/>
     </c:otherwise>
 </c:choose>
+</div>
 
 </f:form>
