@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.controllers;
 
+import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.forms.AnswerForm;
 import fr.soat.devoxx.game.forms.UserGameInformation;
@@ -69,14 +70,22 @@ public class GameController {
                                @RequestParam("questionId") Long questionId,
                                @RequestParam("answer") Long answer,
                                Model model) {
-       answerQuestion(questionId, answer, userGameInformation);
+        try {
+            answerQuestion(questionId, answer, userGameInformation);
 
-       return play(userGameInformation,model);
+            return play(userGameInformation,model);
+        } catch(AlreadyAnsweredException e) {
+            return index(model);
+        }
     }
 
     private void answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) {
        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
             if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
+                if(userQuestion.getReponse() != null) {
+                    throw new AlreadyAnsweredException();
+                }
+
                 for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
                     if(choice.getQuestionChoiceId().equals(answer)) {
                         userQuestion.setReponse(choice);
