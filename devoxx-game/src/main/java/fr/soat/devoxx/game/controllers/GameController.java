@@ -1,6 +1,7 @@
 package fr.soat.devoxx.game.controllers;
 
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
+import fr.soat.devoxx.game.forms.AnswerForm;
 import fr.soat.devoxx.game.forms.UserGameInformation;
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.QuestionChoice;
@@ -35,7 +36,7 @@ public class GameController {
         UserGameInformation userGameInformation  = new UserGameInformation(10,100,getCurrentUserPendingQuestions());
         model.addAttribute("userGameInfos",userGameInformation);
 
-        model.addAttribute("userName",currentUser.getUser().getUsername());
+        model.addAttribute("userName",currentUser.getUser().getUserForname());
         model.addAttribute("rank",userGameInformation.getCurrentRanking());
         model.addAttribute("nbUsers",userGameInformation.getNbOfPlayers());
         model.addAttribute("waitingQuestions",userGameInformation.getNbOfQuestionsToAnswer());
@@ -48,25 +49,26 @@ public class GameController {
     public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Model model) {
 
         try {
-            model.addAttribute("question",userGameInformation.nextQuestion());
+            Question question = userGameInformation.nextQuestion();
+            model.addAttribute("answerForm",new AnswerForm(question.getIdQuestion()));
+            model.addAttribute("question", question);
             model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
             model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
             model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
             return TilesUtil.DFR_GAME_PLAY_PAGE;
         } catch(NoMoreQuestionException e) {
-            return TilesUtil.DFR_GAME_INDEX_PAGE;
+            return index(model);
         }
     }
 
-    @RequestMapping(value = "/next", method = RequestMethod.POST)
+    @RequestMapping(value = "/next")
     public String nextQuestion(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
                                @RequestParam("questionId") Long questionId,
                                @RequestParam("answer") Long answer,
                                Model model) {
+       answerQuestion(questionId, answer, userGameInformation);
 
-        answerQuestion(questionId, answer, userGameInformation);
-
-        return play(userGameInformation,model);
+       return play(userGameInformation,model);
     }
 
     private void answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) {

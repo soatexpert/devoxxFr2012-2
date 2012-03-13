@@ -40,7 +40,7 @@ public class UserGameInformation {
     public int getNbOfQuestionsToAnswer() {
         int nbOfQuestionsToAnswer = 0;
         for(UserQuestion question : questionsInProgress) {
-            if(question.getReponse() != null)  {
+            if(question.getReponse() == null)  {
                 nbOfQuestionsToAnswer++;
             }
         }
