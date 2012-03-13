@@ -3,15 +3,15 @@
 }
 
 #play .ui-icon, #play-btn .ui-icon {
-    background-image: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/130-dice.png");
+    background-image: url("/img/glyphish-icons/icons/130-dice.png");
 }
 
 #rules .ui-icon {
-    background-image: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/184-warning.png");
+    background-image: url("/img/glyphish-icons/icons/184-warning.png");
 }
 
 #about .ui-icon {
-    background-image: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/123-id-card.png");
+    background-image: url("/img/glyphish-icons/icons/123-id-card.png");
 }
 
 
