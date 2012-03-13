@@ -45,7 +45,7 @@ public class UserServicesImpl implements UserServices {
     public BundleUserQuestions getQuestionBundle() {
         List<UserQuestion> questions = new ArrayList<UserQuestion>();
 
-        questions.add(new UserQuestion(new Question()));
+        questions.add(new UserQuestion());
 
         BundleUserQuestions bundle = new BundleUserQuestions(
                 questions,

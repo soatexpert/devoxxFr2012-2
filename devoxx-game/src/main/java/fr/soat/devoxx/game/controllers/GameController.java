@@ -1,73 +1,120 @@
 package fr.soat.devoxx.game.controllers;
 
+import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
+import fr.soat.devoxx.game.forms.AnswerForm;
+import fr.soat.devoxx.game.forms.UserGameInformation;
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.QuestionChoice;
+import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.security.OpenIdUserDetails;
 import fr.soat.devoxx.game.tools.TilesUtil;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
 @RequestMapping(value = "/game")
+@SessionAttributes("userGameInfos")
 public class GameController {
 
-    @RequestMapping(value = {"/", "/index"})
+    private AtomicLong increment = new AtomicLong();
+
+    @RequestMapping(value = {"/", "/index", ""})
     public String index(Model model) {
         final OpenIdUserDetails currentUser = (OpenIdUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        model.addAttribute("userName","toto");
-        model.addAttribute("rank",10);
-        model.addAttribute("nbUsers",100);
-        model.addAttribute("waitingQuestions",3);
+        UserGameInformation userGameInformation  = new UserGameInformation(10,100,getCurrentUserPendingQuestions());
+        model.addAttribute("userGameInfos",userGameInformation);
+
+        model.addAttribute("userName",currentUser.getUser().getUserForname());
+        model.addAttribute("rank",userGameInformation.getCurrentRanking());
+        model.addAttribute("nbUsers",userGameInformation.getNbOfPlayers());
+        model.addAttribute("waitingQuestions",userGameInformation.getNbOfQuestionsToAnswer());
 
 
         return TilesUtil.DFR_GAME_INDEX_PAGE;
     }
     
     @RequestMapping("/play")
-    public String play(Model model) {
+    public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Model model) {
 
-        Question question = new Question();
-        question.setIdQuestion(1234);
-        question.setQuestionLabel("Quel est le nom de l'évènement auquel vous participez ?");
-        List<QuestionChoice> answers = new ArrayList<QuestionChoice>();
-        QuestionChoice choice1 = new QuestionChoice();
-        choice1.setQuestionChoiceId(1231l);
-        choice1.setChoiceLabel("Devoxx");
-        answers.add(choice1);
-
-        QuestionChoice choice2 = new QuestionChoice();
-        choice2.setQuestionChoiceId(1232l);
-        choice2.setChoiceLabel("JavaOne");
-        answers.add(choice2);
-
-        QuestionChoice choice3 = new QuestionChoice();
-        choice3.setQuestionChoiceId(1233l);
-        choice3.setChoiceLabel("Techdays");
-        answers.add(choice3);
-
-        QuestionChoice choice4 = new QuestionChoice();
-        choice4.setQuestionChoiceId(1234l);
-        choice4.setChoiceLabel("Solidays");
-        answers.add(choice4);
-
-        question.setChoices(answers);
-
-        model.addAttribute("question",question);
-
-        return TilesUtil.DFR_GAME_PLAY_PAGE;
+        try {
+            Question question = userGameInformation.nextQuestion();
+            model.addAttribute("answerForm",new AnswerForm(question.getIdQuestion()));
+            model.addAttribute("question", question);
+            model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
+            model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
+            model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
+            return TilesUtil.DFR_GAME_PLAY_PAGE;
+        } catch(NoMoreQuestionException e) {
+            return index(model);
+        }
     }
 
-    @RequestMapping(value = "/next", method = RequestMethod.POST)
-    public String nextQuestion() {
-        return TilesUtil.DFR_GAME_PLAY_PAGE;
+    @RequestMapping(value = "/next")
+    public String nextQuestion(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
+                               @RequestParam("questionId") Long questionId,
+                               @RequestParam("answer") Long answer,
+                               Model model) {
+       answerQuestion(questionId, answer, userGameInformation);
+
+       return play(userGameInformation,model);
+    }
+
+    private void answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) {
+        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
+            if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
+                for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
+                    if(choice.getQuestionChoiceId().equals(answer)) {
+                        userQuestion.setReponse(choice);
+                    }
+                }
+            }
+        }
+    }
+
+    private List<UserQuestion> getCurrentUserPendingQuestions() {
+        List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
+
+        UserQuestion pendingQuestion1 = new UserQuestion();
+        pendingQuestion1.setQuestion(createQuestion("Quel est le nom de l'évènement auquel vous participez ?","Devoxx","JavaOne","TechDays","Solidays"));
+        currentUserPendingQuestions.add(pendingQuestion1);
+
+
+        UserQuestion pendingQuestion2 = new UserQuestion();
+        pendingQuestion2.setQuestion(createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?", "42", "Dieu", "joker", "ObiWanKenobi"));
+        currentUserPendingQuestions.add(pendingQuestion2);
+
+        return currentUserPendingQuestions;
+    }
+
+    private Question createQuestion(String questionLabel,String... answers) {
+        Question question = new Question();
+        question.setIdQuestion(increment.incrementAndGet());
+        question.setQuestionLabel(questionLabel);
+        List<QuestionChoice> questionAnswers = new ArrayList<QuestionChoice>();
+
+        for(String answer : answers) {
+            QuestionChoice choice1 = new QuestionChoice();
+            choice1.setQuestionChoiceId(increment.incrementAndGet());
+            choice1.setChoiceLabel(answer);
+            questionAnswers.add(choice1);
+        }
+
+        question.setGoodChoice(questionAnswers.get(0));
+
+        question.setChoices(questionAnswers);
+
+        return question;
     }
 }
