@@ -53,7 +53,9 @@ public class GameController {
             UserQuestion nextQuestion = userGameInformation.nextQuestion();
 
             nextQuestion.setStartQuestion(System.currentTimeMillis());
+            //TODO save (nextQuestion); pour persister la date de debut
 
+            model.addAttribute("questionStartDate",nextQuestion.getStartQuestion());
             model.addAttribute("answerForm",new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
             model.addAttribute("question", nextQuestion.getQuestion());
             model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
@@ -95,6 +97,12 @@ public class GameController {
                 }
             }
         }
+    }
+
+    @RequestMapping(value = "/pause")
+    public String pause(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
+                        Model model) {
+        return index(model);
     }
 
     private List<UserQuestion> getCurrentUserPendingQuestions() {
