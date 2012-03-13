@@ -3,20 +3,20 @@
 }
 
 #play .ui-icon, #play-btn .ui-icon {
-    background-image: url("/img/glyphish-icons/icons/130-dice.png");
+    background-image: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/130-dice.png");
 }
 
 #rules .ui-icon {
-    background-image: url("/img/glyphish-icons/icons/184-warning.png");
+    background-image: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/184-warning.png");
 }
 
 #about .ui-icon {
-    background-image: url("/img/glyphish-icons/icons/123-id-card.png");
+    background-image: url("/devoxx-game-0.0.1-SNAPSHOT/img/glyphish-icons/icons/123-id-card.png");
 }
 
 
 
-#button,#navfooter .ui-btn .ui-icon {
+#navfooter .ui-btn .ui-icon,#play-btn .ui-icon {
     border-radius: 0 !important;
     box-shadow: none !important;
     height: 30px !important;
@@ -30,7 +30,24 @@
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: 24px 22px;
- }
+}
+
+#rules .ui-icon, #about .ui-icon {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    height: 20px !important;
+    margin-left: 0px !important;
+    width: 20px !important;
+    margin-top:-12px;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-origin: padding-box;
+    background-position: 66% 66%;
+    background-repeat: no-repeat;
+    background-size: 16px 14px;
+
+}
 
 #question .ui-controlgroup-label {
 	font-weight: bold;
