@@ -27,12 +27,14 @@ public class UserServicesImpl implements UserServices {
 
 	@Transactional
 	public void createUser(User user) {
+	    user = userDao.getEntityManager().merge(user);
 		userDao.getEntityManager().persist(user);
 	}
 	
 	@Transactional
     public void updateUser(User user) {
-	    userDao.getEntityManager().merge(user);        
+	    user = userDao.getEntityManager().merge(user);
+	    userDao.getEntityManager().flush();
     }
 
 	@Transactional

@@ -47,6 +47,7 @@ import com.google.common.base.Strings;
 import fr.soat.devoxx.game.forms.UserForm;
 import fr.soat.devoxx.game.model.User;
 import fr.soat.devoxx.game.model.UserRoles;
+import fr.soat.devoxx.game.services.UserRolesServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
 

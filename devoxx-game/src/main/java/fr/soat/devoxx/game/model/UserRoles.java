@@ -23,6 +23,8 @@
  */
 package fr.soat.devoxx.game.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,8 +38,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USER_ROLES")
-public class UserRoles {
-    
+public class UserRoles implements Serializable {
+
+    private static final long serialVersionUID = 516974820036173698L;
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -19,6 +19,7 @@ import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.model.User;
 import fr.soat.devoxx.game.model.UserRoles;
+import fr.soat.devoxx.game.services.UserRolesServices;
 import fr.soat.devoxx.game.services.UserServices;
 
 /**
@@ -28,6 +29,9 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
 
     @Autowired
     UserServices userServices;
+    
+    @Autowired
+    UserRolesServices userRolesServices;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenIdUserDetailsService.class);
 
@@ -75,7 +79,11 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         
         if(null == user) {
             user = new User();
-            user.addUserRole(new UserRoles("ROLE_USER"));
+            UserRoles role = userRolesServices.getUserRoleByName("ROLE_USER");
+            if(null == role) {
+                role = new UserRoles("ROLE_USER");
+            }
+            user.addUserRole(role);
             user.setUserName(urlId);
             user.setUserForname(fullName);
             user.setUserEmail(email);
