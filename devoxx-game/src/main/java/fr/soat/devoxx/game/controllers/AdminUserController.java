@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.forms.UserForm;
@@ -99,7 +100,7 @@ public class AdminUserController {
     
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
     public String updateUserPost(@PathVariable Long userId, Model model,
-            @ModelAttribute("subscribeForm") @Valid UserForm userForm, BindingResult result) {
+            @ModelAttribute("userForm") @Valid UserForm userForm, BindingResult result) {
         String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
         
         if (result.hasErrors()) {
@@ -107,13 +108,13 @@ public class AdminUserController {
         }
         
         try {
-            User user = new User();
-            user.setUserId(userId);
+            User user = userServices.getUser(userId);
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
-//            user.setAdmin(userForm.isAdmin());
-            
+            user.setUserRoles(splitUserRoles(userForm.getUserRoles()));
+            LOGGER.info(user.getUserRoles().toString());
             userServices.updateUser(user);
+            forward = "redirect:/admin/user/";
         } catch (RuntimeException e) {
             //TODO RuntimeException :( gérer des exceptions métiers coté userServices
             model.addAttribute("error", "admin.error.user.update");
@@ -138,6 +139,15 @@ public class AdminUserController {
             LOGGER.info("Error while deleting user", e);
         }
         return forward;
+    }
+    
+    private static List<UserRoles> splitUserRoles(String userRolesComma) {
+        List<UserRoles> userRoles = new ArrayList<UserRoles>();
+        Iterable<String> userRolesStr = Splitter.onPattern("[\\s]*[,;]{1}[\\s]*").split(userRolesComma);
+        for (String roleName : userRolesStr) {
+            userRoles.add(new UserRoles(roleName.trim().toUpperCase()));
+        }
+        return userRoles;
     }
     
     private static String joinUserRoles(User user) {

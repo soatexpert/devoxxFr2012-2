@@ -30,7 +30,6 @@ public class UserServicesImpl implements UserServices {
 		userDao.getEntityManager().persist(user);
 	}
 	
-	@Override
 	@Transactional
     public void updateUser(User user) {
 	    userDao.getEntityManager().merge(user);        

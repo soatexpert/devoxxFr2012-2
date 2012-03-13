@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,16 +55,16 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         List<OpenIDAttribute> attributes = token.getAttributes();
 
         for (OpenIDAttribute attribute : attributes) {
-            if (attribute.getName().equals("email")) {
+            if ("email".equals(attribute.getName())) {
                 email = attribute.getValues().get(0);
             }
-            if (attribute.getName().equals("firstname")) {
+            if ("firstname".equals(attribute.getName())) {
                 firstName = attribute.getValues().get(0);
             }
-            if (attribute.getName().equals("lastname")) {
+            if ("lastname".equals(attribute.getName())) {
                 lastName = attribute.getValues().get(0);
             }
-            if (attribute.getName().equals("fullname")) {
+            if ("fullname".equals(attribute.getName())) {
                 fullName = attribute.getValues().get(0);
             }
         }
@@ -89,16 +87,11 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
             userServices.updateUser(user);
         }
 
-        OpenIdUserDetails openIdUser;
-        /*List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
-        if (user.isAdmin()) {
-            grantedAuthorities.addAll(AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
-        }*/
         List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
         for (UserRoles role : user.getUserRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }        
-        openIdUser = new OpenIdUserDetails(urlId, grantedAuthorities);
+        OpenIdUserDetails openIdUser = new OpenIdUserDetails(urlId, grantedAuthorities);
         openIdUser.setUser(user);
         
         return openIdUser;
