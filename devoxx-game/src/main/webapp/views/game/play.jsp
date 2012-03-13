@@ -7,7 +7,7 @@
 <div id="elapsed-time"><span id="timeToUpdate">0</span>s</div>
 
 <script type="text/javascript">
-var start = Date.now();
+var start = ${questionStartDate};
 
 setTimeout("refreshElapsedTime()",1000);
 
@@ -35,10 +35,34 @@ var now = Date.now();
 <c:choose>
     <c:when test="${(nbOfQuestionLeft-1) == 0}"><input type="submit" value="Terminer" data-inline="true"/></c:when>
     <c:otherwise>
-        <a href="<c:url value='/game/pause'/>" data-role="button" data-inline="true">Faire une pause</a>
+        <a href="<c:url value='/game/pause'/>" data-role="button" data-inline="true" id="pauseBtn">Faire une pause</a>
         <input type="submit" value="Continuer" data-inline="true"/>
     </c:otherwise>
 </c:choose>
 </div>
 
 </f:form>
+
+<script type="text/javascript">
+$(document).delegate('#pauseBtn', 'click', function() {
+  $(this).simpledialog({
+    'mode' : 'bool',
+    'prompt' : 'La réponse en cours ne sera pas conservée et votre temps de réponse augmente quand même lorsque vous prennez une pause!',
+    'useModal': true,
+    'buttons' : {
+      'Ok': {
+        click: function () {
+          $('#question').attr('action', 'pause');
+          $('#question').submit();
+        }
+      },
+      'Retour': {
+        click: function () {
+        },
+        icon: "delete",
+        theme: "c"
+      }
+    }
+  })
+})
+</script>
