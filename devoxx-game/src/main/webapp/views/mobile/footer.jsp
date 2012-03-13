@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div data-role="navbar" id="navfooter">
+<!-- div data-role="navbar" id="navfooter">
 	<ul>
 		<li>
 		    <a id="home" href="<c:url value='/game/index' />" class="ui-btn" data-icon="home_custom">
@@ -22,4 +22,4 @@
 		    </a>
 		</li>
 	</ul>
-</div>
+</div -->

@@ -10,8 +10,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         	<link rel="stylesheet" href="<c:url value='/css/game.css' />" />
         	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        	<link rel="stylesheet" type="text/css" href="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.css" />
             <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
             <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+            <script type="text/javascript" src="http://dev.jtsage.com/cdn/simpledialog/latest/jquery.mobile.simpledialog.min.js"></script>
 		<tiles:insertAttribute name="specificHead" ignore="true" />
 	</head>
 	<body>
