@@ -4,6 +4,7 @@ import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.UserQuestion;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,10 +59,10 @@ public class UserGameInformation implements Serializable {
         return questionsInProgress.size();
     }
 
-    public Question nextQuestion() {
+    public UserQuestion nextQuestion() {
         for(UserQuestion userQuestion : questionsInProgress) {
             if(userQuestion.getReponse() == null) {
-                return userQuestion.getQuestion();
+                return userQuestion;
             }
         }
         throw new NoMoreQuestionException();

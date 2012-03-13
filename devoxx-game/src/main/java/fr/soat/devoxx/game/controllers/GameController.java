@@ -49,9 +49,12 @@ public class GameController {
     public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Model model) {
 
         try {
-            Question question = userGameInformation.nextQuestion();
-            model.addAttribute("answerForm",new AnswerForm(question.getIdQuestion()));
-            model.addAttribute("question", question);
+            UserQuestion nextQuestion = userGameInformation.nextQuestion();
+
+            nextQuestion.setStartQuestion(System.currentTimeMillis());
+
+            model.addAttribute("answerForm",new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
+            model.addAttribute("question", nextQuestion.getQuestion());
             model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
             model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
             model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
@@ -72,11 +75,13 @@ public class GameController {
     }
 
     private void answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) {
-        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
+       for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
             if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
                 for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
                     if(choice.getQuestionChoiceId().equals(answer)) {
                         userQuestion.setReponse(choice);
+                        userQuestion.setEndQuestion(System.currentTimeMillis());
+                        //TODO save(userQuestion);
                     }
                 }
             }
