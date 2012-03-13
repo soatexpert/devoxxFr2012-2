@@ -9,8 +9,8 @@
 </c:choose>
 </div>
 
-<p><spring:message code="game.index.ranking.prefix" text="Vous êtes classé" /> ${rank} <spring:message code="game.index.ranking.separator" text="sur" /> ${nbUsers}.</p>
-<p><spring:message code="game.index.waitingQuestions.prefix" text="Vous avez" /> ${waitingQuestions} <spring:message code="game.index.waitingQuestions.suffix" text="question(s) en attente." /> </p>
+<p><spring:message code="game.index.ranking.label" arguments="${rank}§${nbUsers}" argumentSeparator="§" text="Vous êtes classé {0} sur {1}" />.</p>
+<p><spring:message code="game.index.waitingQuestions.label" arguments="${waitingQuestions}" argumentSeparator="§" text="Vous avez {0} question(s) en attente." /></p>
 
 <c:if test="${waitingQuestions > 0}">
     <div class="center-wrapper">
