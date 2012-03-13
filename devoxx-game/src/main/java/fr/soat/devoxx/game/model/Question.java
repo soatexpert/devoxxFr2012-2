@@ -18,7 +18,7 @@ public class Question implements Serializable {
 
     @Id
 	@Column(name = "id")
-	Integer idQuestion;
+	Long idQuestion;
 	
 	@Column(name = "LABEL")
 	String questionLabel;
@@ -29,11 +29,11 @@ public class Question implements Serializable {
 	@OneToOne
 	QuestionChoice goodChoice;
 
-    public Integer getIdQuestion() {
+    public Long getIdQuestion() {
         return idQuestion;
     }
 
-    public void setIdQuestion(Integer idQuestion) {
+    public void setIdQuestion(Long idQuestion) {
         this.idQuestion = idQuestion;
     }
 
