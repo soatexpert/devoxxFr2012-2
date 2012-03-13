@@ -5,12 +5,12 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import java.io.Serializable;
 
 @Entity
+
 public class UserQuestion implements Serializable {
 
-    private static final long serialVersionUID = 4912747959890426136L;
+    private static final long serialVersionUID = 4058247641469267996L;
 
     @Id
 	Long id;

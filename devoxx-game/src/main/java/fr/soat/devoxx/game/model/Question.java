@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "QUESTION")
 public class Question implements Serializable {
 
-    private static final long serialVersionUID = -7601101753001835787L;
+    private static final long serialVersionUID = 4593890730355225780L;
 
     @Id
 	@Column(name = "id")
