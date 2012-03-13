@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,9 +9,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class BundleUserQuestions {
+public class BundleUserQuestions implements Serializable {
 
-	@Id
+    private static final long serialVersionUID = -7113228874677965883L;
+
+    @Id
 	Long id;
 
 	@OneToMany
