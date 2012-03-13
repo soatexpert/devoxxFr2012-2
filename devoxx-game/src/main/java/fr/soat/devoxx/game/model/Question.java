@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,9 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "QUESTION")
-public class Question {
+public class Question implements Serializable {
 
-	@Id
+    private static final long serialVersionUID = 4593890730355225780L;
+
+    @Id
 	@Column(name = "id")
 	Long idQuestion;
 	

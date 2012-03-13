@@ -2,11 +2,14 @@ package fr.soat.devoxx.game.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class QuestionChoice {
+public class QuestionChoice implements Serializable {
 
-	@Id
+    private static final long serialVersionUID = 2477899775268524275L;
+
+    @Id
 	Long questionChoiceId;
 
 	String choiceLabel;

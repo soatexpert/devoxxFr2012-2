@@ -4,6 +4,7 @@ import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.UserQuestion;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,8 +14,10 @@ import java.util.List;
  * Time: 18:49
  * To change this template use File | Settings | File Templates.
  */
-public class UserGameInformation {
-    
+public class UserGameInformation implements Serializable {
+
+    private static final long serialVersionUID = -1918069635247552059L;
+
     private int currentRanking;
     private int nbOfPlayers;
     private List<UserQuestion> questionsInProgress;

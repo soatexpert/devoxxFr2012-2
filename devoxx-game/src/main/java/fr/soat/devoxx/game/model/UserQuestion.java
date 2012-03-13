@@ -3,11 +3,14 @@ package fr.soat.devoxx.game.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 @Entity
-public class UserQuestion {
+public class UserQuestion implements Serializable {
 
-	@Id
+    private static final long serialVersionUID = 4058247641469267996L;
+
+    @Id
 	Long id;
 
 	@OneToOne
