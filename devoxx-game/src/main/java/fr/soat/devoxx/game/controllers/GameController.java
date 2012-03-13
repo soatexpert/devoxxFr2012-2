@@ -29,7 +29,7 @@ public class GameController {
 
     private AtomicLong increment = new AtomicLong();
 
-    @RequestMapping(value = {"/", "/index"})
+    @RequestMapping(value = {"/", "/index", ""})
     public String index(Model model) {
         final OpenIdUserDetails currentUser = (OpenIdUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
