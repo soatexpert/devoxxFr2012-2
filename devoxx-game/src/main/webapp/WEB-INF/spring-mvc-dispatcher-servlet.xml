@@ -12,7 +12,11 @@
 	<context:component-scan base-package="fr.soat.devoxx.game" />
 
 	<!-- Configures the @Controller programming model -->
-	<mvc:annotation-driven />
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
 	<!-- Forwards requests to the "/" resource to the "welcome" view -->
 	<mvc:view-controller path="/" view-name="/index" />
@@ -49,6 +53,8 @@
 			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<property name="paramName" value="lang" />
 		</bean>
+        <!-- On pre-handle, resolve the device that originated the web request -->
+        <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
 	</mvc:interceptors>
 
 

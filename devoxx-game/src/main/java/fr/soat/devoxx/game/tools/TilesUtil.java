@@ -39,6 +39,7 @@ public interface TilesUtil {
 	public static final String DFR_ADMIN_SHOWQUESTION_PAGE = "devoxxfr.admin.showquestion";
     /* AuthController Pages */
 	public static final String DFR_AUTH_LOGIN_PAGE = "devoxxfr.auth.login";
+	public static final String DFR_AUTH_MOBILE_LOGIN_PAGE = "devoxxfr.mobile.auth.login";
     /* Common pages */
 	public static final String DFR_NOT_FOUND_PAGE = "devoxxfr.notfound";
     /* Errors */

@@ -21,23 +21,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fr.soat.devoxx.game.controllers;
+package fr.soat.devoxx.game.services;
 
-import org.springframework.mobile.device.Device;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import fr.soat.devoxx.game.tools.TilesUtil;
-
-@Controller
-@RequestMapping(value = "/auth")
-public class AuthController {
-	
-	@RequestMapping(value = "login")
-	public String login(Device device) {
-	    if(device.isMobile())
-	        return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
-	    else
-	        return TilesUtil.DFR_AUTH_LOGIN_PAGE;
-	}
+public interface QuestionServices {
+    
 }

@@ -47,13 +47,22 @@
         <put-attribute name="content" value="game.play.content" />
     </definition>
     
-    <!-- Définition de la vue '/auth/login' -->
+    <!-- Définition de la vue '/auth/login' (normal) -->
     <definition name="auth.login.content" template="/views/auth/login.jsp" />
     <definition name="auth.login.head" template="/views/auth/loginhead.jsp" />
     <definition name="devoxxfr.auth.login" extends="common.layout">
         <put-attribute name="pageTitle" type="string" value="DevoxxFr - Login" />
         <put-attribute name="specificHead" value="auth.login.head" />
         <put-attribute name="content" value="auth.login.content" />
+    </definition>
+    
+    <!-- Définition de la vue '/auth/login' (mobile) -->
+    <definition name="auth.mobile.login.content" template="/views/auth/login.mobile.jsp" />
+    <definition name="auth.mobile.login.head" template="/views/auth/loginhead.mobile.jsp" />
+    <definition name="devoxxfr.mobile.auth.login" extends="mobile.layout">
+        <put-attribute name="pageTitle" type="string" value="DevoxxFr - Login" />
+        <put-attribute name="specificHead" value="auth.mobile.login.head" />
+        <put-attribute name="content" value="auth.mobile.login.content" />
     </definition>
 
     <!-- Définition de la vue index '/admin/' -->
