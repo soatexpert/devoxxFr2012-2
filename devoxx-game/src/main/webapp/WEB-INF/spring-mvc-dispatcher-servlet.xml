@@ -43,10 +43,12 @@
 	</bean>
 
 	<!-- Internationalization -->
-	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="defaultLocale" value="en" />
-	</bean>
+<!-- 	<bean id="localeResolver" -->
+<!-- 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver"> -->
+<!-- 		<property name="defaultLocale" value="en" /> -->
+<!-- 	</bean> -->
+    <bean id="localeResolver"
+        class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
 
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor"
