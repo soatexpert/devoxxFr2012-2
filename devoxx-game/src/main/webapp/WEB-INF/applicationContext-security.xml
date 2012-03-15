@@ -21,8 +21,8 @@
 		<security:openid-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/auth/login?error=true">
 			<security:attribute-exchange>
 				<security:openid-attribute name="email" type="http://axschema.org/contact/email" required="true" count="1" />
-				<security:openid-attribute name="firstname" type="http://axschema.org/namePerson/first" />
-				<security:openid-attribute name="lastname" type="http://axschema.org/namePerson/last" />
+				<security:openid-attribute name="firstname" type="http://axschema.org/namePerson/first" required="true" />
+				<security:openid-attribute name="lastname" type="http://axschema.org/namePerson/last" required="true" />
 				<security:openid-attribute name="fullname" type="http://axschema.org/namePerson" />
 			</security:attribute-exchange>
 		</security:openid-login>
