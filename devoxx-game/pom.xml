@@ -9,14 +9,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>4.8.1</junit.version>
+        <junit.version>4.10</junit.version>
         <tiles.version>2.2.2</tiles.version>
         <sl4j.version>1.6.4</sl4j.version>
         <jstl.version>1.2</jstl.version>
         <servlet-api.version>2.5</servlet-api.version>
         <spring.version>3.1.0.RELEASE</spring.version>
         <spring-mobile.version>1.0.0.RC1</spring-mobile.version>
-        <hibernate-em.version>3.6.9.Final</hibernate-em.version>
+        <hibernate-em.version>4.1.0.Final</hibernate-em.version>
         <dbunit.version>2.4.8</dbunit.version>
         <mysql.version>5.1.18</mysql.version>
         <logback.version>1.0.1</logback.version>
