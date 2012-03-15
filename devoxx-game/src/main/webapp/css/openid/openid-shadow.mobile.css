@@ -5,6 +5,11 @@
 	This code is licensed under the New BSD License.
 */
 
+.ui-state-error {
+	background-color: #FFB73D;
+	border: 1px solid #FFB73D;
+}
+
 #openid_form {
 	/*width: 320px;*/
 }

@@ -2,13 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript">
     openid.img_path = '<c:url value="/img/openid/" />';
-    $(document).ready(function() {        
-        openid.init('openid_identifier');
+    $(function() {        
+        openid.init('openid_identifier');      
     });
 </script>
 <c:url value="/j_spring_openid_security_check" var="openIdActionUrl" />
 <!-- Simple OpenID Selector -->
-<form action="${openIdActionUrl}" method="post" id="openid_form" data-ajax="false">
+<form action="${openIdActionUrl}" method="post" id="openid_form" data-ajax="false" style="height: 100%;">
     <input type="hidden" name="action" value="verify" />
     <fieldset>
         <legend><spring:message code="login.form.fieldset.legend" text="Sign-in or Create New Account" /></legend>
