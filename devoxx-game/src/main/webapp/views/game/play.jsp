@@ -35,7 +35,7 @@ var now = Date.now();
 <c:choose>
     <c:when test="${(nbOfQuestionLeft-1) == 0}"><input type="submit" value="Terminer" data-inline="true"/></c:when>
     <c:otherwise>
-        <a href="<c:url value='/game/pause'/>" data-role="button" data-inline="true" id="pauseBtn">Faire une pause</a>
+        <a href="<c:url value='/pause'/>" data-role="button" data-inline="true" id="pauseBtn">Faire une pause</a>
         <input type="submit" value="Continuer" data-inline="true"/>
     </c:otherwise>
 </c:choose>
@@ -44,12 +44,13 @@ var now = Date.now();
 </f:form>
 
 <script type="text/javascript">
-$(document).delegate('#pauseBtn', 'click', function() {
-  $(this).simpledialog({
-    'mode' : 'bool',
-    'prompt' : 'La réponse en cours ne sera pas conservée et votre temps de réponse augmente quand même lorsque vous prennez une pause!',
-    'useModal': true,
-    'buttons' : {
+$('#pauseBtn').on('click', function(e) {	
+  e.stopPropagation();
+  $('<div>').simpledialog2({
+    mode : 'button',
+    buttonPrompt : '<spring:message code="game.play.pause.dialog" text="Current response will not be saved and you\'re elapsed time will not be paused !" />',
+    showModal : true,
+    buttons : {
       'Ok': {
         click: function () {
           $('#question').attr('action', 'pause');
@@ -63,6 +64,7 @@ $(document).delegate('#pauseBtn', 'click', function() {
         theme: "c"
       }
     }
-  })
-})
+  });
+  e.preventDefault();
+});
 </script>
