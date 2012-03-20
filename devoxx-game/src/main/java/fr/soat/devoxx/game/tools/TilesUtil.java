@@ -42,9 +42,13 @@ public interface TilesUtil {
 	public static final String DFR_AUTH_MOBILE_LOGIN_PAGE = "devoxxfr.mobile.auth.login";
     /* Common pages */
 	public static final String DFR_NOT_FOUND_PAGE = "devoxxfr.notfound";
-    /* Errors */
+    /* Errors pages */
 	public static final String DFR_ERRORS_ERRORMSG_PAGE = "devoxxfr.errors.errormsg";
-
+	public static final String DFR_ERRORS_404_PAGE = "devoxxfr.errors.notfound";
+	public static final String DFR_ERRORS_403_PAGE = "devoxxfr.errors.forbidden";
+	public static final String DFR_MOBILE_ERRORS_404_PAGE = "devoxxfr.mobile.errors.notfound";
+    public static final String DFR_MOBILE_ERRORS_403_PAGE = "devoxxfr.mobile.errors.forbidden";
+	/* Game pages */
     public static final String DFR_GAME_INDEX_PAGE = "devoxxfr.game.index";
-    public static final String DFR_GAME_PLAY_PAGE = "devoxxfr.game.play";
+    public static final String DFR_GAME_PLAY_PAGE = "devoxxfr.game.play";    
 }
