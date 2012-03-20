@@ -1,3 +1,15 @@
+/* Fonts */
+@font-face {
+    font-family: 'CoconWeb';
+    src: url('CoconWeb-CondBold.eot');
+    src: url('CoconWeb-CondBold.eot?#iefix') format('embedded-opentype'),
+         url('CoconWeb-CondBold.woff') format('woff'),
+         url('CoconComp-CondBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 #home .ui-icon {
     background-image: url("/img/glyphish-icons/icons/53-house.png");
 }
@@ -70,4 +82,45 @@ form {
 
 #elapsed-time {
 	float: right;
+}
+
+#answer, #welcome, #infos {
+	clear:both;
+	margin: auto;
+	text-align:center;
+	width:100%;
+}
+
+#answer .imgText {
+	font-size:26px;
+	font-weight:bold;
+}
+
+.wrong {
+	color:red;
+}
+
+.correct {
+	color:green;
+}
+
+.rightAnswer span {
+	font-weight:bold;
+	font-style:italic;
+}
+
+.delay span {
+	font-weight:bold;
+}
+
+.ui-header .ui-title {
+	color:#8AAB1E;
+	font-weight:400;
+	letter-spacing: 0.05em;
+	font-size:24px;
+	font-family: "CoconWeb", "Georgia", serif;
+}
+
+.ui-mobile .ui-page {
+	background:#FFFFFF url(../img/bg.png) repeat fixed;
 }

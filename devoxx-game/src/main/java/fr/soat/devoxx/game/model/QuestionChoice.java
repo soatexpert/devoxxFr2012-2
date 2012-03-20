@@ -31,4 +31,21 @@ public class QuestionChoice implements Serializable {
     public void setChoiceLabel(String choiceLabel) {
         this.choiceLabel = choiceLabel;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        QuestionChoice that = (QuestionChoice) o;
+
+        if (!questionChoiceId.equals(that.questionChoiceId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return questionChoiceId.hashCode();
+    }
 }

@@ -1,6 +1,7 @@
 package fr.soat.devoxx.game.controllers;
 
 import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
+import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.forms.AnswerForm;
 import fr.soat.devoxx.game.forms.UserGameInformation;
@@ -73,15 +74,26 @@ public class GameController {
                                @RequestParam("answer") Long answer,
                                Model model) {
         try {
-            answerQuestion(questionId, answer, userGameInformation);
+            model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
+            model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
+            model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
 
-            return play(userGameInformation,model);
+            UserQuestion question = answerQuestion(questionId, answer, userGameInformation);
+
+            model.addAttribute("answerDelayInSeconds",question.getAnsweringTimeInSeconds());
+            model.addAttribute("isAnswerCorrect",question.isAnswerCorrect());
+            model.addAttribute("rightAnswer", question.getCorrectAnswer());
+
+
+            return TilesUtil.DFR_GAME_ANSWER_PAGE;
         } catch(AlreadyAnsweredException e) {
+            return index(model);
+        } catch (InvalidQuestionException e) {
             return index(model);
         }
     }
 
-    private void answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) {
+    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {
        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
             if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
                 if(userQuestion.getReponse() != null) {
@@ -95,8 +107,11 @@ public class GameController {
                         //TODO save(userQuestion);
                     }
                 }
+                
+                return userQuestion;
             }
         }
+        throw new InvalidQuestionException();
     }
 
     @RequestMapping(value = "/pause")

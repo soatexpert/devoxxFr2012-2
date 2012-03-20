@@ -50,5 +50,6 @@ public interface TilesUtil {
     public static final String DFR_MOBILE_ERRORS_403_PAGE = "devoxxfr.mobile.errors.forbidden";
 	/* Game pages */
     public static final String DFR_GAME_INDEX_PAGE = "devoxxfr.game.index";
-    public static final String DFR_GAME_PLAY_PAGE = "devoxxfr.game.play";    
+    public static final String DFR_GAME_PLAY_PAGE = "devoxxfr.game.play";
+    public static final String DFR_GAME_ANSWER_PAGE = "devoxxfr.game.answer";
 }

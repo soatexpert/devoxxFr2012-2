@@ -6,8 +6,10 @@
 <c:if test="${not empty userName}">${userName} !</c:if>
 </div>
 
+<div id="infos">
 <p><spring:message code="game.index.ranking.label" arguments="${rank}§${nbUsers}" argumentSeparator="§" text="Vous êtes classé {0} sur {1}" />.</p>
 <p><spring:message code="game.index.waitingQuestions.label" arguments="${waitingQuestions}" argumentSeparator="§" text="Vous avez {0} question(s) en attente." /></p>
+</div>
 
 <c:if test="${waitingQuestions > 0}">
     <div class="center-wrapper">

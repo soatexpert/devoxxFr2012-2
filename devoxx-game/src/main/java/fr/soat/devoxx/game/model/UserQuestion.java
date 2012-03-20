@@ -64,4 +64,20 @@ public class UserQuestion implements Serializable {
     public void setReponse(QuestionChoice reponse) {
         this.reponse = reponse;
     }
+
+    public int getAnsweringTimeInSeconds() {
+        return Math.round(getAnsweringTimeInMs() / 1000);
+    }
+
+    private long getAnsweringTimeInMs() {
+        return endQuestion - startQuestion;
+    }
+
+    public boolean isAnswerCorrect() {
+        return getQuestion().getGoodChoice().equals(getReponse());
+    }
+
+    public QuestionChoice getCorrectAnswer() {
+        return getQuestion().getGoodChoice();
+    }
 }

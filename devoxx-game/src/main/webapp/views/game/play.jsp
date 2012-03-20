@@ -32,13 +32,7 @@ var now = Date.now();
 </fieldset>
 
 <div class="center-wrapper">
-<c:choose>
-    <c:when test="${(nbOfQuestionLeft-1) == 0}"><input type="submit" value="Terminer" data-inline="true"/></c:when>
-    <c:otherwise>
-        <a href="<c:url value='/pause'/>" data-role="button" data-inline="true" id="pauseBtn">Faire une pause</a>
-        <input type="submit" value="Continuer" data-inline="true"/>
-    </c:otherwise>
-</c:choose>
+        <input type="submit" value="Valider" data-inline="true"/>
 </div>
 
 </f:form>
