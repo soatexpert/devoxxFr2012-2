@@ -34,6 +34,7 @@
 		<property name="basenames">
 			<list>
 				<value>classpath:messages/globalMessages</value>
+                <value>classpath:messages/errorMessages</value>
 				<value>classpath:messages/adminMessages</value>
 				<value>classpath:messages/loginMessages</value>
 			</list>
