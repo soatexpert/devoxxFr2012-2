@@ -33,7 +33,7 @@ import fr.soat.devoxx.game.tools.TilesUtil;
 @RequestMapping(value = "/")
 public class IndexController {
 
-	@RequestMapping(value = "index", method = RequestMethod.GET)
+	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public String index() {
 		return TilesUtil.DFR_INDEX_PAGE;
 	}

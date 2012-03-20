@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
-@RequestMapping(value = "/game")
+@RequestMapping(value = "/")
 @SessionAttributes("userGameInfos")
 public class GameController {
 
