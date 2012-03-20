@@ -3,10 +3,7 @@
 
 <div id="welcome">
 <spring:message code="game.index.welcome" text="Bienvenue" />
-<c:choose>
-	<c:when test="${username==null}"></c:when>
-	<c:otherwise>${userName}!</c:otherwise>
-</c:choose>
+<c:if test="${not empty userName}">${userName} !</c:if>
 </div>
 
 <p><spring:message code="game.index.ranking.label" arguments="${rank}§${nbUsers}" argumentSeparator="§" text="Vous êtes classé {0} sur {1}" />.</p>
@@ -14,7 +11,6 @@
 
 <c:if test="${waitingQuestions > 0}">
     <div class="center-wrapper">
-        <spring:url value=""></spring:url>
         <a id="play-btn" href="<c:url value='/play' />" data-role="button" data-inline="true" data-iconpos="top" data-icon="play">
             <spring:message code="game.index.playNow" text="Jouez Maintenant!" />
         </a>
