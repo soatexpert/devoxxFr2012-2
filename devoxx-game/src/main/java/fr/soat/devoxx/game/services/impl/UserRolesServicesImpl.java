@@ -23,36 +23,32 @@
  */
 package fr.soat.devoxx.game.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import fr.soat.devoxx.game.dao.GenericDao;
 import fr.soat.devoxx.game.model.UserRoles;
 import fr.soat.devoxx.game.services.UserRolesServices;
+import fr.soat.devoxx.game.services.repository.UserRolesRepository;
 
 @Repository
 public class UserRolesServicesImpl implements UserRolesServices {
 
     @Autowired
-    GenericDao<UserRoles> userRolesDao;
+    UserRolesRepository userRolesRepo;
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<UserRoles> getAllUserRoles() {
-        return userRolesDao.getEntityManager().createQuery("from UserRoles").getResultList();
+    public Iterable<UserRoles> getAllUserRoles() {
+        return userRolesRepo.findAll();
     }
 
     @Override
     public UserRoles getUserRole(Long id_role) {
-        return userRolesDao.getEntityManager().find(UserRoles.class, id_role);
+        return userRolesRepo.findOne(id_role);
     }
 
     @Override
     public UserRoles getUserRoleByName(String roleName) {
-        return (UserRoles) userRolesDao.getEntityManager().createQuery("from UserRoles WHERE roleName=?1").setParameter(1, roleName).setMaxResults(1)
-                .getSingleResult();
+        return userRolesRepo.findUserRoleByName(roleName);
     }
 
 }

@@ -3,11 +3,9 @@ package fr.soat.devoxx.game.services;
 import fr.soat.devoxx.game.model.BundleUserQuestions;
 import fr.soat.devoxx.game.model.User;
 
-import java.util.List;
-
 public interface UserServices {
 
-	public List<User> getUsers();
+	public Iterable<User> getAllUsers();
 
 	public void createUser(User user);
 	
@@ -21,7 +19,7 @@ public interface UserServices {
     
     public int nbOfUsers();
 
-	public User getUser(long userId);
+	public User getUser(Long userId);
 
 	public User getUserByName(String username);
 }

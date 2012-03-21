@@ -66,7 +66,7 @@ public class AdminUserController {
 
 	@RequestMapping(value = "/admin/user")
 	public String showAllUser(Model model) {
-		model.addAttribute("allUserResponses", userServices.getUsers());
+		model.addAttribute("allUserResponses", userServices.getAllUsers());
 		return TilesUtil.DFR_ADMIN_SHOWALLUSERS_PAGE;
 	}
 
@@ -112,7 +112,13 @@ public class AdminUserController {
             User user = userServices.getUser(userId);
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
-            user.setUserRoles(splitUserRoles(userForm.getUserRoles()));
+            /*try {
+                role = userRolesServices.getUserRoleByName("ROLE_USER");
+            } catch (RuntimeException e) {
+                LOGGER.debug("No Roles found");
+                role = new UserRoles("ROLE_USER");
+            }
+            user.setUserRoles(splitUserRoles(userForm.getUserRoles()));*/
             LOGGER.info(user.getUserRoles().toString());
             userServices.updateUser(user);
             forward = "redirect:/admin/user/";

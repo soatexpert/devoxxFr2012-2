@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Deprecated
 public class GenericDao<T extends Serializable> {
 
 	@PersistenceContext

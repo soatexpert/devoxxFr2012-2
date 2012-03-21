@@ -3,45 +3,42 @@ package fr.soat.devoxx.game.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.soat.devoxx.game.model.BundleUserQuestions;
-import fr.soat.devoxx.game.model.UserQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import fr.soat.devoxx.game.dao.GenericDao;
-import fr.soat.devoxx.game.model.Question;
+import fr.soat.devoxx.game.model.BundleUserQuestions;
 import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.services.repository.UserRepository;
 
 @Repository
-public class UserServicesImpl implements UserServices {
+public class UserServicesImpl implements UserServices  {
 
 	@Autowired
-	GenericDao<User> userDao;
+	UserRepository userRepo;
 
-	public User getUser(long userId) {
-		return userDao.getEntityManager().find(User.class, userId);
-
+	@Override
+	public User getUser(Long userId) {
+		return userRepo.findOne(userId);
 	}
 
-	@Transactional
+	@Override
 	public void createUser(User user) {
-	    user = userDao.getEntityManager().merge(user);
-		userDao.getEntityManager().persist(user);
+	    userRepo.save(user);
 	}
 	
-	@Transactional
+	@Override
     public void updateUser(User user) {
-	    user = userDao.getEntityManager().merge(user);
-	    userDao.getEntityManager().flush();
+	    userRepo.save(user);
     }
 
-	@Transactional
+    @Override
 	public void deleteUser(User user) {
-		userDao.getEntityManager().remove(user);
+	    userRepo.delete(user);
 	}
 
+	@Override
     public BundleUserQuestions getQuestionBundle() {
         List<UserQuestion> questions = new ArrayList<UserQuestion>();
 
@@ -61,21 +58,14 @@ public class UserServicesImpl implements UserServices {
     public int nbOfUsers() {
         return 100;
     }
+    
+    @Override
+    public Iterable<User> getAllUsers() {
+        return userRepo.findAll();
+    }    
 
-    @SuppressWarnings("unchecked")
-	public List<User> getUsers() {
-		return userDao.getEntityManager().createQuery("from User").getResultList();
-	}
-
-	@Transactional
+    @Override
 	public User getUserByName(String username) {
-		User u = (User) userDao.getEntityManager().createQuery("from User u where u.userName = ?1").setParameter(1, username).getSingleResult();
-		/*if (resultList.size() != 0)
-			return (UserDetails) resultList.get(0);
-		User u = new User();
-		u.setUserName(username);
-		u.setAdmin(false);
-		createUser(u);*/
-		return u;
-	}
+		return userRepo.findUserByName(username);
+	}    
 }

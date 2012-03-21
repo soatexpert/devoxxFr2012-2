@@ -21,16 +21,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fr.soat.devoxx.game.services;
+package fr.soat.devoxx.game.services.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.soat.devoxx.game.model.UserRoles;
 
-public interface UserRolesServices {    
+@Transactional
+public interface UserRolesRepository extends CrudRepository<UserRoles, Long> {
     
-    public Iterable<UserRoles> getAllUserRoles();
-    
-    public UserRoles getUserRole(Long id_role);
-    
-    public UserRoles getUserRoleByName(String roleName);
+    @Query("FROM UserRoles ur WHERE ur.roleName=?1")
+    public UserRoles findUserRoleByName(String roleName);    
     
 }
