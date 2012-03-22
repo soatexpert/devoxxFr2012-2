@@ -1,7 +1,5 @@
 package fr.soat.devoxx.game.services.impl;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +13,7 @@ public class UserServicesImplTest extends GenericTestCase {
 
 	@Test
 	public void testCreateUser() {
-		assertEquals(userServices.getUser(1).getUserName(), "khanh");
+		assertEquals(userServices.getUser(1L).getUserName(), "khanh");
 	}
 
 }
