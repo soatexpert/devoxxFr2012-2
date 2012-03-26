@@ -17,7 +17,7 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 
 import com.google.common.base.Strings;
 
-import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.UserRoles;
 import fr.soat.devoxx.game.services.UserRolesServices;
 import fr.soat.devoxx.game.services.UserServices;
@@ -37,7 +37,7 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
 
     @Override
     public UserDetails loadUserDetails(OpenIDAuthenticationToken token) throws UsernameNotFoundException {
-        User user = null;
+        DevoxxUser user = null;
         String email = null;
         String firstName = null;
         String lastName = null;
@@ -78,7 +78,7 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         }
         
         if(null == user) {
-            user = new User();
+            user = new DevoxxUser();
             UserRoles role;
             try {
                 role = userRolesServices.getUserRoleByName("ROLE_USER");

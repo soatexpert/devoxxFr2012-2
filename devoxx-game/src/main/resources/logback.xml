@@ -10,6 +10,7 @@
 	<logger name="org.springframework" level="info" />
 	<logger name="org.springframework.http" level="info" />
 	<logger name="org.springframework.web" level="info" />
+	<logger name="fr.soat.devoxx.game" level="debug" />
 
 	<root level="info">
 		<appender-ref ref="CONSOLE" />

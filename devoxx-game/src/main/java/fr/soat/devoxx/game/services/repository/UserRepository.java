@@ -27,12 +27,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.DevoxxUser;
 
 @Transactional
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     
-    @Query("FROM User u where u.userName=?1")
-    public User findUserByName(String username);
+    @Query("FROM DevoxxUser u where u.userName=?1")
+    public DevoxxUser findUserByName(String username);
     
 }

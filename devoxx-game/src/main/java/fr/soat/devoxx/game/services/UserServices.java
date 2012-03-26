@@ -1,17 +1,17 @@
 package fr.soat.devoxx.game.services;
 
 import fr.soat.devoxx.game.model.BundleUserQuestions;
-import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.DevoxxUser;
 
 public interface UserServices {
 
-	public Iterable<User> getAllUsers();
+	public Iterable<DevoxxUser> getAllUsers();
 
-	public void createUser(User user);
+	public void createUser(DevoxxUser user);
 	
-	public void updateUser(User user);
+	public void updateUser(DevoxxUser user);
 	
-	public void deleteUser(User user);
+	public void deleteUser(DevoxxUser user);
 
     public BundleUserQuestions getQuestionBundle();
 
@@ -19,7 +19,7 @@ public interface UserServices {
     
     public int nbOfUsers();
 
-	public User getUser(Long userId);
+	public DevoxxUser getUser(Long userId);
 
-	public User getUserByName(String username);
+	public DevoxxUser getUserByName(String username);
 }

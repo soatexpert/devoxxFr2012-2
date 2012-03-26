@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fr.soat.devoxx.game.model.BundleUserQuestions;
-import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.services.repository.UserRepository;
@@ -19,22 +19,22 @@ public class UserServicesImpl implements UserServices  {
 	UserRepository userRepo;
 
 	@Override
-	public User getUser(Long userId) {
+	public DevoxxUser getUser(Long userId) {
 		return userRepo.findOne(userId);
 	}
 
 	@Override
-	public void createUser(User user) {
+	public void createUser(DevoxxUser user) {
 	    userRepo.save(user);
 	}
 	
 	@Override
-    public void updateUser(User user) {
+    public void updateUser(DevoxxUser user) {
 	    userRepo.save(user);
     }
 
     @Override
-	public void deleteUser(User user) {
+	public void deleteUser(DevoxxUser user) {
 	    userRepo.delete(user);
 	}
 
@@ -60,12 +60,12 @@ public class UserServicesImpl implements UserServices  {
     }
     
     @Override
-    public Iterable<User> getAllUsers() {
+    public Iterable<DevoxxUser> getAllUsers() {
         return userRepo.findAll();
     }    
 
     @Override
-	public User getUserByName(String username) {
+	public DevoxxUser getUserByName(String username) {
 		return userRepo.findUserByName(username);
 	}    
 }

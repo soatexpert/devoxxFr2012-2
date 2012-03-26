@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<!-- USER -->
-	<USER ID="1" NAME="khanh" FORNAME=""/>
-<!-- 	<USER_ROLE ID="1" ROLE_NAME="ROLE_USER" /> -->
-<!-- 	<USER_USER_ROLE ID_USER="1" ID_ROLE="1" /> -->
-	<!--<USER ID="2" ISADMIN="1" NAME="francois" FORNAME=""/>-->
-	<!--<USER ID="3" ISADMIN="0" NAME="mathieu" FORNAME=""/>-->
-	<!--<USER ID="4" ISADMIN="0" NAME="francois" FORNAME=""/>-->
-	<!--<USER ID="5" ISADMIN="0" NAME="aurelien" FORNAME=""/>	-->
+	<!-- DEVOXX_USER -->
+	<DEVOXX_USER ID="100" NAME="khanh" FORNAME="" REGEMENT_ACCEPTED="1" COMMERCIAL_ACCEPTED="1" NEWS_ACCEPTED="1" QRCODE_ACCPETED="1"/>
+<!-- 	<DEVOXX_USER_ROLE ID="1" ROLE_NAME="ROLE_DEVOXX_USER" /> -->
+<!-- 	<DEVOXX_USER_DEVOXX_USER_ROLE ID_DEVOXX_USER="1" ID_ROLE="1" /> -->
+	<!--<DEVOXX_USER ID="2" ISADMIN="1" NAME="francois" FORNAME=""/>-->
+	<!--<DEVOXX_USER ID="3" ISADMIN="0" NAME="mathieu" FORNAME=""/>-->
+	<!--<DEVOXX_USER ID="4" ISADMIN="0" NAME="francois" FORNAME=""/>-->
+	<!--<DEVOXX_USER ID="5" ISADMIN="0" NAME="aurelien" FORNAME=""/>	-->
 </dataset>

@@ -27,22 +27,22 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.DevoxxUser;
 
 public class OpenIdUserDetails extends org.springframework.security.core.userdetails.User {
 
 	private static final long serialVersionUID = 7055496430992973297L;
-	private User user;
+	private DevoxxUser user;
 
 	public OpenIdUserDetails(String username, Collection<? extends GrantedAuthority> authorities) {
 		super(username, "notused", authorities);
 	}	
 
-	public User getUser() {
+	public DevoxxUser getUser() {
         return user;
     }
 	
-    public void setUser(User user) {
+    public void setUser(DevoxxUser user) {
         this.user = user;
     }
 

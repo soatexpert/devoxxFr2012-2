@@ -1,76 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-          http://www.springframework.org/schema/tx 
-          http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-          http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.1.xsd
-          http://www.springframework.org/schema/context 
-          http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<bean id="myEmf"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="fr.soat.devoxx.game.model" />
+
+	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager" p:entityManagerFactory-ref="entityManagerFactory" />
+
+	<jdbc:embedded-database id="dataSource" type="DERBY" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<context:component-scan base-package="fr.soat.devoxx.game" />
+
+	<jpa:repositories base-package="fr.soat.devoxx.game.services" query-lookup-strategy="create-if-not-found" />
+
+	<bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory" p:dataSource-ref="dataSource"
+		p:packagesToScan="fr.soat.devoxx.game.model">
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="showSql" value="true" />
-				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
-				<!--<property name="databasePlatform" value="org.hibernate.dialect.DerbyDialect" />-->
-			</bean>
-		</property>
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-			</props>
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" p:databasePlatform="org.hibernate.dialect.DerbyDialect"
+				p:generate-ddl="true" p:showSql="true"/>
 		</property>
 	</bean>
-
-	<!--<bean id="dataSource"-->
-		<!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-		<!--&lt;!&ndash;<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>&ndash;&gt;-->
-		<!--&lt;!&ndash;<property name="url" value="jdbc:derby:devoxx;create=true"/>&ndash;&gt;-->
-		<!--&lt;!&ndash;<property name="username" value=""/>&ndash;&gt;-->
-		<!--&lt;!&ndash;<property name="password" value=""/>&ndash;&gt;-->
-        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
-        <!--<property name="url" value="jdbc:mysql://localhost/devoxx" />-->
-        <!--<property name="username" value="root" />-->
-        <!--<property name="password" value="" />-->
-	<!--</bean>-->
-
-    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="myEmf" />
-    </bean>
-
-    <tx:annotation-driven transaction-manager="txManager" />
-
-    <context:component-scan base-package="fr.soat.devoxx.game" />
-
-    <beans profile="prod">
-        <bean id="dataSource"
-              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-            <property name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/devoxx-game-tests" />
-            <property name="username" value="devoxx-test" />
-            <property name="password" value="soat" />
-        </bean>
-    </beans>
-
-    <beans profile="dev">
-        <bean id="dataSource"
-              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-            <property name="url" value="jdbc:mysql://localhost/devoxx" />
-            <property name="username" value="root" />
-            <property name="password" value="root" />
-        </bean>
-    </beans>
-
-
 
 </beans>

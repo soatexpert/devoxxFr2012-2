@@ -45,7 +45,7 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.forms.UserForm;
-import fr.soat.devoxx.game.model.User;
+import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.UserRoles;
 import fr.soat.devoxx.game.services.UserRolesServices;
 import fr.soat.devoxx.game.services.UserServices;
@@ -74,7 +74,7 @@ public class AdminUserController {
     public String showUser(@PathVariable Long userId, Model model) {
         String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
         try {
-            User user = userServices.getUser(userId);
+            DevoxxUser user = userServices.getUser(userId);
             model.addAttribute("userResponse", user);
             model.addAttribute("mailHash", getEmailHash(user.getUserEmail()));
             model.addAttribute("userRolesComma", joinUserRoles(user));
@@ -90,7 +90,7 @@ public class AdminUserController {
     
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public String updateUser(@PathVariable Long userId, Model model) {
-        User user = userServices.getUser(userId);
+        DevoxxUser user = userServices.getUser(userId);
         model.addAttribute("userResponse", user);   
         model.addAttribute("mailHash", getEmailHash(user.getUserEmail()));
         model.addAttribute("userRolesComma", joinUserRoles(user));
@@ -109,7 +109,7 @@ public class AdminUserController {
         }
         
         try {
-            User user = userServices.getUser(userId);
+            DevoxxUser user = userServices.getUser(userId);
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
             /*try {
@@ -136,7 +136,7 @@ public class AdminUserController {
     public String removeUser(@PathVariable Long userId, Model model) {
         String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
         try {
-            User user = userServices.getUser(userId);
+            DevoxxUser user = userServices.getUser(userId);
             userServices.deleteUser(user);
             forward = "redirect:/admin/user/";
         } catch (RuntimeException e) {
@@ -157,7 +157,7 @@ public class AdminUserController {
         return userRoles;
     }
     
-    private static String joinUserRoles(User user) {
+    private static String joinUserRoles(DevoxxUser user) {
         List<String> userRolesStr = new ArrayList<String>();
         for (UserRoles role : user.getUserRoles()) {
             userRolesStr.add(role.getRoleName());
