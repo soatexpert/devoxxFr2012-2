@@ -40,7 +40,21 @@ public class User implements Serializable, UserDetails {
 
     @Column(name = "EMAIL")
     String userEmail;
+    
+    @Column(name = "REGEMENT_ACCEPTED")
+    boolean reglementAccepted;
 
+    @Column(name = "COMMERCIAL_ACCEPTED")
+    boolean commercialEmailAccepted;
+
+    @Column(name = "NEWS_ACCEPTED")
+    boolean nextEventsAccepted;
+    
+    @Column(name = "QRCODE_ACCPETED")
+    boolean isAcceptedQrCode;
+    
+    
+    
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
 
