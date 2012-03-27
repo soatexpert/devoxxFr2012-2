@@ -58,7 +58,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
     List<UserRoles> userRoles = new ArrayList<UserRoles>();
 

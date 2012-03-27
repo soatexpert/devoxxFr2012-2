@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.UserRoles;
+import fr.soat.devoxx.game.services.UserRolesServices;
 import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.services.repository.UserRolesRepository;
 
 public class UserServiceTest extends GenericTestCase {
 
@@ -17,6 +19,9 @@ public class UserServiceTest extends GenericTestCase {
 	
 	@Autowired
 	UserServices userServices;
+	
+    @Autowired
+    UserRolesRepository userRolesRepo;
 	
 	@Test
 	public void testUserCreation() {
@@ -42,6 +47,7 @@ public class UserServiceTest extends GenericTestCase {
 	private UserRoles createUserRole(String roleName) {
 		UserRoles roles = new UserRoles();
 		roles.setRoleName(roleName);
+		userRolesRepo.save(roles);
 		return roles;
 	}
 
