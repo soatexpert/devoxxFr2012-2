@@ -115,7 +115,6 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         try {
             return userServices.getUserByName(username);
         } catch (RuntimeException e) {
-            // TODO LOGGER + une exception plus explicite dans le catch
             LOGGER.debug("user not found", e);
             throw new UsernameNotFoundException(username + " not found", e);
         }

@@ -29,7 +29,7 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long userId;
 
     @Column(name = "NAME", unique = true, nullable = false)
@@ -58,7 +58,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
     List<UserRoles> userRoles = new ArrayList<UserRoles>();
 
