@@ -2,7 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 
-<div id="advancement">Question ${nbOfQuestionsAnswered+1}/ ${nbOfQuestionsTotal}</div>
+<div id="advancement">
+    <spring:message code="game.play.steps" arguments="${nbOfQuestionsAnswered+1}§${nbOfQuestionsTotal}" argumentSeparator="§" text="Question {0} / {1}" />
+</div>
 
 <div id="elapsed-time"><span id="timeToUpdate">0</span>s</div>
 
@@ -32,7 +34,7 @@ var now = Date.now();
 </fieldset>
 
 <div class="center-wrapper" style="display:none" id="validateBtn">
-        <input type="submit" value="Valider" data-inline="true"/>
+        <input type="submit" value="<spring:message code="game.play.validate" text="Valider" />" data-inline="true"/>
 </div>
 
 </f:form>

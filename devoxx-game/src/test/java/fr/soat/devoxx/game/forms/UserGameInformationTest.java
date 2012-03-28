@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.forms;
 
+import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.QuestionChoice;
 import fr.soat.devoxx.game.model.UserQuestion;
@@ -23,44 +24,71 @@ public class UserGameInformationTest {
     private AtomicLong increment = new AtomicLong();
 
     @Test
-    public void whenNoQuestionGetNbOfQuestionsToAnswerReturnZero() {
-         UserGameInformation userGameInformation = new UserGameInformation(0,0, Collections.<UserQuestion>emptyList());
-
+    public void when_NoQuestion_GetNbOfQuestionsToAnswer_ReturnZero() {
+        UserGameInformation userGameInformation = buildUserGameInformation(Collections.<UserQuestion>emptyList());
         Assert.assertEquals(0, userGameInformation.getNbOfQuestionsToAnswer());
     }
 
     @Test
-    public void whenAllQuestionsNotAnsweredGetNbOfQuestionsToAnswerReturnListSize() {
-
-
-        List<UserQuestion> userQuestions = createUserQuestions();
-        UserGameInformation userGameInformation = new UserGameInformation(0,0, userQuestions);
+    public void when_AllQuestionsNotAnswered_GetNbOfQuestionsToAnswer_ReturnListSize() {
+        List<UserQuestion> userQuestions = createUserQuestions(2,false,false);
+        UserGameInformation userGameInformation = buildUserGameInformation(userQuestions);
 
         Assert.assertEquals(userQuestions.size(), userGameInformation.getNbOfQuestionsToAnswer());
     }
 
     @Test
-    public void whenSomeQuestionsNotAnsweredGetNbOfQuestionsToAnswerReturnRightSize() {
-
-
-        List<UserQuestion> userQuestions = createUserQuestions();
-        userQuestions.get(0).setReponse(new QuestionChoice());
-        UserGameInformation userGameInformation = new UserGameInformation(0,0, userQuestions);
+    public void when_SomeQuestionsNotAnswered_GetNbOfQuestionsToAnswer_ReturnRightSize() {
+        List<UserQuestion> userQuestions = createUserQuestions(2,true,false);
+        UserGameInformation userGameInformation = buildUserGameInformation(userQuestions);
 
         Assert.assertEquals(userQuestions.size()-1, userGameInformation.getNbOfQuestionsToAnswer());
     }
 
-    private List<UserQuestion> createUserQuestions() {
+    @Test(expected = NoMoreQuestionException.class)
+    public void when_want_NextQuestion_with_EmptyList_then_throwException() {
+        UserGameInformation userGameInformation = buildUserGameInformation(Collections.<UserQuestion>emptyList());
+
+        userGameInformation.nextQuestion();
+    }
+    
+    @Test
+    public void when_want_NextQuestion_with_FirstUnanswered_then_returnFirstQuestion() {
+        List<UserQuestion> userQuestions = createUserQuestions(2, false, false);
+        UserGameInformation userGameInformation = buildUserGameInformation(userQuestions);
+
+        UserQuestion userQuestion = userGameInformation.nextQuestion();
+        
+        Assert.assertEquals(userQuestions.get(0),userQuestion);
+    }
+
+    @Test
+    public void when_want_NextQuestion_with_FirstAnswered_then_returnSecondQuestion() {
+        List<UserQuestion> userQuestions = createUserQuestions(2, true, false);
+        UserGameInformation userGameInformation = buildUserGameInformation(userQuestions);
+
+        UserQuestion userQuestion = userGameInformation.nextQuestion();
+
+        Assert.assertEquals(userQuestions.get(1),userQuestion);
+    }
+
+
+
+    private UserGameInformation buildUserGameInformation(List<UserQuestion> userQuestions) {
+        return new UserGameInformation(0,0, userQuestions);
+    }
+
+    private List<UserQuestion> createUserQuestions(final int nbOfQuestions, boolean... answered) {
         List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
 
-        UserQuestion pendingQuestion1 = new UserQuestion();
-        pendingQuestion1.setQuestion(createQuestion("Quel est le nom de l'évènement auquel vous participez ?","Devoxx","JavaOne","TechDays","Solidays"));
-        currentUserPendingQuestions.add(pendingQuestion1);
-
-
-        UserQuestion pendingQuestion2 = new UserQuestion();
-        pendingQuestion2.setQuestion(createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?", "42", "Dieu", "joker", "ObiWanKenobi"));
-        currentUserPendingQuestions.add(pendingQuestion2);
+        for(int currentQuestionIdx = 0; currentQuestionIdx < nbOfQuestions; currentQuestionIdx++) {
+            UserQuestion pendingQuestion = new UserQuestion();
+            pendingQuestion.setQuestion(createQuestion("Question " + currentQuestionIdx, "rep1", "rep2", "rep3", "rep4"));
+            if(answered[currentQuestionIdx]) {
+                pendingQuestion.setReponse(new QuestionChoice());
+            }
+            currentUserPendingQuestions.add(pendingQuestion);
+        }
 
         return currentUserPendingQuestions;
     }
