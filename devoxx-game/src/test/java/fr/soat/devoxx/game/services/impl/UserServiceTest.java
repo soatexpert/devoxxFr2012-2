@@ -43,7 +43,7 @@ public class UserServiceTest extends GenericTestCase {
 		assertEquals(userByName.getUserEmail(), USER_EMAIL);
 		assertEquals(userByName.getUserRoles().size(), 2);
 	}
-	
+
 	private UserRoles createUserRole(String roleName) {
 		UserRoles roles = new UserRoles();
 		roles.setRoleName(roleName);

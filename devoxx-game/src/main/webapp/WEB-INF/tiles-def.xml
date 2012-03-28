@@ -51,6 +51,14 @@
         <put-attribute name="pageTitle" type="string" value="DevoxxFr - Jouez" />
         <put-attribute name="content" value="game.answer.content" />
     </definition>
+    <definition name="game.rules.content" template="/views/game/rules.jsp" />
+    <definition name="game.approval.content" template="/views/game/approval.jsp" >
+        <put-attribute name="rules" value="game.rules.content"/>
+    </definition>
+    <definition name="devoxxfr.game.approval" extends="mobile.layout">
+        <put-attribute name="pageTitle" type="string" value="DevoxxFr - Jouez" />
+        <put-attribute name="content" value="game.approval.content" />
+    </definition>
     
     <!-- Définition de la vue '/auth/login' (normal) -->
     <definition name="auth.login.content" template="/views/auth/login.jsp" />

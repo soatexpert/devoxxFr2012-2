@@ -5,38 +5,40 @@ import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.forms.AnswerForm;
 import fr.soat.devoxx.game.forms.UserGameInformation;
-import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.QuestionChoice;
 import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.security.OpenIdUserDetails;
+import fr.soat.devoxx.game.services.QuestionServices;
+import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
 @RequestMapping(value = "/")
 @SessionAttributes("userGameInfos")
 public class GameController {
 
-    private AtomicLong increment = new AtomicLong();
+    @Autowired
+    private UserServices userServices;
+
+    @Autowired
+    private QuestionServices questionServices;
 
     @RequestMapping(value = {"/", "/index", ""})
     public String index(Model model) {
         final OpenIdUserDetails currentUser = (OpenIdUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        UserGameInformation userGameInformation  = new UserGameInformation(10,100,getCurrentUserPendingQuestions());
+        if(!currentUser.getUser().isReglementAccepted()) {
+            return TilesUtil.DFR_GAME_RULES_APPROVAL;
+        }
+
+        UserGameInformation userGameInformation  = new UserGameInformation(userServices.getPosition(),userServices.nbOfUsers(),userServices.getPendingQuestionsForUser(currentUser.getUser()));
         model.addAttribute("userGameInfos",userGameInformation);
+
 
         model.addAttribute("userName",currentUser.getUser().getUserForname());
         model.addAttribute("rank",userGameInformation.getCurrentRanking());
@@ -46,6 +48,15 @@ public class GameController {
 
         return TilesUtil.DFR_GAME_INDEX_PAGE;
     }
+
+    @RequestMapping("/approveRules")
+    public String approveRules(Model model) {
+        final OpenIdUserDetails currentUser = (OpenIdUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        userServices.approveRules(currentUser.getUser());
+        
+        return index(model);
+    }
     
     @RequestMapping("/play")
     public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Model model) {
@@ -54,14 +65,13 @@ public class GameController {
             UserQuestion nextQuestion = userGameInformation.nextQuestion();
 
             nextQuestion.setStartQuestion(System.currentTimeMillis());
-            //TODO save (nextQuestion); pour persister la date de debut
+
+            questionServices.updateUserQuestion(nextQuestion);
 
             model.addAttribute("questionStartDate",nextQuestion.getStartQuestion());
             model.addAttribute("answerForm",new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
             model.addAttribute("question", nextQuestion.getQuestion());
-            model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
-            model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
-            model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
+            addUserInformationToModel(userGameInformation, model);
             return TilesUtil.DFR_GAME_PLAY_PAGE;
         } catch(NoMoreQuestionException e) {
             return index(model);
@@ -74,16 +84,13 @@ public class GameController {
                                @RequestParam("answer") Long answer,
                                Model model) {
         try {
-            model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
-            model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
-            model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
+            addUserInformationToModel(userGameInformation, model);
 
             UserQuestion question = answerQuestion(questionId, answer, userGameInformation);
 
             model.addAttribute("answerDelayInSeconds",question.getAnsweringTimeInSeconds());
             model.addAttribute("isAnswerCorrect",question.isAnswerCorrect());
             model.addAttribute("rightAnswer", question.getCorrectAnswer());
-
 
             return TilesUtil.DFR_GAME_ANSWER_PAGE;
         } catch(AlreadyAnsweredException e) {
@@ -93,65 +100,44 @@ public class GameController {
         }
     }
 
-    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {
-       for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
-            if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
-                if(userQuestion.getReponse() != null) {
-                    throw new AlreadyAnsweredException();
-                }
-
-                for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
-                    if(choice.getQuestionChoiceId().equals(answer)) {
-                        userQuestion.setReponse(choice);
-                        userQuestion.setEndQuestion(System.currentTimeMillis());
-                        //TODO save(userQuestion);
-                    }
-                }
-                
-                return userQuestion;
-            }
-        }
-        throw new InvalidQuestionException();
-    }
-
     @RequestMapping(value = "/pause")
     public String pause(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
                         Model model) {
         return index(model);
     }
 
-    private List<UserQuestion> getCurrentUserPendingQuestions() {
-        List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
-
-        UserQuestion pendingQuestion1 = new UserQuestion();
-        pendingQuestion1.setQuestion(createQuestion("Quel est le nom de l'évènement auquel vous participez ?","Devoxx","JavaOne","TechDays","Solidays"));
-        currentUserPendingQuestions.add(pendingQuestion1);
-
-
-        UserQuestion pendingQuestion2 = new UserQuestion();
-        pendingQuestion2.setQuestion(createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?", "42", "Dieu", "joker", "ObiWanKenobi"));
-        currentUserPendingQuestions.add(pendingQuestion2);
-
-        return currentUserPendingQuestions;
+    private void addUserInformationToModel(UserGameInformation userGameInformation, Model model) {
+        model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
+        model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
+        model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
     }
 
-    private Question createQuestion(String questionLabel,String... answers) {
-        Question question = new Question();
-        question.setIdQuestion(increment.incrementAndGet());
-        question.setQuestionLabel(questionLabel);
-        List<QuestionChoice> questionAnswers = new ArrayList<QuestionChoice>();
+    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {
+       for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
+            if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
+                checkQuestionNotAlreadyAnswered(userQuestion);
 
-        for(String answer : answers) {
-            QuestionChoice choice1 = new QuestionChoice();
-            choice1.setQuestionChoiceId(increment.incrementAndGet());
-            choice1.setChoiceLabel(answer);
-            questionAnswers.add(choice1);
+                updateQuestionWithAnswer(answer, userQuestion);
+
+                return userQuestion;
+            }
         }
+        throw new InvalidQuestionException();
+    }
 
-        question.setGoodChoice(questionAnswers.get(0));
+    private void updateQuestionWithAnswer(Long answer, UserQuestion userQuestion) {
+        for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
+            if(choice.getQuestionChoiceId().equals(answer)) {
+                userQuestion.setReponse(choice);
+                userQuestion.setEndQuestion(System.currentTimeMillis());
+                questionServices.updateUserQuestion(userQuestion);
+            }
+        }
+    }
 
-        question.setChoices(questionAnswers);
-
-        return question;
+    private void checkQuestionNotAlreadyAnswered(UserQuestion userQuestion) {
+        if(userQuestion.getReponse() != null) {
+            throw new AlreadyAnsweredException();
+        }
     }
 }

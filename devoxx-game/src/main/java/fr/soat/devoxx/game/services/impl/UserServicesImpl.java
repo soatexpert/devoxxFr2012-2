@@ -2,13 +2,12 @@ package fr.soat.devoxx.game.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
+import fr.soat.devoxx.game.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import fr.soat.devoxx.game.model.BundleUserQuestions;
-import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.services.repository.UserRepository;
 
@@ -67,5 +66,49 @@ public class UserServicesImpl implements UserServices  {
     @Override
 	public DevoxxUser getUserByName(String username) {
 		return userRepo.findUserByName(username);
-	}    
+	}
+
+    @Override
+    public void approveRules(DevoxxUser user) {
+        user.setReglementAccepted(true);
+        updateUser(user);
+    }
+
+    @Override
+    public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser user) {
+        List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
+
+        UserQuestion pendingQuestion1 = new UserQuestion();
+        pendingQuestion1.setQuestion(createQuestion("Quel est le nom de l'évènement auquel vous participez ?","Devoxx","JavaOne","TechDays","Solidays"));
+        currentUserPendingQuestions.add(pendingQuestion1);
+
+
+        UserQuestion pendingQuestion2 = new UserQuestion();
+        pendingQuestion2.setQuestion(createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?", "42", "Dieu", "joker", "ObiWanKenobi"));
+        currentUserPendingQuestions.add(pendingQuestion2);
+
+        return currentUserPendingQuestions;
+    }
+
+    // TODO a supprimer quand impl en base faite!
+    private AtomicLong increment = new AtomicLong();
+    private Question createQuestion(String questionLabel,String... answers) {
+        Question question = new Question();
+        question.setIdQuestion(increment.incrementAndGet());
+        question.setQuestionLabel(questionLabel);
+        List<QuestionChoice> questionAnswers = new ArrayList<QuestionChoice>();
+
+        for(String answer : answers) {
+            QuestionChoice choice1 = new QuestionChoice();
+            choice1.setQuestionChoiceId(increment.incrementAndGet());
+            choice1.setChoiceLabel(answer);
+            questionAnswers.add(choice1);
+        }
+
+        question.setGoodChoice(questionAnswers.get(0));
+
+        question.setChoices(questionAnswers);
+
+        return question;
+    }
 }

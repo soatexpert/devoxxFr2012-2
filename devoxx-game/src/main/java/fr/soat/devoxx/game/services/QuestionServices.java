@@ -23,6 +23,9 @@
  */
 package fr.soat.devoxx.game.services;
 
+import fr.soat.devoxx.game.model.UserQuestion;
+
 public interface QuestionServices {
-    
+
+    void updateUserQuestion(UserQuestion nextQuestion);
 }

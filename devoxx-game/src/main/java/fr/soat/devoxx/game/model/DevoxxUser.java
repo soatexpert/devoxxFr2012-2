@@ -40,7 +40,7 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @Column(name = "EMAIL")
     String userEmail;
-    
+
     @Column(name = "REGEMENT_ACCEPTED")
     boolean reglementAccepted;
 
@@ -49,18 +49,18 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @Column(name = "NEWS_ACCEPTED")
     boolean nextEventsAccepted;
-    
+
     @Column(name = "QRCODE_ACCPETED")
     boolean isAcceptedQrCode;
-    
-    
-    
+
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
     List<UserRoles> userRoles = new ArrayList<UserRoles>();
+
+
 
     public Long getUserId() {
         return userId;
@@ -120,7 +120,7 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     public boolean isEnabled() {
         return true;
-    }    
+    }
 
     public List<BundleUserQuestions> getBundleUserQuestions() {
         return bundleUserQuestions;
@@ -137,9 +137,17 @@ public class DevoxxUser implements Serializable, UserDetails {
     public void setUserRoles(List<UserRoles> userRoles) {
         this.userRoles = userRoles;
     }
-    
+
     public void addUserRole(UserRoles userRole) {
         this.userRoles.add(userRole);
+    }
+
+    public void setReglementAccepted(boolean reglementAccepted) {
+        this.reglementAccepted = reglementAccepted;
+    }
+
+    public boolean isReglementAccepted() {
+        return reglementAccepted;
     }
 
     @Override

@@ -31,34 +31,14 @@ var now = Date.now();
         </c:forEach>
 </fieldset>
 
-<div class="center-wrapper">
+<div class="center-wrapper" style="display:none" id="validateBtn">
         <input type="submit" value="Valider" data-inline="true"/>
 </div>
 
 </f:form>
 
 <script type="text/javascript">
-$('#pauseBtn').on('click', function(e) {	
-  e.stopPropagation();
-  $('<div>').simpledialog2({
-    mode : 'button',
-    buttonPrompt : '<spring:message code="game.play.pause.dialog" text="Current response will not be saved and you\'re elapsed time will not be paused !" />',
-    showModal : true,
-    buttons : {
-      'Ok': {
-        click: function () {
-          $('#question').attr('action', 'pause');
-          $('#question').submit();
-        }
-      },
-      'Retour': {
-        click: function () {
-        },
-        icon: "delete",
-        theme: "c"
-      }
-    }
-  });
-  e.preventDefault();
+$('[id^="radio-choice-"]').on('click', function(e) {	
+  $('#validateBtn').show();
 });
 </script>
