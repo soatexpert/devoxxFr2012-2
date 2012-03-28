@@ -119,7 +119,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     }
 
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 
     public List<BundleUserQuestions> getBundleUserQuestions() {

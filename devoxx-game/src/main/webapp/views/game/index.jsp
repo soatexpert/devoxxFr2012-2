@@ -6,6 +6,17 @@
 <c:if test="${not empty userName}">${userName} !</c:if>
 </div>
 
+<c:if test="${!approuved}">
+  <div class="errorBox">
+    <div>
+        <p>
+            <span style="float: left; margin-left: 5px;" class="ui-icon ui-icon-alert"></span>
+            <spring:message code="game.index.notApprouved" text="N'oubliez pas de valider votre participation sur le stand So@t." />
+        </p>
+    </div>
+  </div>
+</c:if>
+
 <div id="infos">
 <p><spring:message code="game.index.ranking.label" arguments="${rank}§${nbUsers}" argumentSeparator="§" text="Vous êtes classé {0} sur {1}" />.</p>
 <p><spring:message code="game.index.waitingQuestions.label" arguments="${waitingQuestions}" argumentSeparator="§" text="Vous avez {0} question(s) en attente." /></p>

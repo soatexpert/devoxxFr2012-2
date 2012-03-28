@@ -25,11 +25,11 @@ var providers_large = {
     label : 'Entrez votre OpenID.',
     url : null
   },
-  aol : {
+  /*aol : {
     name : 'AOL',
     label : 'Entrez votre nom d\'écran AOL.',
     url : 'http://openid.aol.com/{username}'
-  }
+  }    */
 };
 
 var providers_small = {

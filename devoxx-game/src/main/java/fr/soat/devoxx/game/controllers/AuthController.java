@@ -35,9 +35,9 @@ public class AuthController {
 	
 	@RequestMapping(value = "login")
 	public String login(Device device) {
-	    if(device.isMobile())
+	    //if(device.isMobile())
 	        return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
-	    else
-	        return TilesUtil.DFR_AUTH_LOGIN_PAGE;
+	    //else
+	    //    return TilesUtil.DFR_AUTH_LOGIN_PAGE;
 	}
 }

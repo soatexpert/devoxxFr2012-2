@@ -81,11 +81,26 @@ form {
 	float: right;
 }
 
-#answer, #welcome, #infos {
+#answer, #welcome, #infos, #infos legend {
 	clear:both;
 	margin: auto;
 	text-align:center;
 	width:100%;
+}
+
+#openid_btns {
+	margin: auto;
+	text-align:center;
+	max-width:230px;
+}
+
+#openid_highlight a {
+	border: 2px solid red;	
+}
+
+div #openid_highlight {
+	padding: 0px;
+	float: none;	
 }
 
 #answer .imgText {
@@ -99,6 +114,10 @@ form {
 
 .correct {
 	color:green;
+}
+
+.ui-content a.ui-btn {
+	margin-top:10px;
 }
 
 .rightAnswer span {
@@ -119,5 +138,14 @@ form {
 }
 
 .ui-mobile .ui-page {
-	background:#f9f9f9 url(../img/bg.png) repeat-x;
+	background:#f7f7f7 url(../img/bg.png) repeat-x;
+}
+
+.errorBox {
+	margin:auto;
+	text-align:center;
+max-width:400px;
+background-color:#75ffb6;
+border-radius: 15px;
+padding:2px 2px 2px 5px;
 }

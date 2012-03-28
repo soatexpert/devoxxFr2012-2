@@ -6,6 +6,7 @@
         openid.init('openid_identifier');      
     });
 </script>
+<div id="infos">
 <c:url value="/j_spring_openid_security_check" var="openIdActionUrl" />
 <!-- Simple OpenID Selector -->
 <form action="${openIdActionUrl}" method="post" id="openid_form" data-ajax="false" style="height: 100%;">
@@ -38,4 +39,5 @@
         </noscript>
     </fieldset>
 </form>
+</div>
 <!-- /Simple OpenID Selector -->

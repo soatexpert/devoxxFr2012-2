@@ -39,11 +39,13 @@ public class GameController {
             return TilesUtil.DFR_GAME_RULES_APPROVAL;
         }
 
+
         UserGameInformation userGameInformation  = new UserGameInformation(userServices.getPosition(),userServices.nbOfUsers(),userServices.getPendingQuestionsForUser(currentUser.getUser()));
         model.addAttribute("userGameInfos",userGameInformation);
 
-
+        model.addAttribute("approuved",currentUser.getUser().isEnabled());
         model.addAttribute("userName",currentUser.getUser().getUserForname());
+
         model.addAttribute("rank",userGameInformation.getCurrentRanking());
         model.addAttribute("nbUsers",userGameInformation.getNbOfPlayers());
         model.addAttribute("waitingQuestions",userGameInformation.getNbOfQuestionsToAnswer());
