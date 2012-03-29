@@ -8,6 +8,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><tiles:insertAttribute name="pageTitle" ignore="true" /></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />
+        <META HTTP-EQUIV="EXPIRES" CONTENT="-1" />
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
         <link rel="stylesheet" href="<c:url value='/css/game.css' />" />
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
