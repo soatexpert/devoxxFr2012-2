@@ -24,6 +24,7 @@
 package fr.soat.devoxx.game.controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -46,8 +47,8 @@ import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.forms.UserForm;
 import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.UserRoles;
-import fr.soat.devoxx.game.services.UserRolesServices;
+import fr.soat.devoxx.game.model.UserRole;
+import fr.soat.devoxx.game.services.UserRoleServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
 
@@ -61,6 +62,9 @@ public class AdminUserController {
 
 	@Autowired
 	UserServices userServices;
+	
+	@Autowired
+    UserRoleServices userRoleServices;
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(AdminUserController.class);
 
@@ -112,13 +116,14 @@ public class AdminUserController {
             DevoxxUser user = userServices.getUser(userId);
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
-            /*try {
-                role = userRolesServices.getUserRoleByName("ROLE_USER");
+            List<String> rolesStr = splitUserRoles(userForm.getUserRoles());
+            List<UserRole> roles = null;
+            try {
+                roles = userRoleServices.getUserRolesByNames(rolesStr);
             } catch (RuntimeException e) {
-                LOGGER.debug("No Roles found");
-                role = new UserRoles("ROLE_USER");
+                LOGGER.debug("No Roles found", e);
             }
-            user.setUserRoles(splitUserRoles(userForm.getUserRoles()));*/
+            user.setUserRoles(new HashSet<UserRole>(roles));
             LOGGER.info(user.getUserRoles().toString());
             userServices.updateUser(user);
             forward = "redirect:/admin/user/";
@@ -148,18 +153,19 @@ public class AdminUserController {
         return forward;
     }
     
-    private static List<UserRoles> splitUserRoles(String userRolesComma) {
-        List<UserRoles> userRoles = new ArrayList<UserRoles>();
+    private static List<String> splitUserRoles(String userRolesComma) {
+        List<String> userRoles = new ArrayList<String>();
         Iterable<String> userRolesStr = Splitter.onPattern("[\\s]*[,;]{1}[\\s]*").split(userRolesComma);
         for (String roleName : userRolesStr) {
-            userRoles.add(new UserRoles(roleName.trim().toUpperCase()));
+            //userRoles.add(new UserRole(roleName.trim().toUpperCase()));
+            userRoles.add(roleName.trim().toUpperCase());
         }
         return userRoles;
     }
     
     private static String joinUserRoles(DevoxxUser user) {
         List<String> userRolesStr = new ArrayList<String>();
-        for (UserRoles role : user.getUserRoles()) {
+        for (UserRole role : user.getUserRoles()) {
             userRolesStr.add(role.getRoleName());
         }
         return Joiner.on(", ").join(userRolesStr);
