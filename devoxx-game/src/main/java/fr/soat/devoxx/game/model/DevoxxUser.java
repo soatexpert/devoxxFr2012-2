@@ -1,9 +1,10 @@
 package fr.soat.devoxx.game.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -33,7 +35,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     Long userId;
 
     @Column(name = "NAME", unique = true, nullable = false)
-    String userName;
+    String username;
 
     @Column(name = "FORNAME")
     String userForname;
@@ -52,14 +54,16 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @Column(name = "QRCODE_ACCPETED")
     boolean isAcceptedQrCode;
+    
+    @Column(name = "IS_ENABLED")
+    boolean enabled = false;
 
     @OneToMany
     List<BundleUserQuestions> bundleUserQuestions;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
-    List<UserRoles> userRoles = new ArrayList<UserRoles>();
-
+    Set<UserRole> userRoles = new HashSet<UserRole>();
 
 
     public Long getUserId() {
@@ -68,14 +72,6 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getUserForname() {
@@ -94,32 +90,51 @@ public class DevoxxUser implements Serializable, UserDetails {
         this.userEmail = userEmail;
     }
 
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Collection<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
+        for (UserRole role : this.getUserRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }        
+        return grantedAuthorities;
     }
 
+    @Override
     public String getPassword() {
-        return userName;
+        return username;
     }
 
+    @Override
     public String getUsername() {
-        return userName;
+        return username;
+    }
+    
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
+    @Override
     public boolean isAccountNonExpired() {
         return false;
     }
 
+    @Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
+    @Override
     public boolean isCredentialsNonExpired() {
         return false;
+    }   
+    
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
+    @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
 
     public List<BundleUserQuestions> getBundleUserQuestions() {
@@ -130,15 +145,15 @@ public class DevoxxUser implements Serializable, UserDetails {
         this.bundleUserQuestions = bundleUserQuestions;
     }
 
-    public List<UserRoles> getUserRoles() {
+    public Set<UserRole> getUserRoles() {
         return userRoles;
     }
 
-    public void setUserRoles(List<UserRoles> userRoles) {
+    public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
 
-    public void addUserRole(UserRoles userRole) {
+    public void addUserRole(UserRole userRole) {
         this.userRoles.add(userRole);
     }
 
@@ -152,7 +167,8 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", userName=" + userName + ", userForname=" + userForname + ", userEmail=" + userEmail
-                + ", bundleUserQuestions=" + bundleUserQuestions + "]";
-    }
+        return "DevoxxUser [userId=" + userId + ", username=" + username + ", userForname=" + userForname + ", userEmail=" + userEmail + ", reglementAccepted="
+                + reglementAccepted + ", commercialEmailAccepted=" + commercialEmailAccepted + ", nextEventsAccepted=" + nextEventsAccepted
+                + ", isAcceptedQrCode=" + isAcceptedQrCode + ", enabled=" + enabled + ", userRoles=" + userRoles + "]";
+    }        
 }
