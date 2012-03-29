@@ -1,16 +1,5 @@
 package fr.soat.devoxx.game.controllers;
 
-import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
-import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
-import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
-import fr.soat.devoxx.game.forms.AnswerForm;
-import fr.soat.devoxx.game.forms.UserGameInformation;
-import fr.soat.devoxx.game.model.QuestionChoice;
-import fr.soat.devoxx.game.model.UserQuestion;
-import fr.soat.devoxx.game.security.OpenIdUserDetails;
-import fr.soat.devoxx.game.services.QuestionServices;
-import fr.soat.devoxx.game.services.UserServices;
-import fr.soat.devoxx.game.tools.TilesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +8,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
+import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
+import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
+import fr.soat.devoxx.game.forms.AnswerForm;
+import fr.soat.devoxx.game.forms.UserGameInformation;
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.QuestionChoice;
+import fr.soat.devoxx.game.model.UserQuestion;
+import fr.soat.devoxx.game.services.QuestionServices;
+import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.tools.TilesUtil;
 
 @Controller
 @RequestMapping(value = "/")
@@ -33,18 +34,18 @@ public class GameController {
 
     @RequestMapping(value = {"/", "/index", ""})
     public String index(Model model) {
-        final OpenIdUserDetails currentUser = (OpenIdUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(!currentUser.getUser().isReglementAccepted()) {
+        if(!currentUser.isReglementAccepted()) {
             return TilesUtil.DFR_GAME_RULES_APPROVAL;
         }
 
 
-        UserGameInformation userGameInformation  = new UserGameInformation(userServices.getPosition(),userServices.nbOfUsers(),userServices.getPendingQuestionsForUser(currentUser.getUser()));
+        UserGameInformation userGameInformation  = new UserGameInformation(userServices.getPosition(),userServices.nbOfUsers(),userServices.getPendingQuestionsForUser(currentUser));
         model.addAttribute("userGameInfos",userGameInformation);
 
-        model.addAttribute("approuved",currentUser.getUser().isEnabled());
-        model.addAttribute("userName",currentUser.getUser().getUserForname());
+        model.addAttribute("approuved",currentUser.isEnabled());
+        model.addAttribute("username",currentUser.getUserForname());
 
         model.addAttribute("rank",userGameInformation.getCurrentRanking());
         model.addAttribute("nbUsers",userGameInformation.getNbOfPlayers());
@@ -56,9 +57,9 @@ public class GameController {
 
     @RequestMapping("/approveRules")
     public String approveRules(Model model) {
-        final OpenIdUserDetails currentUser = (OpenIdUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        userServices.approveRules(currentUser.getUser());
+        userServices.approveRules(currentUser);
         
         return index(model);
     }
