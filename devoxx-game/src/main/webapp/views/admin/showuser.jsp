@@ -8,7 +8,7 @@
             </div>
     	</td>
         <td>            
-            <div>Username : ${userResponse.userName}</div>
+            <div>Username : ${userResponse.username}</div>
             <div>Name : ${userResponse.userForname}</div>
             <div>Mail : ${userResponse.userEmail}</div>
             <div>Role : ${userRolesComma}</div>

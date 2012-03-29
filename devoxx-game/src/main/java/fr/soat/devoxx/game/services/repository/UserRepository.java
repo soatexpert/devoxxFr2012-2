@@ -32,7 +32,7 @@ import fr.soat.devoxx.game.model.DevoxxUser;
 @Transactional
 public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     
-    @Query("FROM DevoxxUser u where u.userName=?1")
+    @Query("FROM DevoxxUser u where u.username=?1")
     public DevoxxUser findUserByName(String username);
     
 }

@@ -3,7 +3,7 @@
 
 <div id="welcome">
 <spring:message code="game.index.welcome" text="Bienvenue" />
-<c:if test="${not empty userName}">${userName} !</c:if>
+<c:if test="${not empty username}">${username} !</c:if>
 </div>
 
 <c:if test="${!approuved}">

@@ -12,7 +12,7 @@
 	        </td>
 			<td>
 				<div>
-					<spring:message code="admin.user.name" text="Username" /> : ${userResponse.userName}
+					<spring:message code="admin.user.name" text="Username" /> : ${userResponse.username}
 				</div>
 				<div>
 					<spring:message code="admin.user.fullname" text="Name" /> :

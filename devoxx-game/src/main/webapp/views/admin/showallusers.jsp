@@ -10,7 +10,7 @@
 		</tr>
 		<c:forEach items="${allUserResponses}" var="userResponse">
 			<tr>
-				<td>${userResponse.userName}</td>
+				<td>${userResponse.username}</td>
 				<td>${userResponse.userForname}</td>
 				<td>${userResponse.userEmail}</td>
 				<td>

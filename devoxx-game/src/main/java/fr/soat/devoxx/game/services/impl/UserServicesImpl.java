@@ -5,7 +5,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import fr.soat.devoxx.game.model.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Repository;
 
 import fr.soat.devoxx.game.services.UserServices;
@@ -15,7 +20,12 @@ import fr.soat.devoxx.game.services.repository.UserRepository;
 public class UserServicesImpl implements UserServices  {
 
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
+	
+	@Autowired
+	private SessionRegistry sessionRegistry;
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(UserServicesImpl.class);
 
 	@Override
 	public DevoxxUser getUser(Long userId) {
@@ -30,6 +40,23 @@ public class UserServicesImpl implements UserServices  {
 	@Override
     public void updateUser(DevoxxUser user) {
 	    userRepo.save(user);
+	    // invalidate user session	    
+	    List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
+	    for (Object principal : loggedUsers) {
+            if(principal instanceof DevoxxUser) {
+                final DevoxxUser loggedUser = (DevoxxUser) principal;
+                if(user.getUsername().equals(loggedUser.getUsername()) && !user.getUserRoles().equals(loggedUser.getUserRoles())) {
+                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
+                    if(null != sessionsInfo && sessionsInfo.size() > 0) {
+                        for (SessionInformation sessionInformation : sessionsInfo) {
+                            LOGGER.info("Exprire now :" + sessionInformation.getSessionId());
+                            sessionInformation.expireNow(); // force re-logging
+                            sessionRegistry.removeSessionInformation(sessionInformation.getSessionId());
+                        }
+                    }
+                }
+            }
+        }	    
     }
 
     @Override
