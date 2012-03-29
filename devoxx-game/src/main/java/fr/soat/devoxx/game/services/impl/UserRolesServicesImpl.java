@@ -23,32 +23,39 @@
  */
 package fr.soat.devoxx.game.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import fr.soat.devoxx.game.model.UserRoles;
-import fr.soat.devoxx.game.services.UserRolesServices;
-import fr.soat.devoxx.game.services.repository.UserRolesRepository;
+import fr.soat.devoxx.game.model.UserRole;
+import fr.soat.devoxx.game.services.UserRoleServices;
+import fr.soat.devoxx.game.services.repository.UserRoleRepository;
 
 @Repository
-public class UserRolesServicesImpl implements UserRolesServices {
+public class UserRolesServicesImpl implements UserRoleServices {
 
     @Autowired
-    UserRolesRepository userRolesRepo;
+    UserRoleRepository userRoleRepo;
 
     @Override
-    public Iterable<UserRoles> getAllUserRoles() {
-        return userRolesRepo.findAll();
+    public Iterable<UserRole> getAllUserRoles() {
+        return userRoleRepo.findAll();
     }
 
     @Override
-    public UserRoles getUserRole(Long id_role) {
-        return userRolesRepo.findOne(id_role);
+    public UserRole getUserRole(Long id_role) {
+        return userRoleRepo.findOne(id_role);
     }
 
     @Override
-    public UserRoles getUserRoleByName(String roleName) {
-        return userRolesRepo.findUserRoleByName(roleName);
+    public UserRole getUserRoleByName(String roleName) {
+        return userRoleRepo.findUserRoleByName(roleName);
+    }
+
+    @Override
+    public List<UserRole> getUserRolesByNames(List<String> roleNames) {
+        return userRoleRepo.findUserRolesByNames(roleNames);
     }
 
 }
