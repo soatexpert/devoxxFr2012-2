@@ -23,16 +23,21 @@
  */
 package fr.soat.devoxx.game.services.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.soat.devoxx.game.model.UserRoles;
+import fr.soat.devoxx.game.model.UserRole;
 
 @Transactional
-public interface UserRolesRepository extends CrudRepository<UserRoles, Long> {
+public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
     
-    @Query("FROM UserRoles ur WHERE ur.roleName=?1")
-    public UserRoles findUserRoleByName(String roleName);    
+    @Query("FROM UserRole ur WHERE ur.roleName=?1")
+    public UserRole findUserRoleByName(String roleName);    
+    
+    @Query("FROM UserRole ur WHERE ur.roleName IN(?1)")
+    public List<UserRole> findUserRolesByNames(List<String> roleNames);    
     
 }

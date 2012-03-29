@@ -37,8 +37,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "USER_ROLES")
-public class UserRoles implements Serializable {
+@Table(name = "USER_ROLE")
+public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 516974820036173698L;
 
@@ -50,10 +50,10 @@ public class UserRoles implements Serializable {
     @Column(unique = true, nullable = false, name = "ROLE_NAME")
     String roleName;    
 
-    public UserRoles() {
+    public UserRole() {
     }
 
-    public UserRoles(String roleName) {
+    public UserRole(String roleName) {
         this.roleName = roleName;
     }
 
@@ -89,7 +89,7 @@ public class UserRoles implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        UserRoles other = (UserRoles) obj;
+        UserRole other = (UserRole) obj;
         if (roleName == null) {
             if (other.roleName != null)
                 return false;

@@ -23,14 +23,18 @@
  */
 package fr.soat.devoxx.game.services;
 
-import fr.soat.devoxx.game.model.UserRoles;
+import java.util.List;
 
-public interface UserRolesServices {    
+import fr.soat.devoxx.game.model.UserRole;
+
+public interface UserRoleServices {    
     
-    public Iterable<UserRoles> getAllUserRoles();
+    public Iterable<UserRole> getAllUserRoles();
     
-    public UserRoles getUserRole(Long id_role);
+    public UserRole getUserRole(Long id_role);
     
-    public UserRoles getUserRoleByName(String roleName);
+    public UserRole getUserRoleByName(String roleName);
+    
+    public List<UserRole> getUserRolesByNames(List<String> roleNames);
     
 }
