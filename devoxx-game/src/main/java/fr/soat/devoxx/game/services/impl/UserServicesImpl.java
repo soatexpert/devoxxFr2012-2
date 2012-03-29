@@ -49,6 +49,7 @@ public class UserServicesImpl implements UserServices  {
                     List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
                     if(null != sessionsInfo && sessionsInfo.size() > 0) {
                         for (SessionInformation sessionInformation : sessionsInfo) {
+                            //TODO ne déloggue pas le User, voir pourquoi...
                             LOGGER.info("Exprire now :" + sessionInformation.getSessionId());
                             sessionInformation.expireNow(); // force re-logging
                             sessionRegistry.removeSessionInformation(sessionInformation.getSessionId());
