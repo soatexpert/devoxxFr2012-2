@@ -29,10 +29,20 @@
 		<security:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
         <security:intercept-url pattern="/**" access="ROLE_USER" />
 		<security:logout invalidate-session="true" logout-success-url="/auth/login" logout-url="/auth/logout" />
+        <security:session-management session-authentication-strategy-ref="sas" />
 <!-- 		<security:remember-me token-repository-ref="tokenRepo" /> -->
 	</security:http>
 
 	<bean id="openIdUserService" class="fr.soat.devoxx.game.security.OpenIdUserDetailsService" />
+    
+    <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+    <bean id="sas"
+        class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+        <property name="maximumSessions" value="1" />
+        <constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+    </bean>
+    
 <!-- 	<bean id="tokenRepo" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl" /> -->
 
 	<security:authentication-manager>
