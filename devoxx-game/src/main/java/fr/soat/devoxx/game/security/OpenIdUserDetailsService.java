@@ -1,13 +1,10 @@
 package fr.soat.devoxx.game.security;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,8 +15,8 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 import com.google.common.base.Strings;
 
 import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.UserRoles;
-import fr.soat.devoxx.game.services.UserRolesServices;
+import fr.soat.devoxx.game.model.UserRole;
+import fr.soat.devoxx.game.services.UserRoleServices;
 import fr.soat.devoxx.game.services.UserServices;
 
 /**
@@ -31,7 +28,7 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
     UserServices userServices;
     
     @Autowired
-    UserRolesServices userRolesServices;
+    UserRoleServices userRolesServices;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenIdUserDetailsService.class);
 
@@ -79,18 +76,18 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
         
         if(null == user) {
             user = new DevoxxUser();
-            UserRoles role;
+            UserRole role;
             try {
                 role = userRolesServices.getUserRoleByName("ROLE_USER");
             } catch (RuntimeException e) {
                 LOGGER.debug("No Roles found");
-                role = new UserRoles("ROLE_USER");
+                role = new UserRole("ROLE_USER");
             }
             if(null == role) {
-                role = new UserRoles("ROLE_USER");
+                role = new UserRole("ROLE_USER");
             }            
             user.addUserRole(role);
-            user.setUserName(urlId);
+            user.setUsername(urlId);
             user.setUserForname(fullName);
             user.setUserEmail(email);
             userServices.createUser(user);
@@ -101,14 +98,14 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
             userServices.updateUser(user);
         }
 
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+        /*List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
         for (UserRoles role : user.getUserRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }        
         OpenIdUserDetails openIdUser = new OpenIdUserDetails(urlId, grantedAuthorities);
-        openIdUser.setUser(user);
+        openIdUser.setUser(user);*/
         
-        return openIdUser;
+        return user;
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
