@@ -1,7 +1,7 @@
 /* Fonts */
 @font-face {
     font-family: 'CoconWeb';
-    src: url('/CoconComp-CondBold.ttf') format('truetype');
+    src: url('CoconComp-CondBold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
