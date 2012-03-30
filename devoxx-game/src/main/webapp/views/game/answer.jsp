@@ -24,7 +24,7 @@
 <div class="center-wrapper">
 <c:choose>
     <c:when test="${(nbOfQuestionLeft-1) == 0}">
-        <a href="<c:url value='/' />" data-role="button" data-inline="true"><spring:message code="game.answer.done"/></a>
+        <a href="<c:url value='/home' />" data-role="button" data-inline="true"><spring:message code="game.answer.done"/></a>
     </c:when>
     <c:otherwise>
         <a href="<c:url value='/play' />" data-role="button" data-inline="true"><spring:message code="game.answer.continue"/></a>
@@ -32,6 +32,6 @@
 </c:choose>
 <c:if test="${(nbOfQuestionLeft-1) != 0}">
 <br/>
-<a href="<c:url value='/' />" data-role="button" data-inline="true"><spring:message code="game.answer.break"/></a>
+<a href="<c:url value='/home' />" data-role="button" data-inline="true"><spring:message code="game.answer.break"/></a>
 </c:if>
 </div>

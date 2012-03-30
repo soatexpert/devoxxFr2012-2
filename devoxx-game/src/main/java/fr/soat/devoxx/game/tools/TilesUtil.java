@@ -53,4 +53,6 @@ public interface TilesUtil {
     public static final String DFR_GAME_PLAY_PAGE = "devoxxfr.game.play";
     public static final String DFR_GAME_ANSWER_PAGE = "devoxxfr.game.answer";
     public static final String DFR_GAME_RULES_APPROVAL = "devoxxfr.game.approval";
+    public static final String DFR_GAME_RULES_PAGE = "devoxxfr.game.rules";
+    public static final String DFR_GAME_ABOUT_PAGE = "devoxxfr.game.about";
 }

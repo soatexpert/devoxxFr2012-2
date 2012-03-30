@@ -18,6 +18,8 @@
 
     <!-- Definitions communes mobile-->
     <definition name="mobile.header" template="/views/mobile/header.jsp" />
+    <definition name="mobile.about.header" template="/views/mobile/header_about.jsp" />
+    <definition name="mobile.rules.header" template="/views/mobile/header_rules.jsp" />
     <definition name="mobile.footer" template="/views/mobile/footer.jsp" />
 
     <definition name="mobile.layout" template="/views/mobile/layout.jsp">
@@ -58,6 +60,17 @@
     <definition name="devoxxfr.game.approval" extends="mobile.layout">
         <put-attribute name="pageTitle" type="string" value="DevoxxFr - Jouez" />
         <put-attribute name="content" value="game.approval.content" />
+    </definition>
+    <definition name="devoxxfr.game.rules" extends="mobile.layout">
+        <put-attribute name="pageTitle" type="string" value="DevoxxFr - Jouez" />
+        <put-attribute name="content" value="game.rules.content" />
+        <put-attribute name="header" value="mobile.rules.header" />
+    </definition>
+    <definition name="game.about.content" template="/views/game/about.jsp" />
+    <definition name="devoxxfr.game.about" extends="mobile.layout">
+        <put-attribute name="pageTitle" type="string" value="DevoxxFr - Jouez" />
+        <put-attribute name="content" value="game.about.content" />
+        <put-attribute name="header" value="mobile.about.header" />
     </definition>
     
     <!-- Définition de la vue '/auth/login' (normal) -->

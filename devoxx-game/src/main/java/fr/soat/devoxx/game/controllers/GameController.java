@@ -32,7 +32,7 @@ public class GameController {
     @Autowired
     private QuestionServices questionServices;
 
-    @RequestMapping(value = {"/", "/index", ""})
+    @RequestMapping(value = {"/", "/home","/index", ""})
     public String index(Model model) {
         final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -110,6 +110,16 @@ public class GameController {
     public String pause(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
                         Model model) {
         return index(model);
+    }
+
+    @RequestMapping("/rules")
+    public String rules() {
+        return TilesUtil.DFR_GAME_RULES_PAGE;
+    }
+
+    @RequestMapping("/about")
+    public String about() {
+        return TilesUtil.DFR_GAME_ABOUT_PAGE;
     }
 
     private void addUserInformationToModel(UserGameInformation userGameInformation, Model model) {
