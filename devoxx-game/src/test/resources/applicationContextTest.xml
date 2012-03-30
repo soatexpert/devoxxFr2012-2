@@ -26,5 +26,7 @@
 				p:generate-ddl="true" p:showSql="true"/>
 		</property>
 	</bean>
+    
+    <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
 
 </beans>
