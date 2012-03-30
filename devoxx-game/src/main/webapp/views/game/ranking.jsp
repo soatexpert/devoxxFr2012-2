@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
     </head>
     <body>
-        <h1>So@t Quizz - Classement</h1>
+        <h1><img src="<c:url value='/img/soat.png'/>"/><span>Quizz - Classement</span></h1>
         <div id="ranking">
             <table width="100%">
 		<thead>
