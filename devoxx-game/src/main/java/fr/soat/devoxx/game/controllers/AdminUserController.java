@@ -80,7 +80,7 @@ public class AdminUserController {
         try {
             DevoxxUser user = userServices.getUser(userId);
             model.addAttribute("userResponse", user);
-            model.addAttribute("mailHash", getEmailHash(user.getUserEmail()));
+            model.addAttribute("mailHash", user.getMailHash());
             model.addAttribute("userRolesComma", joinUserRoles(user));
             forward = TilesUtil.DFR_ADMIN_SHOWUSER_PAGE;
         } catch (RuntimeException e) {
@@ -96,7 +96,7 @@ public class AdminUserController {
     public String updateUser(@PathVariable Long userId, Model model) {
         DevoxxUser user = userServices.getUser(userId);
         model.addAttribute("userResponse", user);   
-        model.addAttribute("mailHash", getEmailHash(user.getUserEmail()));
+        model.addAttribute("mailHash", user.getMailHash());
         model.addAttribute("userRolesComma", joinUserRoles(user));
         model.addAttribute("userForm", new UserForm());
         
@@ -169,10 +169,5 @@ public class AdminUserController {
             userRolesStr.add(role.getRoleName());
         }
         return Joiner.on(", ").join(userRolesStr);
-    }
-    
-    private static String getEmailHash(String email) {
-        String n_email = Strings.isNullOrEmpty(email) ? "" : email.trim().toLowerCase();
-        return DigestUtils.md5Hex(n_email);
     }
 }

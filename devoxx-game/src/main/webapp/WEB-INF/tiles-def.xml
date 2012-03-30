@@ -37,6 +37,9 @@
         <put-attribute name="content" value="index.content" />
     </definition>
 
+    <!-- Définition de la vue '/ranking' -->
+    <definition name="devoxxfr.game.ranking" template="/views/game/ranking.jsp" />
+
     <!-- Définition de la vue '/game' -->
     <definition name="game.index.content" template="/views/game/index.jsp" />
     <definition name="devoxxfr.game.index" extends="mobile.layout">

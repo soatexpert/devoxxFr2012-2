@@ -11,6 +11,10 @@
           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<security:http pattern="/auth/login*" security="none" />
+    <security:http pattern="/rules" security="none" />
+    <security:http pattern="/about" security="none" />
+    <security:http pattern="/ranking" security="none" />
+    <security:http pattern="/updateRanking" security="none" />
     <security:http pattern="/error/**" security="none" />
 	<security:http pattern="/css/**" security="none" />
 	<security:http pattern="/index/**" security="none" />

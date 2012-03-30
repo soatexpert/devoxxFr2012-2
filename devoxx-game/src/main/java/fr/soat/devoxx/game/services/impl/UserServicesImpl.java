@@ -1,11 +1,8 @@
 package fr.soat.devoxx.game.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
 import fr.soat.devoxx.game.model.*;
-
+import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.services.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +10,8 @@ import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Repository;
 
-import fr.soat.devoxx.game.services.UserServices;
-import fr.soat.devoxx.game.services.repository.UserRepository;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class UserServicesImpl implements UserServices  {
@@ -116,6 +113,33 @@ public class UserServicesImpl implements UserServices  {
         currentUserPendingQuestions.add(pendingQuestion2);
 
         return currentUserPendingQuestions;
+    }
+
+    @Override
+    public List<RankedUser> getPlayersTop10() {
+        TreeSet<RankedUser> rankedUsers = new TreeSet<RankedUser>(new Comparator<RankedUser>() {
+            @Override
+            public int compare(RankedUser rankedUser, RankedUser rankedUser1) {
+                return rankedUser1.getScore() - rankedUser.getScore();
+            }
+        });
+
+        Iterable<DevoxxUser> allUsers = getAllUsers();
+
+        Random randomizer = new Random();
+
+        int maxUsers = 10;
+        int cmp = 1;
+        for (DevoxxUser user : allUsers) {
+            rankedUsers.add(new RankedUser(user,randomizer.nextInt(200),randomizer.nextInt(2000)));
+
+            cmp++;
+            if(cmp > 10) {
+                break;
+            }
+        }
+
+        return new ArrayList<RankedUser>(rankedUsers);
     }
 
     // TODO a supprimer quand impl en base faite!

@@ -1,0 +1,78 @@
+/* Fonts */
+@font-face {
+    font-family: 'CoconWeb';
+    src: url('CoconComp-CondBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+	background:#f7f7f7 url(../img/bg.png) repeat;
+	margin:0px;
+}
+
+h1 {
+	color:#8AAB1E;
+	font-weight:400;
+	letter-spacing: 0.05em;
+	font-size:3em;
+	font-family: "CoconWeb", "Georgia", serif;
+	font-weight: bold;
+}
+
+#ranking {
+	border: 2px solid #cccccc;
+	border-right-style:none;
+	border-radius:20px 0px 0px 20px;
+	margin-left : 5%;
+	margin-right:0px;
+	padding : 1% 0px 2% 2%;
+	
+}
+
+table thead {
+	visibility:hidden;
+}
+
+td {
+
+}
+
+.odd {
+	background-color: rgba(238,238,238,0.5);;
+}
+
+#picture {
+	width:64px;
+}
+
+#name {
+	color:#8AAB1E;
+	letter-spacing: 0.05em;
+	font-size:1.8em;
+	font-family: "CoconWeb", "Georgia", serif;
+	font-weight: bold;
+	padding-left:2%;
+	width:80%;
+}
+
+#score {
+	color:#515151;
+	font-weight:800;
+	letter-spacing: 0.05em;
+	font-size:1.6em;
+	font-family: "CoconWeb", "Georgia", serif;
+	text-align:right;
+	padding:10px;
+}
+
+#time {
+	color:#515151;
+	font-weight:400;
+	letter-spacing: 0.05em;
+	font-size:1.5em;
+	font-family: "CoconWeb", "Georgia", serif;
+	text-align:right;	
+	padding:10px;
+}
