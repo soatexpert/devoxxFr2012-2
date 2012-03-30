@@ -20,8 +20,10 @@
 	<security:http pattern="/index/**" security="none" />
 	<security:http pattern="/img/**" security="none" />
 	<security:http pattern="/js/**" security="none" />
+    <security:http pattern="/favicon.ico" security="none" />
+    <security:http pattern="/CoconComp-CondBold.ttf" security="none" />
 
-	<security:http access-denied-page="/error/403">
+	<security:http access-denied-page="/error/403" auto-config="false" disable-url-rewriting="true">
 		<security:openid-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/auth/login?error=true">
 			<security:attribute-exchange>
 				<security:openid-attribute name="email" type="http://axschema.org/contact/email" required="true" count="1" />
