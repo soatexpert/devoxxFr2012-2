@@ -7,10 +7,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><tiles:insertAttribute name="pageTitle" ignore="true" /></title>
-        <link type="text/css" rel="stylesheet" href="<c:url value='/css/custom-theme/jquery-ui-1.8.17.custom.css' />" />
+        <link type="text/css" rel="stylesheet" href="<c:url value='/css/custom-theme/jquery-ui-1.8.18.custom.css' />" />
         <link type="text/css" rel="stylesheet" href="<c:url value='/css/devoxxfr.css' />" />   
         <script type="text/javascript" src="<c:url value='/js/jquery-1.7.1.min.js' />"></script>
-        <script type="text/javascript" src="<c:url value='/js/jquery-ui-1.8.17.custom.min.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/js/jquery-ui-1.8.18.custom.min.js' />"></script>
         <script type="text/javascript">
 		$(function() {
 		    $(".ui-btn, input:submit").button();
