@@ -22,12 +22,9 @@
 		        $(this).addClass("ui-widget-content");
 		    });
 		    $(".jtable tr").hover(function() {
-		    	$(this).children("td").addClass("ui-state-hover");
+		    	$(this).children("td").addClass("ui-state-highlight");
 		    }, function() {
-		        $(this).children("td").removeClass("ui-state-hover");
-		    });
-		    $(".jtable tr").click(function() {		
-		        $(this).children("td").toggleClass("ui-state-highlight");
+		        $(this).children("td").removeClass("ui-state-highlight");
 		    });		
 		});
 		</script>

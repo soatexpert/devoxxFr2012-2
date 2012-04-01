@@ -2,8 +2,8 @@ body {
 	margin: 0;
 	height: 100%;
 	width: 100%;
-	color: #ffffff;
-	background-color: #1a1a1a;
+	/*color: #ffffff;
+	background-color: #1a1a1a;*/
 	font-size: 14px;
 	background:#f7f7f7 url(../img/bg.png) repeat-x;
 }
@@ -16,6 +16,10 @@ body {
 	margin: 0 auto;
 }
 
+.dlmenu {
+	width: 300px;
+}
+
 .dlmenu dd, dt {
 	padding: 5px;
 }
@@ -26,16 +30,21 @@ body {
 
 .jtable th, .jtable td {
 	padding: 4px;
+	word-wrap: break-word;
 }
 
 #allUsersContainer {
 	margin-top: 30px;
-	width: 600px;	
+	width: 800px;	
 }
 #allUsersContainer table {
-	width: 600px;
+	table-layout: fixed;
+	width: 800px;
     margin-bottom: 8px;
     text-align: center;
+}
+#allUsersContainer table .actions_row {
+	width: 150px;
 }
 
 #header {

@@ -13,15 +13,19 @@
 				<td>${userResponse.username}</td>
 				<td>${userResponse.userForname}</td>
 				<td>${userResponse.userEmail}</td>
-				<td>
-				<a href='<c:url value="/admin/user/${userResponse.userId}" />' class="ui-btn">
-				<spring:message code="admin.btn.show" text="Show" /></a>
-				&nbsp;
-				<a href='<c:url value="/admin/user/${userResponse.userId}/update" />' class="ui-btn">
-                <spring:message code="admin.btn.modify" text="Modify" /></a>
-                &nbsp;
-				<a href='<c:url value="/admin/user/${userResponse.userId}/delete" />' class="ui-btn">
-	            <spring:message code="admin.btn.delete" text="Remove" /></a>
+				<td class="actions_col">
+				<a href='<c:url value="/admin/user/${userResponse.userId}" />' class="ui-btn"
+				title='<spring:message code="admin.btn.show" text="Show" />'>
+				    <span class="ui-icon ui-icon-person"></span>
+				</a>
+				<a href='<c:url value="/admin/user/${userResponse.userId}/update" />' class="ui-btn"
+                title='<spring:message code="admin.btn.modify" text="Modify" />'>
+                    <span class="ui-icon ui-icon-pencil"></span>
+                </a>
+				<a href='<c:url value="/admin/user/${userResponse.userId}/delete" />' class="ui-btn"
+	            title='<spring:message code="admin.btn.delete" text="Remove" />'>
+	               <span class="ui-icon ui-icon-closethick"></span>
+	            </a>
 				</td>
 			</tr>
 		</c:forEach>
