@@ -5,6 +5,7 @@ body {
 	color: #ffffff;
 	background-color: #1a1a1a;
 	font-size: 14px;
+	background:#f7f7f7 url(../img/bg.png) repeat-x;
 }
 
 .contentContainer {
