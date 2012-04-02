@@ -2,17 +2,23 @@ package fr.soat.devoxx.game.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-
+@Table(name = "USER_QUESTION")
 public class UserQuestion implements Serializable {
 
     private static final long serialVersionUID = 4058247641469267996L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
 	Long id;
 
 	@OneToOne
@@ -80,4 +86,13 @@ public class UserQuestion implements Serializable {
     public QuestionChoice getCorrectAnswer() {
         return getQuestion().getGoodChoice();
     }
+    
+    public UserQuestion() {
+        super();
+    }  
+
+    public UserQuestion(Question question) {
+        super();
+        this.question = question;
+    }    
 }

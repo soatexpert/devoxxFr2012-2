@@ -2,18 +2,25 @@ package fr.soat.devoxx.game.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-
+@Table(name = "QUESTION_CHOICE")
 public class QuestionChoice implements Serializable {
 
     private static final long serialVersionUID = 2477899775268524275L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
 	Long questionChoiceId;
 
+    @Column(name = "CHOICE_LABEL")
 	String choiceLabel;
 
     public Long getQuestionChoiceId() {

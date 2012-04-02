@@ -49,8 +49,10 @@ public class DevoxxUser implements Serializable, UserDetails {
     @Column(name = "IS_ENABLED")
     boolean enabled = false;
 
-    @OneToMany
-    List<BundleUserQuestions> bundleUserQuestions;
+    /*@OneToMany
+    List<BundleUserQuestions> bundleUserQuestions;*/    
+    @OneToOne
+    BundleUserQuestions bundleUserQuestions;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
@@ -128,11 +130,19 @@ public class DevoxxUser implements Serializable, UserDetails {
         return this.enabled;
     }
 
-    public List<BundleUserQuestions> getBundleUserQuestions() {
+    /*public List<BundleUserQuestions> getBundleUserQuestions() {
         return bundleUserQuestions;
     }
 
     public void setBundleUserQuestions(List<BundleUserQuestions> bundleUserQuestions) {
+        this.bundleUserQuestions = bundleUserQuestions;
+    }*/
+    
+    public BundleUserQuestions getBundleUserQuestions() {
+        return bundleUserQuestions;
+    }
+
+    public void setBundleUserQuestions(BundleUserQuestions bundleUserQuestions) {
         this.bundleUserQuestions = bundleUserQuestions;
     }
 

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,7 +19,8 @@ public class Question implements Serializable {
     private static final long serialVersionUID = 4593890730355225780L;
 
     @Id
-	@Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	Long idQuestion;
 	
 	@Column(name = "LABEL")

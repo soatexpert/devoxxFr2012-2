@@ -62,7 +62,7 @@ public class UserServicesImpl implements UserServices  {
 	    userRepo.delete(user);
 	}
 
-	@Override
+	/*@Override
     public BundleUserQuestions getQuestionBundle() {
         List<UserQuestion> questions = new ArrayList<UserQuestion>();
 
@@ -73,7 +73,7 @@ public class UserServicesImpl implements UserServices  {
                 null
         );
         return bundle;
-    }
+    }*/
 
     public int getPosition() {
 		return 10;
@@ -101,17 +101,37 @@ public class UserServicesImpl implements UserServices  {
 
     @Override
     public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser user) {
+
         List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
+        
+        user = getUser(user.getUserId());
+        BundleUserQuestions bundle = user.getBundleUserQuestions();
+        if(null != bundle) {
+            List<Question> remainingQuestions = bundle.getRemainingQuestions();            
+    
+            UserQuestion userQuestion;
+            for (Question question : remainingQuestions) {
+                userQuestion = new UserQuestion(question);
+                currentUserPendingQuestions.add(userQuestion);
+            }
+        } else {
+            LOGGER.debug("no BundleUserQuestions for user : " + user.getUserId());
+        }
 
-        UserQuestion pendingQuestion1 = new UserQuestion();
-        pendingQuestion1.setQuestion(createQuestion("Quel est le nom de l'évènement auquel vous participez ?","Devoxx","JavaOne","TechDays","Solidays"));
-        currentUserPendingQuestions.add(pendingQuestion1);
-
-
-        UserQuestion pendingQuestion2 = new UserQuestion();
-        pendingQuestion2.setQuestion(createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?", "42", "Dieu", "joker", "ObiWanKenobi"));
-        currentUserPendingQuestions.add(pendingQuestion2);
-
+        /*
+         * UserQuestion pendingQuestion1 = new UserQuestion();
+         * pendingQuestion1.setQuestion
+         * (createQuestion("Quel est le nom de l'évènement auquel vous participez ?"
+         * ,"Devoxx","JavaOne","TechDays","Solidays"));
+         * currentUserPendingQuestions.add(pendingQuestion1);
+         * 
+         * 
+         * UserQuestion pendingQuestion2 = new UserQuestion();
+         * pendingQuestion2.setQuestion
+         * (createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?"
+         * , "42", "Dieu", "joker", "ObiWanKenobi"));
+         * currentUserPendingQuestions.add(pendingQuestion2);
+         */
         return currentUserPendingQuestions;
     }
 

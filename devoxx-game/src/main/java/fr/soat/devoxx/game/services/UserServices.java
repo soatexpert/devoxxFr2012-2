@@ -17,7 +17,7 @@ public interface UserServices {
 	
 	public void deleteUser(DevoxxUser user);
 
-    public BundleUserQuestions getQuestionBundle();
+    /*public BundleUserQuestions getQuestionBundle();*/
 
 	public int getPosition();
     
