@@ -4,42 +4,38 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>So@t Quizz - classement</title>
-		<link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
-		<link type="text/css" href="css/ranking.css" rel="stylesheet" />
-		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+		<link type="text/css" href="<c:url value='/css/custom-theme/jquery-ui-1.8.17.custom.css'/>" rel="stylesheet" />
+		<link type="text/css" href="<c:url value='/css/ranking.css'/>" rel="stylesheet" />
+		<script type="text/javascript" src="<c:url value='/js/jquery-1.7.1.min.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-ui-1.8.18.custom.min.js'/>"></script>
     </head>
     <body>
         <h1><img src="<c:url value='/img/soat.png'/>"/><span>Quizz - Classement</span></h1>
         <div id="ranking">
-            <table width="100%">
-		<thead>
-			<tr>
-				<th>Avatar</th>
-				<th width="100%">Name</th>
-				<th>score</th>
-				<th>Time</th>
-			</tr>
-		</thead>
-		<c:forEach items="${players}" var="player" varStatus="status">
-		        <c:choose>
-                    <c:when test="${status.count%2 == 0}">
-                        <tr id="player${status.count}" class="even">
-                    </c:when>
-                    <c:otherwise>
-                        <tr id="player${status.count}" class="odd">
-                    </c:otherwise>
-                </c:choose>
-                    <td id="picture"><img src="http://www.gravatar.com/avatar/${player.mailHash}?d=mm&s=64" /></td>
-                    <td id="name">${player.name}</td>
-                    <td id="score">${player.score}pts</td>
-                    <td id="time">${player.time}s</td>
-                </tr>
-        </c:forEach>
- </div>
-<script>
+            <table style="width: 100%;">
+			<thead>
+				<tr>
+					<th>Avatar</th>
+					<th style="width: 40%;">Name</th>
+					<th>score</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${players}" var="player" varStatus="status">
+				<tr id="player${status.count}" class="${status.count % 2 == 0 ? 'even' : 'odd'}">
+					<td id="picture"><img src="http://www.gravatar.com/avatar/${player.mailHash}?d=mm&s=64" /></td>
+					<td id="name">${player.name}</td>
+					<td id="score">${player.score}pts</td>
+					<td id="time">${player.time}s</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+	        </table>
+        </div>
+<script type="text/javascript">
     $(document).ready(function() {
         setInterval("updateRanking()",10000);
     });
@@ -62,7 +58,7 @@
         alert("incoming Text " + jqXHR.responseText);
     });
     }
- </script>
+</script>
 
     </body>
 </html>
