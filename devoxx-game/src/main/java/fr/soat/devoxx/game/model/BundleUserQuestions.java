@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,6 +29,9 @@ public class BundleUserQuestions implements Serializable {
 
 	@OneToOne
 	private QuestionsPack questionsPack;	
+	
+	@Enumerated(EnumType.STRING)
+    public QuestionPackType questionPackType;
 	
 	@PostLoad
 	protected void calculateRemainingQuestions() {
@@ -66,10 +71,18 @@ public class BundleUserQuestions implements Serializable {
 
     public void setQuestionsPack(QuestionsPack questionsPack) {
         this.questionsPack = questionsPack;
+    }    
+
+    public QuestionPackType getQuestionPackType() {
+        return questionPackType;
     }
 
-    public BundleUserQuestions(List<UserQuestion> userQuestions, QuestionsPack questionsPack) {
+    public void setQuestionPackType(QuestionPackType questionPackType) {
+        this.questionPackType = questionPackType;
+    }
+
+    public BundleUserQuestions(List<UserQuestion> userQuestions, QuestionPackType packType) {
         this.userQuestions = userQuestions;
-        this.questionsPack = questionsPack;
+        this.questionPackType = packType;
     }
 }

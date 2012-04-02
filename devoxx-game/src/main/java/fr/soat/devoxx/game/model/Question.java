@@ -3,8 +3,11 @@ package fr.soat.devoxx.game.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,18 +22,20 @@ public class Question implements Serializable {
     private static final long serialVersionUID = 4593890730355225780L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	Long idQuestion;
 	
 	@Column(name = "LABEL")
 	String questionLabel;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	List<QuestionChoice> choices;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	QuestionChoice goodChoice;
+
+    @Enumerated(EnumType.STRING)
+    QuestionPackType pack;
 
     public Long getIdQuestion() {
         return idQuestion;
@@ -62,5 +67,13 @@ public class Question implements Serializable {
 
     public void setGoodChoice(QuestionChoice goodChoice) {
         this.goodChoice = goodChoice;
+    }
+
+    public QuestionPackType getPack() {
+        return pack;
+    }
+
+    public void setPack(QuestionPackType pack) {
+        this.pack = pack;
     }
 }

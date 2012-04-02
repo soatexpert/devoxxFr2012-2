@@ -299,6 +299,12 @@
             <version>1.9.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.8</version>
+        </dependency>
+
 		<!--<dependency> -->
 		<!--<groupId>mysql</groupId> -->
 		<!--<artifactId>mysql-connector-java</artifactId> -->

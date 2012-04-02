@@ -19,8 +19,8 @@ public class UserServicesImpl implements UserServices  {
 	@Autowired
 	private UserRepository userRepo;
 	
-	@Autowired
-	private SessionRegistry sessionRegistry;
+	//@Autowired
+	//private SessionRegistry sessionRegistry;
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(UserServicesImpl.class);
 
@@ -38,7 +38,7 @@ public class UserServicesImpl implements UserServices  {
     public void updateUser(DevoxxUser user) {
 	    userRepo.save(user);
 	    // invalidate user session	    
-	    List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
+	    /*List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
 	    for (Object principal : loggedUsers) {
             if(principal instanceof DevoxxUser) {
                 final DevoxxUser loggedUser = (DevoxxUser) principal;
@@ -54,7 +54,7 @@ public class UserServicesImpl implements UserServices  {
                     }
                 }
             }
-        }	    
+        }    */
     }
 
     @Override
@@ -106,7 +106,7 @@ public class UserServicesImpl implements UserServices  {
         
         user = getUser(user.getUserId());
         BundleUserQuestions bundle = user.getBundleUserQuestions();
-        if(null != bundle) {
+        if(null != bundle) { //TODO always null
             List<Question> remainingQuestions = bundle.getRemainingQuestions();            
     
             UserQuestion userQuestion;
