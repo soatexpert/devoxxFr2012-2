@@ -3,10 +3,7 @@ package fr.soat.devoxx.game.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class BundleUserQuestions implements Serializable {
@@ -19,11 +16,11 @@ public class BundleUserQuestions implements Serializable {
 	@OneToMany
 	public List<UserQuestion> userQuestions;
 
-	@OneToOne
-	public QuestionsPack questionsPack;
+    @Enumerated(EnumType.STRING)
+	public QuestionPackType questionPackType;
 
-    public BundleUserQuestions(List<UserQuestion> userQuestions, QuestionsPack questionsPack) {
+    public BundleUserQuestions(List<UserQuestion> userQuestions, QuestionPackType packType) {
         this.userQuestions = userQuestions;
-        this.questionsPack = questionsPack;
+        this.questionPackType = packType;
     }
 }
