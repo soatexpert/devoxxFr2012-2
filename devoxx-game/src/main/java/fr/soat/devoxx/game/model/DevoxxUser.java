@@ -50,7 +50,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     long score;
     long totalTime;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
     Set<UserRole> userRoles = new HashSet<UserRole>();
 
