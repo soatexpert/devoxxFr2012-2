@@ -112,7 +112,7 @@ public class GameController {
     }
 
     private void updatePlayerScore(Long answer, DevoxxUser currentUser, UserQuestion question) {
-        if(answer.equals(question.getCorrectAnswer())) {
+        if(answer.equals(question.getCorrectAnswer().getQuestionChoiceId())) {
             currentUser.addToScore(1);
         }
         currentUser.addToTime(question.getAnsweringTimeInSeconds());
