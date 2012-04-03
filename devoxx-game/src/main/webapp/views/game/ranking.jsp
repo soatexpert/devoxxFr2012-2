@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>So@t Quizz - classement</title>
-		<link type="text/css" href="<c:url value='/css/custom-theme/jquery-ui-1.8.17.custom.css'/>" rel="stylesheet" />
+		<link type="text/css" href="<c:url value='/css/custom-theme/jquery-ui-1.8.18.custom.css'/>" rel="stylesheet" />
 		<link type="text/css" href="<c:url value='/css/ranking.css'/>" rel="stylesheet" />
 		<script type="text/javascript" src="<c:url value='/js/jquery-1.7.1.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/jquery-ui-1.8.18.custom.min.js'/>"></script>
