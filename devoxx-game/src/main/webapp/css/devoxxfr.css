@@ -43,8 +43,8 @@ body {
     margin-bottom: 8px;
     text-align: center;
 }
-#allUsersContainer table .actions_row {
-	width: 150px;
+#allUsersContainer table .actions_col {
+	width: 160px;
 }
 
 #header {

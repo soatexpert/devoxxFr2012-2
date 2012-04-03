@@ -95,10 +95,16 @@ public class AdminUserController {
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public String updateUser(@PathVariable Long userId, Model model) {
         DevoxxUser user = userServices.getUser(userId);
-        model.addAttribute("userResponse", user);   
+        UserForm userForm = new UserForm();
+        userForm.setUserEmail(user.getUserEmail());
+        userForm.setUserForname(user.getUserForname());
+        userForm.setUserActive(user.isEnabled());
+        userForm.setUserRoles(joinUserRoles(user));
+        //model.addAttribute("userResponse", user);   
         model.addAttribute("mailHash", user.getMailHash());
-        model.addAttribute("userRolesComma", joinUserRoles(user));
-        model.addAttribute("userForm", new UserForm());
+        model.addAttribute("username", user.getUsername());
+        //model.addAttribute("userRolesComma", joinUserRoles(user));
+        model.addAttribute("userForm", userForm);
         
         return TilesUtil.DFR_ADMIN_UPDATEUSER_PAGE;
     }
@@ -116,6 +122,7 @@ public class AdminUserController {
             DevoxxUser user = userServices.getUser(userId);
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
+            user.setEnabled(userForm.getUserActive());
             List<String> rolesStr = splitUserRoles(userForm.getUserRoles());
             List<UserRole> roles = null;
             try {

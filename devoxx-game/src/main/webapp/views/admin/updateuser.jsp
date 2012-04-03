@@ -12,24 +12,33 @@
 	        </td>
 			<td>
 				<div>
-					<spring:message code="admin.user.name" text="Username" /> : ${userResponse.username}
+					<spring:message code="admin.user.name" text="Username" /> : ${username}
 				</div>
 				<div>
 					<spring:message code="admin.user.fullname" text="Name" /> :
-					<form:input path="userForname" value="${userResponse.userForname}" />
+					<form:input path="userForname" />
 				</div>
 				<div>
 					<spring:message code="admin.user.mail" text="Email" /> :
-					<form:input path="userEmail" value="${userResponse.userEmail}" />
+					<form:input path="userEmail" />
 				</div>
+				<div>
+                    <spring:message code="admin.label.enabled" text="Enabled" /> :
+                    <form:checkbox path="userActive" cssErrorClass="error" />Yes
+                    <form:errors path="userActive" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" />
+                </div>
 				<div>
 					<spring:message code="admin.label.roles" text="Roles" /> :
-					<form:input path="userRoles" cssErrorClass="error" value="${userRolesComma}" />
+					<form:input path="userRoles" cssErrorClass="error" />
 					<form:errors path="userRoles" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" />
-				</div>
-				<div>
-					<input type="submit" value='<spring:message code="admin.btn.modify" text="Modify" />' />
-				</div>
+				</div>				
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+			 <input style="float: left;" type="submit" value='<spring:message code="admin.btn.modify" text="Modify" />' />
+			 <a style="margin-left: 6px; float: left;" href="<c:url value='/admin/user' />" class="ui-btn"><spring:message code="global.btn.back" text="Back" /></a>
 			</td>
 		</tr>
 	</table>

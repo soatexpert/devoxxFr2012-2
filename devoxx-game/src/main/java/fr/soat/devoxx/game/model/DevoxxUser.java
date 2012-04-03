@@ -34,7 +34,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     @Column(name = "EMAIL")
     String userEmail;
 
-    @Column(name = "REGEMENT_ACCEPTED")
+    @Column(name = "REGLEMENT_ACCEPTED")
     boolean reglementAccepted;
 
     @Column(name = "COMMERCIAL_ACCEPTED")

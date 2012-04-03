@@ -41,6 +41,9 @@ public class UserForm implements Serializable {
     private String userEmail;
     
     @NotNull
+    private boolean userActive;
+    
+    @NotNull
     @Pattern(regexp = "[a-zA-Z_]+[\\s]*[,;]{0,1}([\\s]*[a-zA-Z_]+[\\s]*[,;]{0,1})*")
     private String userRoles;
 
@@ -58,6 +61,14 @@ public class UserForm implements Serializable {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }    
+
+    public boolean getUserActive() {
+        return userActive;
+    }
+
+    public void setUserActive(boolean userActive) {
+        this.userActive = userActive;
     }
 
     public String getUserRoles() {

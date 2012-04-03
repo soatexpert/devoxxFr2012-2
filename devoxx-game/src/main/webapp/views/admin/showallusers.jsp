@@ -6,14 +6,17 @@
 			<th><spring:message code="admin.user.name" text="Username" /></th>
 			<th><spring:message code="admin.user.fullname" text="Name" /></th>
 			<th><spring:message code="admin.user.mail" text="Email" /></th>
-			<th><spring:message code="admin.label.action" text="Action" /></th>
+			<th style="width: 65px;"><spring:message code="admin.label.enabled" text="Enabled" /></th>
+			<th class="actions_col"><spring:message code="admin.label.action" text="Action" /></th>
 		</tr>
 		<c:forEach items="${allUserResponses}" var="userResponse">
 			<tr>
 				<td>${userResponse.username}</td>
 				<td>${userResponse.userForname}</td>
 				<td>${userResponse.userEmail}</td>
-				<td class="actions_col">
+				<td><span class="ui-icon ${userResponse.enabled ? 'ui-icon-check' : 'ui-icon-close'} center"></span></td>
+				
+				<td>
 				<a href='<c:url value="/admin/user/${userResponse.userId}" />' class="ui-btn"
 				title='<spring:message code="admin.btn.show" text="Show" />'>
 				    <span class="ui-icon ui-icon-person"></span>
@@ -23,7 +26,7 @@
                     <span class="ui-icon ui-icon-pencil"></span>
                 </a>
 				<a href='<c:url value="/admin/user/${userResponse.userId}/delete" />' class="ui-btn"
-	            title='<spring:message code="admin.btn.delete" text="Remove" />'>
+	            title='<spring:message code="admin.btn.delete" text="Remove" />' onclick="return confirm('Are you sure ?');">
 	               <span class="ui-icon ui-icon-closethick"></span>
 	            </a>
 				</td>
