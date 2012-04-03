@@ -1,26 +1,31 @@
 package fr.soat.devoxx.game.services.impl;
 
-import fr.soat.devoxx.game.model.*;
-import fr.soat.devoxx.game.services.UserServices;
-import fr.soat.devoxx.game.services.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.session.SessionInformation;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import fr.soat.devoxx.game.model.BundleUserQuestions;
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.Question;
+import fr.soat.devoxx.game.model.QuestionChoice;
+import fr.soat.devoxx.game.model.RankedUser;
+import fr.soat.devoxx.game.model.UserQuestion;
+import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.services.repository.UserRepository;
 
 @Repository
 public class UserServicesImpl implements UserServices  {
 
 	@Autowired
 	private UserRepository userRepo;
-	
-	//@Autowired
-	//private SessionRegistry sessionRegistry;
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(UserServicesImpl.class);
 
@@ -36,25 +41,7 @@ public class UserServicesImpl implements UserServices  {
 	
 	@Override
     public void updateUser(DevoxxUser user) {
-	    userRepo.save(user);
-	    // invalidate user session	    
-	    /*List<Object> loggedUsers = sessionRegistry.getAllPrincipals();
-	    for (Object principal : loggedUsers) {
-            if(principal instanceof DevoxxUser) {
-                final DevoxxUser loggedUser = (DevoxxUser) principal;
-                if(user.getUsername().equals(loggedUser.getUsername()) && !user.getUserRoles().equals(loggedUser.getUserRoles())) {
-                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false);
-                    if(null != sessionsInfo && sessionsInfo.size() > 0) {
-                        for (SessionInformation sessionInformation : sessionsInfo) {
-                            //TODO ne déloggue pas le User, voir pourquoi...
-                            LOGGER.info("Exprire now :" + sessionInformation.getSessionId());
-                            sessionInformation.expireNow(); // force re-logging
-                            sessionRegistry.removeSessionInformation(sessionInformation.getSessionId());
-                        }
-                    }
-                }
-            }
-        }    */
+	    userRepo.save(user);	    
     }
 
     @Override
@@ -144,7 +131,7 @@ public class UserServicesImpl implements UserServices  {
             }
         });
 
-        Iterable<DevoxxUser> allUsers = getAllUsers();
+        Iterable<DevoxxUser> allUsers = this.getAllUsers();
 
         Random randomizer = new Random();
 
@@ -154,7 +141,7 @@ public class UserServicesImpl implements UserServices  {
             rankedUsers.add(new RankedUser(user,randomizer.nextInt(200),randomizer.nextInt(2000)));
 
             cmp++;
-            if(cmp > 10) {
+            if(cmp > maxUsers) {
                 break;
             }
         }

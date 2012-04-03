@@ -1,11 +1,10 @@
 package fr.soat.devoxx.game.services;
 
-import fr.soat.devoxx.game.model.BundleUserQuestions;
+import java.util.List;
+
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.RankedUser;
 import fr.soat.devoxx.game.model.UserQuestion;
-
-import java.util.List;
 
 public interface UserServices {
 
@@ -27,7 +26,7 @@ public interface UserServices {
 
 	public DevoxxUser getUserByName(String username);
 
-    void approveRules(DevoxxUser user);
+	public void approveRules(DevoxxUser user);
 
     /**
      * Retourne la liste des questions non répondues dans le BundleUserQuestions de l'utilisateur passé en paramètre.
@@ -35,11 +34,11 @@ public interface UserServices {
      * @param user
      * @return
      */
-    List<UserQuestion> getPendingQuestionsForUser(DevoxxUser user);
+	public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser user);
 
     /**
      * Retourne la liste du top 10 des utilisateurs avec leurs scores et leur temps total de reponse en secondes
      * @return
      */
-    List<RankedUser> getPlayersTop10();
+	public List<RankedUser> getPlayersTop10();
 }
