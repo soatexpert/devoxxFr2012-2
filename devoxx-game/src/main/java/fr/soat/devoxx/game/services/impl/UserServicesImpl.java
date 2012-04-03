@@ -1,16 +1,14 @@
 package fr.soat.devoxx.game.services.impl;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.TreeSet;
-import java.util.concurrent.atomic.AtomicLong;
 
 import fr.soat.devoxx.game.model.*;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserQuestionsGenerator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,11 +80,7 @@ public class UserServicesImpl implements UserServices  {
     }
 
     @Override
-    public List<RankedUser> getPlayersTop10() {
-        List<RankedUser> rankedUsers =userRepo.ranking();
-
-        CollectionUtils.
-
-        return filteredRankedUsers;
+    public List<DevoxxUser> getPlayersTop10() {
+        return userRepo.findTopTen();
     }
 }

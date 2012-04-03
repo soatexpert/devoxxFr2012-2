@@ -1,12 +1,5 @@
 package fr.soat.devoxx.game.controllers;
 
-import fr.soat.devoxx.game.model.RankedUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
 import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
@@ -18,6 +11,11 @@ import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -93,9 +91,13 @@ public class GameController {
                                @RequestParam("answer") Long answer,
                                Model model) {
         try {
+            final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
             addUserInformationToModel(userGameInformation, model);
 
-            UserQuestion question = answerQuestion(questionId, answer, userGameInformation);
+            UserQuestion question = answerQuestion(questionId, answer, userGameInformation, currentUser);
+
+            updatePlayerScore(answer, currentUser, question);
 
             model.addAttribute("answerDelayInSeconds",question.getAnsweringTimeInSeconds());
             model.addAttribute("isAnswerCorrect",question.isAnswerCorrect());
@@ -107,6 +109,14 @@ public class GameController {
         } catch (InvalidQuestionException e) {
             return index(model);
         }
+    }
+
+    private void updatePlayerScore(Long answer, DevoxxUser currentUser, UserQuestion question) {
+        if(answer.equals(question.getCorrectAnswer())) {
+            currentUser.addToScore(1);
+        }
+        currentUser.addToTime(question.getAnsweringTimeInSeconds());
+        userServices.updateUser(currentUser);
     }
 
     @RequestMapping(value = "/pause")
@@ -134,7 +144,7 @@ public class GameController {
     }
 
     @RequestMapping(value="/updateRanking", headers="Accept=*/*", method=RequestMethod.GET)
-    public @ResponseBody List<RankedUser> updateRanking(Model model) {
+    public @ResponseBody List<DevoxxUser> updateRanking(Model model) {
         return userServices.getPlayersTop10();
     }
 
@@ -144,7 +154,7 @@ public class GameController {
         model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
     }
 
-    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {
+    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation, DevoxxUser currentUser) throws InvalidQuestionException {
        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
             if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
                 checkQuestionNotAlreadyAnswered(userQuestion);

@@ -3,8 +3,6 @@ package fr.soat.devoxx.game.services;
 import java.util.List;
 
 import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.RankedUser;
-import fr.soat.devoxx.game.model.UserQuestion;
 
 public interface UserServices {
 
@@ -32,5 +30,5 @@ public interface UserServices {
      * Retourne la liste du top 10 des utilisateurs avec leurs scores et leur temps total de reponse en secondes
      * @return
      */
-	public List<RankedUser> getPlayersTop10();
+	public List<DevoxxUser> getPlayersTop10();
 }

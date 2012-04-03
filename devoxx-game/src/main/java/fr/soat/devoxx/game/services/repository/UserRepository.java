@@ -29,10 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.soat.devoxx.game.model.DevoxxUser;
 
+import java.util.List;
+
 @Transactional
 public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     
     @Query("FROM DevoxxUser u where u.username=?1")
     public DevoxxUser findUserByName(String username);
-    
+
+    @Query("FROM DevoxxUser u order by u.score DESC, u.totalTime DESC, u.userForname ASC limit 10")
+    List<DevoxxUser> findTopTen();
 }

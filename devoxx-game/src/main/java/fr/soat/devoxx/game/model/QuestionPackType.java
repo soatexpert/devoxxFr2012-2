@@ -50,7 +50,7 @@ public enum QuestionPackType {
     }
 
     public int getNbOfQuestionsToGenerate() {
-        return endHour - startHour;
+        return endHour - startHour + 1;
     }
 
     public int getStartHour() {

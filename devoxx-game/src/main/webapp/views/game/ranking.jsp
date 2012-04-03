@@ -27,9 +27,9 @@
 			<c:forEach items="${players}" var="player" varStatus="status">
 				<tr id="player${status.count}" class="${status.count % 2 == 0 ? 'even' : 'odd'}">
 					<td id="picture"><img src="http://www.gravatar.com/avatar/${player.mailHash}?d=mm&s=64" /></td>
-					<td id="name">${player.name}</td>
+					<td id="name">${player.userForname}</td>
 					<td id="score">${player.score}pts</td>
-					<td id="time">${player.time}s</td>
+					<td id="time">${player.totalTime}s</td>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -46,10 +46,10 @@
             var clone = $('#ranking').clone();
 
             for(var cmp = 0; cmp < players.length; cmp++) {
-                clone.find("#player" + (cmp+1) + " > #name").text(players[cmp].name);
+                clone.find("#player" + (cmp+1) + " > #name").text(players[cmp].userForname);
                 clone.find("#player" + (cmp+1) + " > #picture > img").attr("src","http://www.gravatar.com/avatar/" + players[cmp].mailHash + "?d=mm&s=64");
                 clone.find("#player" + (cmp+1) + " > #score").text(players[cmp].score +"pts");
-                clone.find("#player" + (cmp+1) + " > #time").text(players[cmp].time +"s");
+                clone.find("#player" + (cmp+1) + " > #time").text(players[cmp].totalTime +"s");
             }
 
             $('#ranking').replaceWith(clone);

@@ -1,18 +1,16 @@
 package fr.soat.devoxx.game.model;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.*;
-
 import com.google.common.base.Strings;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "DEVOXX_USER")
@@ -48,6 +46,9 @@ public class DevoxxUser implements Serializable, UserDetails {
     
     @Column(name = "IS_ENABLED")
     boolean enabled = false;
+
+    long score;
+    long totalTime;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
@@ -208,5 +209,29 @@ public class DevoxxUser implements Serializable, UserDetails {
         return "DevoxxUser [userId=" + userId + ", username=" + username + ", userForname=" + userForname + ", userEmail=" + userEmail + ", reglementAccepted="
                 + reglementAccepted + ", commercialEmailAccepted=" + commercialEmailAccepted + ", nextEventsAccepted=" + nextEventsAccepted
                 + ", isAcceptedQrCode=" + isAcceptedQrCode + ", enabled=" + enabled + ", userRoles=" + userRoles + "]";
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
+    }
+
+    public long getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(long totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public void addToScore(long points) {
+        score += points;
+    }
+
+    public void addToTime(long timeToAdd) {
+        totalTime += timeToAdd;
     }
 }
