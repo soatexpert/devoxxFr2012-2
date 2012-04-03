@@ -17,7 +17,6 @@ public class QuestionImporterTest {
     private ApplicationContext applicationContext;
 
     @Test
-    @Ignore
     public void testImport() throws QuestionImportingError {
         QuestionsImporter importer = new QuestionsImporter("/test.xls",0);
         importer.setQuestionServices((QuestionServices)applicationContext.getBean(QuestionServices.class));
