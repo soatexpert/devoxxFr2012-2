@@ -1,10 +1,8 @@
 package fr.soat.devoxx.game.forms;
 
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
-import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.UserQuestion;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class UserGameInformation implements Serializable {
     public int getNbOfQuestionsToAnswer() {
         int nbOfQuestionsToAnswer = 0;
         for(UserQuestion question : questionsInProgress) {
-            if(question.getReponse() == null)  {
+            if(question.getResponse() == null)  {
                 nbOfQuestionsToAnswer++;
             }
         }
@@ -61,7 +59,7 @@ public class UserGameInformation implements Serializable {
 
     public UserQuestion nextQuestion() {
         for(UserQuestion userQuestion : questionsInProgress) {
-            if(userQuestion.getReponse() == null) {
+            if(userQuestion.getResponse() == null) {
                 return userQuestion;
             }
         }

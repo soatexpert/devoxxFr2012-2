@@ -3,17 +3,7 @@ package fr.soat.devoxx.game.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "QUESTION")
@@ -28,7 +18,7 @@ public class Question implements Serializable {
 	@Column(name = "LABEL")
 	String questionLabel;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	List<QuestionChoice> choices;
 	
 	@OneToOne(cascade = CascadeType.ALL)

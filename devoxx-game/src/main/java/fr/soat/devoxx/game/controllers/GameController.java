@@ -41,7 +41,10 @@ public class GameController {
         }
 
 
-        UserGameInformation userGameInformation  = new UserGameInformation(userServices.getPosition(),userServices.nbOfUsers(),userServices.getPendingQuestionsForUser(currentUser));
+        UserGameInformation userGameInformation  = new UserGameInformation(
+                userServices.getPosition(),
+                userServices.nbOfUsers(),
+                questionServices.getPendingQuestionsForUser(currentUser));
         model.addAttribute("userGameInfos",userGameInformation);
 
         model.addAttribute("approuved",currentUser.isEnabled());
@@ -157,7 +160,7 @@ public class GameController {
     private void updateQuestionWithAnswer(Long answer, UserQuestion userQuestion) {
         for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
             if(choice.getQuestionChoiceId().equals(answer)) {
-                userQuestion.setReponse(choice);
+                userQuestion.setResponse(choice);
                 userQuestion.setEndQuestion(System.currentTimeMillis());
                 questionServices.updateUserQuestion(userQuestion);
             }
@@ -165,7 +168,7 @@ public class GameController {
     }
 
     private void checkQuestionNotAlreadyAnswered(UserQuestion userQuestion) {
-        if(userQuestion.getReponse() != null) {
+        if(userQuestion.getResponse() != null) {
             throw new AlreadyAnsweredException();
         }
     }

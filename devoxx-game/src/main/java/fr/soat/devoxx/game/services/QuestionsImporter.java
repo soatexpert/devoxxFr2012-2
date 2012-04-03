@@ -43,8 +43,8 @@ public class QuestionsImporter {
                 final String questionLabel = extractCellValueAtIndex(row, 1);
                 final String answer1 = extractCellValueAtIndex(row, 2);
                 final String answer2 = extractCellValueAtIndex(row, 3);
-                final String answer3 = extractCellValueAtIndex(row, 3);
-                final String answer4 = extractCellValueAtIndex(row, 4);
+                final String answer3 = extractCellValueAtIndex(row, 4);
+                final String answer4 = extractCellValueAtIndex(row, 5);
                 final int correctAnswerIndex = extractIntCellValueAtIndex(row, 6);
                 final String packName = extractCellValueAtIndex(row,7);
 

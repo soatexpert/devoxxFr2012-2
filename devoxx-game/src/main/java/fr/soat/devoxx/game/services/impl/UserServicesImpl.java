@@ -7,17 +7,15 @@ import java.util.Random;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicLong;
 
+import fr.soat.devoxx.game.model.*;
+import fr.soat.devoxx.game.services.QuestionServices;
+import fr.soat.devoxx.game.services.UserQuestionsGenerator;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import fr.soat.devoxx.game.model.BundleUserQuestions;
-import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.Question;
-import fr.soat.devoxx.game.model.QuestionChoice;
-import fr.soat.devoxx.game.model.RankedUser;
-import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.services.repository.UserRepository;
 
@@ -26,6 +24,12 @@ public class UserServicesImpl implements UserServices  {
 
 	@Autowired
 	private UserRepository userRepo;
+    
+    @Autowired
+    private UserQuestionsGenerator userQuestionsGenerator;
+
+    @Autowired
+    private QuestionServices questionServices;
 	
 	private static Logger LOGGER = LoggerFactory.getLogger(UserServicesImpl.class);
 
@@ -37,7 +41,11 @@ public class UserServicesImpl implements UserServices  {
 	@Override
 	public void createUser(DevoxxUser user) {
 	    userRepo.save(user);
-	}
+
+        List<UserQuestion> userQuestions = userQuestionsGenerator.generateQuestionsListForUser(user);
+
+        questionServices.saveBundleOfUserQuestions(userQuestions);
+    }
 	
 	@Override
     public void updateUser(DevoxxUser user) {
@@ -49,25 +57,12 @@ public class UserServicesImpl implements UserServices  {
 	    userRepo.delete(user);
 	}
 
-	/*@Override
-    public BundleUserQuestions getQuestionBundle() {
-        List<UserQuestion> questions = new ArrayList<UserQuestion>();
-
-        questions.add(new UserQuestion());
-
-        BundleUserQuestions bundle = new BundleUserQuestions(
-                questions,
-                null
-        );
-        return bundle;
-    }*/
-
     public int getPosition() {
 		return 10;
 	}
 
-    public int nbOfUsers() {
-        return 100;
+    public long nbOfUsers() {
+        return userRepo.count();
     }
     
     @Override
@@ -87,87 +82,11 @@ public class UserServicesImpl implements UserServices  {
     }
 
     @Override
-    public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser user) {
-
-        List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
-        
-        user = getUser(user.getUserId());
-        BundleUserQuestions bundle = user.getBundleUserQuestions();
-        if(null != bundle) { //TODO always null
-            List<Question> remainingQuestions = bundle.getRemainingQuestions();            
-    
-            UserQuestion userQuestion;
-            for (Question question : remainingQuestions) {
-                userQuestion = new UserQuestion(question);
-                currentUserPendingQuestions.add(userQuestion);
-            }
-        } else {
-            LOGGER.debug("no BundleUserQuestions for user : " + user.getUserId());
-        }
-
-        /*
-         * UserQuestion pendingQuestion1 = new UserQuestion();
-         * pendingQuestion1.setQuestion
-         * (createQuestion("Quel est le nom de l'évènement auquel vous participez ?"
-         * ,"Devoxx","JavaOne","TechDays","Solidays"));
-         * currentUserPendingQuestions.add(pendingQuestion1);
-         * 
-         * 
-         * UserQuestion pendingQuestion2 = new UserQuestion();
-         * pendingQuestion2.setQuestion
-         * (createQuestion("Quelle est la reponse à l'univers, la vie et tout ça ?"
-         * , "42", "Dieu", "joker", "ObiWanKenobi"));
-         * currentUserPendingQuestions.add(pendingQuestion2);
-         */
-        return currentUserPendingQuestions;
-    }
-
-    @Override
     public List<RankedUser> getPlayersTop10() {
-        TreeSet<RankedUser> rankedUsers = new TreeSet<RankedUser>(new Comparator<RankedUser>() {
-            @Override
-            public int compare(RankedUser rankedUser, RankedUser rankedUser1) {
-                return rankedUser1.getScore() - rankedUser.getScore();
-            }
-        });
+        List<RankedUser> rankedUsers =userRepo.ranking();
 
-        Iterable<DevoxxUser> allUsers = this.getAllUsers();
+        CollectionUtils.
 
-        Random randomizer = new Random();
-
-        int maxUsers = 10;
-        int cmp = 1;
-        for (DevoxxUser user : allUsers) {
-            rankedUsers.add(new RankedUser(user,randomizer.nextInt(200),randomizer.nextInt(2000)));
-
-            cmp++;
-            if(cmp > maxUsers) {
-                break;
-            }
-        }
-
-        return new ArrayList<RankedUser>(rankedUsers);
-    }
-
-    // TODO a supprimer quand impl en base faite!
-    private AtomicLong increment = new AtomicLong();
-    private Question createQuestion(String questionLabel,String... answers) {
-        Question question = new Question();
-        question.setIdQuestion(increment.incrementAndGet());
-        question.setQuestionLabel(questionLabel);
-        List<QuestionChoice> questionAnswers = new ArrayList<QuestionChoice>();
-
-        for(String answer : answers) {
-            QuestionChoice choice1 = new QuestionChoice();
-            choice1.setQuestionChoiceId(increment.incrementAndGet());
-            choice1.setChoiceLabel(answer);
-            questionAnswers.add(choice1);
-        }
-
-        question.setGoodChoice(questionAnswers.get(0));
-
-        question.setChoices(questionAnswers);
-
-        return question;
+        return filteredRankedUsers;
     }
 }

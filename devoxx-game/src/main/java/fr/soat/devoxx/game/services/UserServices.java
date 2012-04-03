@@ -20,21 +20,13 @@ public interface UserServices {
 
 	public int getPosition();
     
-    public int nbOfUsers();
+    public long nbOfUsers();
 
 	public DevoxxUser getUser(Long userId);
 
 	public DevoxxUser getUserByName(String username);
 
 	public void approveRules(DevoxxUser user);
-
-    /**
-     * Retourne la liste des questions non répondues dans le BundleUserQuestions de l'utilisateur passé en paramètre.
-     * Ne pas oublié que le bundle est dépendant du questionPack, celui va etre passé en param au demarrage ? il est commun à toute l'application
-     * @param user
-     * @return
-     */
-	public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser user);
 
     /**
      * Retourne la liste du top 10 des utilisateurs avec leurs scores et leur temps total de reponse en secondes

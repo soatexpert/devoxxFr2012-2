@@ -25,6 +25,8 @@ package fr.soat.devoxx.game.services;
 
 import fr.soat.devoxx.game.model.*;
 
+import java.util.List;
+
 public interface QuestionServices {
 
     void updateUserQuestion(UserQuestion nextQuestion);
@@ -32,4 +34,10 @@ public interface QuestionServices {
     Question getQuestionById(Long questionId);
 
     void saveQuestion(Question question);
+
+    List<Question> getQuestionsByPack(QuestionPackType currentPack);
+
+    List<UserQuestion> getPendingQuestionsForUser(DevoxxUser currentUser);
+
+    void saveBundleOfUserQuestions(List<UserQuestion> userQuestions);
 }

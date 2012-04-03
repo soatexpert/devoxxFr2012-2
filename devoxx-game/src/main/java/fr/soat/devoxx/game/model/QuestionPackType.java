@@ -1,5 +1,7 @@
 package fr.soat.devoxx.game.model;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,12 +9,11 @@ import java.util.Date;
 
 public enum QuestionPackType {
     
-    JOUR_1("02/04/2011",10,16),
-    JOUR_2("03/04/2011",10,16),
-    JOUR_3("04/04/2011",10,12);
-    
+    JOUR_1("03/04/2011",22,23),
+    JOUR_2("04/04/2011",10,16);
+
     private Date packDate;
-    private int StartHour;
+    private int startHour;
     private int endHour;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -23,7 +24,7 @@ public enum QuestionPackType {
         } catch (ParseException e) {
             this.packDate = new Date();
         }
-        StartHour = startHour;
+        this.startHour = startHour;
         this.endHour = endHour;
     }
 
@@ -37,4 +38,22 @@ public enum QuestionPackType {
         return JOUR_1;
     }
 
+    public static QuestionPackType packForToday() {
+
+        for(QuestionPackType currentPack : values()) {
+            if(DateUtils.isSameDay(new Date(),currentPack.packDate)) {
+                return currentPack;
+            }
+        }
+
+        return JOUR_1;
+    }
+
+    public int getNbOfQuestionsToGenerate() {
+        return endHour - startHour;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
 }

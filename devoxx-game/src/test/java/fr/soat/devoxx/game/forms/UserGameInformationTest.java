@@ -85,7 +85,7 @@ public class UserGameInformationTest {
             UserQuestion pendingQuestion = new UserQuestion();
             pendingQuestion.setQuestion(createQuestion("Question " + currentQuestionIdx, "rep1", "rep2", "rep3", "rep4"));
             if(answered[currentQuestionIdx]) {
-                pendingQuestion.setReponse(new QuestionChoice());
+                pendingQuestion.setResponse(new QuestionChoice());
             }
             currentUserPendingQuestions.add(pendingQuestion);
         }
