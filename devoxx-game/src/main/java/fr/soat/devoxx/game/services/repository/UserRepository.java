@@ -23,13 +23,13 @@
  */
 package fr.soat.devoxx.game.services.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.soat.devoxx.game.model.DevoxxUser;
-
-import java.util.List;
 
 @Transactional
 public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
@@ -37,6 +37,10 @@ public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     @Query("FROM DevoxxUser u where u.username=?1")
     public DevoxxUser findUserByName(String username);
 
-    @Query("FROM DevoxxUser u order by u.score DESC, u.totalTime DESC, u.userForname ASC limit 10")
-    List<DevoxxUser> findTopTen();
+    @Query("FROM DevoxxUser u")
+    Page<DevoxxUser> findUsersWithPager(Pageable pageable); // Pageable -> order by + limit
+    
+    //@Query("SELECT COUNT(*) FROM DevoxxUser du WHERE du.score > (SELECT u.score FROM DevoxxUser u WHERE u.userId=?1 ORDER BY u.score DESC, u.totalTime ASC, u.userForname DESC)")
+    @Query("SELECT COUNT(*) FROM DevoxxUser du WHERE du.score > (SELECT u.score FROM DevoxxUser u WHERE u.userId=?1)")
+    Long findUserRankingPosition(Long userId);
 }

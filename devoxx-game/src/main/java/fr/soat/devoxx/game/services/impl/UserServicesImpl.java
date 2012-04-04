@@ -1,19 +1,21 @@
 package fr.soat.devoxx.game.services.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import fr.soat.devoxx.game.model.*;
-import fr.soat.devoxx.game.services.QuestionServices;
-import fr.soat.devoxx.game.services.UserQuestionsGenerator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Repository;
 
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.UserQuestion;
+import fr.soat.devoxx.game.services.QuestionServices;
+import fr.soat.devoxx.game.services.UserQuestionsGenerator;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.services.repository.UserRepository;
 
@@ -55,10 +57,12 @@ public class UserServicesImpl implements UserServices  {
 	    userRepo.delete(user);
 	}
 
-    public int getPosition() {
-		return 10;
+    @Override
+    public int getPosition(DevoxxUser user) {
+		return userRepo.findUserRankingPosition(user.getUserId()).intValue() + 1;
 	}
 
+    @Override
     public long nbOfUsers() {
         return userRepo.count();
     }
@@ -80,7 +84,12 @@ public class UserServicesImpl implements UserServices  {
     }
 
     @Override
-    public List<DevoxxUser> getPlayersTop10() {
-        return userRepo.findTopTen();
+    public List<DevoxxUser> getPlayersTop10() {        
+        Order scoreOrder = new Order(Direction.DESC, "score");
+        Order totalTimeOrder = new Order(Direction.ASC, "totalTime");
+        Order userFornameOrder = new Order(Direction.ASC, "userForname");
+        Sort sort = new Sort(scoreOrder, totalTimeOrder, userFornameOrder);
+        Pageable topTen = new PageRequest(0, 10, sort);
+        return userRepo.findUsersWithPager(topTen).getContent();
     }
 }
