@@ -6,29 +6,23 @@ import fr.soat.devoxx.game.model.DevoxxUser;
 
 public interface UserServices {
 
-	public Iterable<DevoxxUser> getAllUsers();
+    public Iterable<DevoxxUser> getAllUsers();
 
-	public void createUser(DevoxxUser user);
-	
-	public void updateUser(DevoxxUser user);
-	
-	public void deleteUser(DevoxxUser user);
+    public void createUser(DevoxxUser user);
 
-    /*public BundleUserQuestions getQuestionBundle();*/
+    public void updateUser(DevoxxUser user);
+
+    public void deleteUser(DevoxxUser user);
 
 	public long getPosition(DevoxxUser user);
     
     public long nbOfUsers();
 
-	public DevoxxUser getUser(Long userId);
+    public DevoxxUser getUser(Long userId);
 
-	public DevoxxUser getUserByName(String username);
+    public DevoxxUser getUserByName(String username);
 
-	public void approveRules(DevoxxUser user);
+    public void approveRules(DevoxxUser user);
 
-    /**
-     * Retourne la liste du top 10 des utilisateurs avec leurs scores et leur temps total de reponse en secondes
-     * @return
-     */
-	public List<DevoxxUser> getPlayersTop10();
+    public List<DevoxxUser> getPlayersTop10();
 }

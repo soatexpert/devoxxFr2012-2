@@ -1,15 +1,14 @@
 package fr.soat.devoxx.game.services.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import fr.soat.devoxx.game.model.*;
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.QuestionPackType;
+import fr.soat.devoxx.game.model.UserQuestion;
+import fr.soat.devoxx.game.model.UserScore;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserQuestionsGenerator;
+import fr.soat.devoxx.game.services.UserServices;
+import fr.soat.devoxx.game.services.repository.UserRepository;
 import fr.soat.devoxx.game.services.repository.UserScoreRepository;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import fr.soat.devoxx.game.services.UserServices;
-import fr.soat.devoxx.game.services.repository.UserRepository;
+import java.util.List;
 
 @Repository
 public class UserServicesImpl implements UserServices  {
@@ -64,9 +62,10 @@ public class UserServicesImpl implements UserServices  {
 	}
 
     public long getPosition(DevoxxUser user) {
-		return userRepo.getUsersWithScoreLessThan(user.getScore(),user.getTotalTime(),QuestionPackType.packForToday()).size()+1;
+		return userRepo.getUsersWithScoreLessThan(user.getScore(), user.getTotalTime(), QuestionPackType.packForToday()).size()+1;
 	}
 
+    @Override
     public long nbOfUsers() {
         return userRepo.count();
     }
