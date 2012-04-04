@@ -8,9 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "DEVOXX_USER")
@@ -47,13 +45,12 @@ public class DevoxxUser implements Serializable, UserDetails {
     @Column(name = "IS_ENABLED")
     boolean enabled = false;
 
-    long score;
-    long totalTime;
-
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
     Set<UserRole> userRoles = new HashSet<UserRole>();
 
+    @ElementCollection(fetch=FetchType.EAGER)
+    Map<QuestionPackType,UserScore> userScores = new HashMap<QuestionPackType, UserScore>();
 
     public Long getUserId() {
         return userId;
@@ -211,27 +208,45 @@ public class DevoxxUser implements Serializable, UserDetails {
                 + ", isAcceptedQrCode=" + isAcceptedQrCode + ", enabled=" + enabled + ", userRoles=" + userRoles + "]";
     }
 
-    public long getScore() {
+    @Transient
+    public UserScore getCurrentScore() {
+        QuestionPackType currentQuestionPack = QuestionPackType.packForToday();
+        UserScore score = userScores.get(currentQuestionPack);
+        if(score == null) {
+            score = new UserScore();
+            userScores.put(currentQuestionPack,score);
+        }
         return score;
     }
 
-    public void setScore(long score) {
-        this.score = score;
+    public void setCurrentScore(UserScore score) {
+        userScores.put(QuestionPackType.packForToday(),score);
     }
 
+    @Transient
+    public long getScore() {
+        return getCurrentScore().getScore();
+    }
+
+    @Transient
     public long getTotalTime() {
-        return totalTime;
-    }
-
-    public void setTotalTime(long totalTime) {
-        this.totalTime = totalTime;
+        return getCurrentScore().getTotalTime();
     }
 
     public void addToScore(long points) {
-        score += points;
+        getCurrentScore().addToScore(points);
     }
 
     public void addToTime(long timeToAdd) {
-        totalTime += timeToAdd;
+        getCurrentScore().addToTotalTime(timeToAdd);
+    }
+
+    public Map<QuestionPackType, UserScore> getUserScores() {
+        return userScores;
+    }
+
+    public void setUserScores(Map<QuestionPackType, UserScore> userScores) {
+        this.userScores = userScores;
+
     }
 }

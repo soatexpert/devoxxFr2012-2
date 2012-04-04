@@ -7,6 +7,7 @@ import java.util.List;
 import fr.soat.devoxx.game.model.*;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserQuestionsGenerator;
+import fr.soat.devoxx.game.services.repository.UserScoreRepository;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.IteratorUtils;
 import org.slf4j.Logger;
@@ -22,6 +23,9 @@ public class UserServicesImpl implements UserServices  {
 
 	@Autowired
 	private UserRepository userRepo;
+    
+    @Autowired
+    private UserScoreRepository userScoreRepo;
     
     @Autowired
     private UserQuestionsGenerator userQuestionsGenerator;
@@ -47,7 +51,9 @@ public class UserServicesImpl implements UserServices  {
 	
 	@Override
     public void updateUser(DevoxxUser user) {
-	    userRepo.save(user);	    
+        final UserScore score = userScoreRepo.save(user.getCurrentScore());
+        user.setCurrentScore(score);
+	    userRepo.save(user);
     }
 
     @Override
@@ -55,8 +61,8 @@ public class UserServicesImpl implements UserServices  {
 	    userRepo.delete(user);
 	}
 
-    public int getPosition() {
-		return 10;
+    public long getPosition(DevoxxUser user) {
+		return userRepo.getUsersWithScoreLessThan(user.getScore(),user.getTotalTime(),QuestionPackType.packForToday()).size()+1;
 	}
 
     public long nbOfUsers() {
@@ -81,6 +87,6 @@ public class UserServicesImpl implements UserServices  {
 
     @Override
     public List<DevoxxUser> getPlayersTop10() {
-        return userRepo.findTopTen();
+        return userRepo.findTopTen(QuestionPackType.packForToday());
     }
 }

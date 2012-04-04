@@ -40,7 +40,7 @@ public class GameController {
 
 
         UserGameInformation userGameInformation  = new UserGameInformation(
-                userServices.getPosition(),
+                userServices.getPosition(currentUser),
                 userServices.nbOfUsers(),
                 questionServices.getPendingQuestionsForUser(currentUser));
         model.addAttribute("userGameInfos",userGameInformation);

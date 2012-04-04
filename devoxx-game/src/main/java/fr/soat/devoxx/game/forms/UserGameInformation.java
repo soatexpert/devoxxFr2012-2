@@ -12,17 +12,17 @@ public class UserGameInformation implements Serializable {
 
     private static final long serialVersionUID = -1918069635247552059L;
 
-    private int currentRanking;
+    private long currentRanking;
     private long nbOfPlayers;
     private List<UserQuestion> questionsInProgress;
 
-    public UserGameInformation(int currentRanking, long nbOfPlayers, List<UserQuestion> questionsInProgress) {
+    public UserGameInformation(long currentRanking, long nbOfPlayers, List<UserQuestion> questionsInProgress) {
         this.currentRanking = currentRanking;
         this.nbOfPlayers = nbOfPlayers;
         this.questionsInProgress = questionsInProgress;
     }
 
-    public int getCurrentRanking() {
+    public long getCurrentRanking() {
         return currentRanking;
     }
 

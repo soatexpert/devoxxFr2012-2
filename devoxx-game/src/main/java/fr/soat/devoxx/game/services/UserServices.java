@@ -16,7 +16,7 @@ public interface UserServices {
 
     /*public BundleUserQuestions getQuestionBundle();*/
 
-	public int getPosition();
+	public long getPosition(DevoxxUser user);
     
     public long nbOfUsers();
 
