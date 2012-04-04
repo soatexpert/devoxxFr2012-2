@@ -13,6 +13,8 @@ import org.apache.commons.collections.IteratorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import fr.soat.devoxx.game.services.UserServices;
@@ -87,6 +89,7 @@ public class UserServicesImpl implements UserServices  {
 
     @Override
     public List<DevoxxUser> getPlayersTop10() {
-        return userRepo.findTopTen(QuestionPackType.packForToday());
+        Pageable topTen = new PageRequest(0, 10);
+        return userRepo.findTopTen(QuestionPackType.packForToday(),topTen).getContent();
     }
 }

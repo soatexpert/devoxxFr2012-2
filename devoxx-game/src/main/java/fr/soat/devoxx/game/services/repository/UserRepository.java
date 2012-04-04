@@ -24,6 +24,8 @@
 package fr.soat.devoxx.game.services.repository;
 
 import fr.soat.devoxx.game.model.QuestionPackType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +41,7 @@ public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     public DevoxxUser findUserByName(String username);
 
     @Query("FROM DevoxxUser u where u.enabled = true order by u.userScores[?1].score DESC, u.userScores[?1].totalTime DESC, u.userForname ASC limit 10")
-    List<DevoxxUser> findTopTen(QuestionPackType questionPack);
+    Page<DevoxxUser> findTopTen(QuestionPackType questionPack, Pageable page);
 
     @Query("FROM DevoxxUser u where u.enabled = true and ( (u.userScores[?3].score > ?1) or (u.userScores[?3].score = ?2 and u.userScores[?3].totalTime < ?2))")
     List<DevoxxUser> getUsersWithScoreLessThan(long score,long totalTime,QuestionPackType questionPack);
