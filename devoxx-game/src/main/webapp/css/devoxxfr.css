@@ -35,11 +35,11 @@ body {
 
 #allUsersContainer {
 	margin-top: 30px;
-	width: 800px;	
+	width: 92%;	
 }
 #allUsersContainer table {
-	table-layout: fixed;
-	width: 800px;
+	/*table-layout: fixed; */
+	width: 100%; 
     margin-bottom: 8px;
     text-align: center;
 }
