@@ -29,3 +29,8 @@
         </a>
     </div>
 </c:if>
+<div class="center-wrapper">
+    <a id="logout-btn" href="<c:url value='/auth/logout' />" data-role="button" data-inline="true" data-iconpos="top" data-icon="play">
+        <spring:message code="global.btn.logout" text="Logout" />
+    </a>
+</div>
