@@ -25,4 +25,6 @@ public interface UserServices {
     public void approveRules(DevoxxUser user);
 
     public List<DevoxxUser> getPlayersTop10();
+    
+    public List<DevoxxUser> findUsersByFornameOrEmail(String term);
 }

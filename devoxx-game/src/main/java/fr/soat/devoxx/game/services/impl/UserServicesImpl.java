@@ -91,4 +91,9 @@ public class UserServicesImpl implements UserServices  {
         Pageable topTen = new PageRequest(0, 10);
         return userRepo.findTopTen(QuestionPackType.packForToday(),topTen).getContent();
     }
+
+    @Override
+    public List<DevoxxUser> findUsersByFornameOrEmail(String term) {
+        return userRepo.findUsersByFornameOrEmail(term);
+    }
 }

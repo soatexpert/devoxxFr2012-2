@@ -44,4 +44,7 @@ public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
 
     @Query("FROM DevoxxUser u where u.enabled = true and ( (u.userScores[?3].score > ?1) or (u.userScores[?3].score = ?2 and u.userScores[?3].totalTime < ?2))")
     List<DevoxxUser> getUsersWithScoreLessThan(long score,long totalTime,QuestionPackType questionPack);
+    
+    @Query("FROM DevoxxUser u where lower(u.userForname) like lower(concat('%',?1,'%')) or lower(u.userEmail) like lower(concat('%',?1,'%'))")
+    List<DevoxxUser> findUsersByFornameOrEmail(String term);
 }

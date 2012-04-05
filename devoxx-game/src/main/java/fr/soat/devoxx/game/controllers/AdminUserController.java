@@ -33,6 +33,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,10 +41,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 
 import fr.soat.devoxx.game.forms.UserForm;
 import fr.soat.devoxx.game.model.DevoxxUser;
@@ -158,6 +162,11 @@ public class AdminUserController {
             LOGGER.info("Error while deleting user", e);
         }
         return forward;
+    }
+    
+    @RequestMapping(value = "/search", headers = "Accept=*/*", method=RequestMethod.GET)
+    public @ResponseBody List<DevoxxUser> searchUser(@RequestParam String term) {
+        return userServices.findUsersByFornameOrEmail(term);
     }
     
     private static List<String> splitUserRoles(String userRolesComma) {
