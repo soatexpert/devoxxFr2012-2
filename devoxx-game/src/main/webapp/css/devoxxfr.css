@@ -5,7 +5,7 @@ body {
 	/*color: #ffffff;
 	background-color: #1a1a1a;*/
 	font-size: 14px;
-	background:#f7f7f7 url(../img/bg.png) repeat-x;
+	background: #f7f7f7 url(../img/bg.png) repeat-x;
 }
 
 .contentContainer {
@@ -20,7 +20,7 @@ body {
 	width: 300px;
 }
 
-.dlmenu dd, dt {
+.dlmenu dd,dt {
 	padding: 5px;
 }
 
@@ -28,21 +28,22 @@ body {
 	border-collapse: collapse;
 }
 
-.jtable th, .jtable td {
+.jtable th,.jtable td {
 	padding: 4px;
 	word-wrap: break-word;
 }
 
 #allUsersContainer {
 	margin-top: 30px;
-	width: 92%;	
+	width: 92%;
 }
-#allUsersContainer table {
-	/*table-layout: fixed; */
-	width: 100%; 
-    margin-bottom: 8px;
-    text-align: center;
+
+#allUsersContainer table { /*table-layout: fixed; */
+	width: 100%;
+	margin-bottom: 8px;
+	text-align: center;
 }
+
 #allUsersContainer table .actions_col {
 	width: 160px;
 }
@@ -50,31 +51,41 @@ body {
 #header {
 	padding: 4px;
 }
+
 #header img {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 #footer {
-    position: fixed; 
-    bottom: 0px; 
-    left: 0px;
-    width: 100%;
-    background-color: #0d0d0d;    
-    overflow: hidden;
-    padding: 4px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: #0d0d0d;
+	overflow: hidden;
+	padding: 4px;
+}
+
+.ui-autocomplete {
+	max-height: 330px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
 }
 
 .thumb {
-	float: left; 
-	width: 48px; 
+	float: left;
+	width: 48px;
 	margin-right: 4px;
 }
 
 .userInfo {
-	width: 250px; 
+	width: 250px;
 	word-wrap: break-word;
 }
 
 .userInfo em {
-    font-size: 11px;
+	font-size: 11px;
 }
