@@ -1,6 +1,5 @@
 package fr.soat.devoxx.game.controllers;
 
-import fr.soat.devoxx.game.dto.DevoxxUserDto;
 import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
 import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
@@ -13,7 +12,6 @@ import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
 import fr.soat.devoxx.game.viewbeans.RankedUserViewBean;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -99,7 +97,7 @@ public class GameController {
 
             addUserInformationToModel(userGameInformation, model);
 
-            UserQuestion question = answerQuestion(questionId, answer, userGameInformation, currentUser);
+            UserQuestion question = answerQuestion(questionId, answer, userGameInformation);
 
             updatePlayerScore(answer, currentUser, question);
 
@@ -124,8 +122,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/pause")
-    public String pause(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
-                        Model model) {
+    public String pause(Model model) {
         return index(model);
     }
 
@@ -176,7 +173,7 @@ public class GameController {
         model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
     }
 
-    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation, DevoxxUser currentUser) throws InvalidQuestionException {
+    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {
        for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
             if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
                 checkQuestionNotAlreadyAnswered(userQuestion);

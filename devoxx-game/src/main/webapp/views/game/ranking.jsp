@@ -49,8 +49,10 @@
                 if(!jQuery.isEmptyObject(players[cmp].name)) {
                     clone.find("#player" + (cmp+1) + " > #name").text(players[cmp].name);
                     var avatarParent = clone.find("#player" + (cmp+1) + " > #picture");
-                    if(avatarParent.has("img")) {
-                        avatarParent.children("img").attr("src", players[cmp].avatarUrl);
+                    var avatarImg = avatarParent.children("img");
+
+                    if(avatarImg.length != 0) {
+                        avatarImg.attr("src", players[cmp].avatarUrl);
                     } else {
                         avatarParent.append("<img src='" + players[cmp].avatarUrl + "'/>");
                     }

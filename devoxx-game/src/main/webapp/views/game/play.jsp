@@ -9,13 +9,13 @@
 <div id="elapsed-time"><span id="timeToUpdate">0</span>s</div>
 
 <script type="text/javascript">
-var start = ${questionStartDate};
+var start = Date.now();
 
 setTimeout("refreshElapsedTime()",1000);
 
 function refreshElapsedTime() {
 
-var now = Date.now();
+    var now = Date.now();
     $("#timeToUpdate").html( Math.floor((now-start)/1000) );
 
     setTimeout("refreshElapsedTime()",1000);
