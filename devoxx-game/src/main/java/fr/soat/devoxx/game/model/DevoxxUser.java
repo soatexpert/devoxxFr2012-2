@@ -51,6 +51,9 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @ElementCollection(fetch=FetchType.EAGER)
     Map<QuestionPackType,UserScore> userScores = new HashMap<QuestionPackType, UserScore>();
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player", orphanRemoval = true, fetch = FetchType.LAZY)
+    List<UserQuestion> userQuestions = new ArrayList<UserQuestion>();    
 
     public Long getUserId() {
         return userId;
@@ -247,6 +250,13 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     public void setUserScores(Map<QuestionPackType, UserScore> userScores) {
         this.userScores = userScores;
+    }
+    
+    public List<UserQuestion> getUserQuestions() {
+        return userQuestions;
+    }
 
+    public void setUserQuestions(List<UserQuestion> userQuestions) {
+        this.userQuestions = userQuestions;
     }
 }

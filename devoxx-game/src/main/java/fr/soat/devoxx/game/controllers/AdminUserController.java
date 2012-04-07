@@ -29,11 +29,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,9 +44,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.Iterables;
 
+import fr.soat.devoxx.game.dto.DevoxxUserDto;
 import fr.soat.devoxx.game.forms.UserForm;
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.UserRole;
@@ -165,8 +162,19 @@ public class AdminUserController {
     }
     
     @RequestMapping(value = "/search", headers = "Accept=*/*", method=RequestMethod.GET)
-    public @ResponseBody List<DevoxxUser> searchUser(@RequestParam String term) {
-        return userServices.findUsersByFornameOrEmail(term);
+    public @ResponseBody List<DevoxxUserDto> searchUser(@RequestParam String term) {
+        List<DevoxxUserDto> usersDtoList = new ArrayList<DevoxxUserDto>();
+        DevoxxUserDto userDto;
+        for (DevoxxUser devoxxUser : userServices.findUsersByFornameOrEmail(term)) {
+            userDto = new DevoxxUserDto();            
+            userDto.setUserId(devoxxUser.getUserId());
+            userDto.setUserEmail(devoxxUser.getUserEmail());
+            userDto.setMailHash(devoxxUser.getMailHash());
+            userDto.setUserForname(devoxxUser.getUserForname());
+            userDto.setEnabled(devoxxUser.isEnabled());
+            usersDtoList.add(userDto);
+        }        
+        return usersDtoList;        
     }
     
     private static List<String> splitUserRoles(String userRolesComma) {

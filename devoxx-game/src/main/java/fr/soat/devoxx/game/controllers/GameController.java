@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.controllers;
 
+import fr.soat.devoxx.game.dto.DevoxxUserDto;
 import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
 import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -144,8 +146,21 @@ public class GameController {
     }
 
     @RequestMapping(value="/updateRanking", headers="Accept=*/*", method=RequestMethod.GET)
-    public @ResponseBody List<DevoxxUser> updateRanking(Model model) {
-        return userServices.getPlayersTop10();
+    public @ResponseBody List<DevoxxUserDto> updateRanking(Model model) {
+        List<DevoxxUserDto> usersDtoList = new ArrayList<DevoxxUserDto>();
+        DevoxxUserDto userDto;
+        for (DevoxxUser devoxxUser : userServices.getPlayersTop10()) {
+            userDto = new DevoxxUserDto();            
+            userDto.setUserId(devoxxUser.getUserId());
+            userDto.setUserEmail(devoxxUser.getUserEmail());
+            userDto.setMailHash(devoxxUser.getMailHash());
+            userDto.setUserForname(devoxxUser.getUserForname());
+            userDto.setEnabled(devoxxUser.isEnabled());
+            userDto.setScore(devoxxUser.getScore());
+            userDto.setTotalTime(devoxxUser.getTotalTime());
+            usersDtoList.add(userDto);
+        }        
+        return usersDtoList;
     }
 
     private void addUserInformationToModel(UserGameInformation userGameInformation, Model model) {
