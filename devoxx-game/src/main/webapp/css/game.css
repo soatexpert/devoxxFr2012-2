@@ -138,8 +138,16 @@ div #openid_highlight {
 .errorBox {
 	margin:auto;
 	text-align:center;
-max-width:400px;
-background-color:#75ffb6;
-border-radius: 15px;
-padding:2px 2px 2px 5px;
+    max-width:400px;
+    background-color:#75ffb6;
+    border-radius: 15px;
+    padding:2px 2px 2px 5px;
+}
+
+.ui-header #rules {
+	top: 0.9em;
+}
+
+.ui-header #about {
+	top: 0.9em;
 }
