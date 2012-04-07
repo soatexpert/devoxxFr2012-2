@@ -63,3 +63,18 @@ body {
     overflow: hidden;
     padding: 4px;
 }
+
+.thumb {
+	float: left; 
+	width: 48px; 
+	margin-right: 4px;
+}
+
+.userInfo {
+	width: 250px; 
+	word-wrap: break-word;
+}
+
+.userInfo em {
+    font-size: 11px;
+}

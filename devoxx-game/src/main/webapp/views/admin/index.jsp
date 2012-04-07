@@ -11,7 +11,7 @@ $(document).ready(function() {
     }).data("autocomplete")._renderItem = function( ul, item ) {
 		return $( "<li></li>" )
 		.data( "item.autocomplete", item )
-		.append( "<a>" + item.userForname + "<br/><em>" + item.userEmail + "</em></a>" )
+		.append( "<a><div style='padding: 2px;'><img src='http://www.gravatar.com/avatar/"+ item.mailHash +"?d=mm&s=48' alt='thumb' class='thumb' /><div class='userInfo'>" + item.userForname + "<br/><em>" + item.userEmail + "</em></div></div></a>" )
 		.appendTo( ul );
     };
 });
