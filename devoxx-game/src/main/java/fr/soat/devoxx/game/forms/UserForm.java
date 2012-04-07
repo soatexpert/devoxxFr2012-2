@@ -24,9 +24,9 @@
 package fr.soat.devoxx.game.forms;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 /**
  * @author aurelien
@@ -44,8 +44,7 @@ public class UserForm implements Serializable {
     private boolean userActive;
     
     @NotNull
-    @Pattern(regexp = "[a-zA-Z_]+[\\s]*[,;]{0,1}([\\s]*[a-zA-Z_]+[\\s]*[,;]{0,1})*")
-    private String userRoles;
+    private List<String> userRoles;
 
     public String getUserForname() {
         return userForname;
@@ -71,11 +70,11 @@ public class UserForm implements Serializable {
         this.userActive = userActive;
     }
 
-    public String getUserRoles() {
+    public List<String> getUserRoles() {
         return userRoles;
     }
 
-    public void setUserRoles(String userRoles) {
+    public void setUserRoles(List<String> userRoles) {
         this.userRoles = userRoles;
-    }    
+    }       
 }

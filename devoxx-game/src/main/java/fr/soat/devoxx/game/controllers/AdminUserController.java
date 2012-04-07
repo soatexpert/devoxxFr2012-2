@@ -100,11 +100,14 @@ public class AdminUserController {
         userForm.setUserEmail(user.getUserEmail());
         userForm.setUserForname(user.getUserForname());
         userForm.setUserActive(user.isEnabled());
-        userForm.setUserRoles(joinUserRoles(user));
-        //model.addAttribute("userResponse", user);   
+        
+        
+        userForm.setUserRoles(getUserRolesStringList(user.getUserRoles()));
+        //userForm.setUserRoles(joinUserRoles(user));
+        List<String> allUserRoles = getUserRolesStringList(userRoleServices.getAllUserRoles());
         model.addAttribute("mailHash", user.getMailHash());
         model.addAttribute("username", user.getUsername());
-        //model.addAttribute("userRolesComma", joinUserRoles(user));
+        model.addAttribute("allUserRoles", allUserRoles);
         model.addAttribute("userForm", userForm);
         
         return TilesUtil.DFR_ADMIN_UPDATEUSER_PAGE;
@@ -124,7 +127,7 @@ public class AdminUserController {
             user.setUserEmail(userForm.getUserEmail());
             user.setUserForname(userForm.getUserForname());
             user.setEnabled(userForm.getUserActive());
-            List<String> rolesStr = splitUserRoles(userForm.getUserRoles());
+            List<String> rolesStr = userForm.getUserRoles();
             List<UserRole> roles = null;
             try {
                 roles = userRoleServices.getUserRolesByNames(rolesStr);
@@ -177,6 +180,7 @@ public class AdminUserController {
         return usersDtoList;        
     }
     
+    @SuppressWarnings("unused")
     private static List<String> splitUserRoles(String userRolesComma) {
         List<String> userRoles = new ArrayList<String>();
         Iterable<String> userRolesStr = Splitter.onPattern("[\\s]*[,;]{1}[\\s]*").split(userRolesComma);
@@ -193,5 +197,13 @@ public class AdminUserController {
             userRolesStr.add(role.getRoleName());
         }
         return Joiner.on(", ").join(userRolesStr);
+    }
+    
+    private static List<String> getUserRolesStringList(Iterable<UserRole> userRoles) {
+        List<String> userRolesString = new ArrayList<String>();
+        for (UserRole role : userRoles) {
+            userRolesString.add(role.getRoleName());
+        }
+        return userRolesString;
     }
 }

@@ -29,7 +29,7 @@
                 </div>
 				<div>
 					<spring:message code="admin.label.roles" text="Roles" /> :
-					<form:input path="userRoles" cssErrorClass="error" />
+					<form:checkboxes items="${allUserRoles}" path="userRoles" cssErrorClass="error"/>
 					<form:errors path="userRoles" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" />
 				</div>				
 			</td>
