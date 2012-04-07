@@ -12,6 +12,8 @@ import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
+import fr.soat.devoxx.game.viewbeans.RankedUserViewBean;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -140,27 +142,32 @@ public class GameController {
     @RequestMapping("/ranking")
     public String ranking(Model model) {
         
-        model.addAttribute("players", userServices.getPlayersTop10());
+        model.addAttribute("players", adaptTop10(userServices.getPlayersTop10()));
         
         return TilesUtil.DFR_GAME_RANKING_PAGE;
     }
 
     @RequestMapping(value="/updateRanking", headers="Accept=*/*", method=RequestMethod.GET)
-    public @ResponseBody List<DevoxxUserDto> updateRanking(Model model) {
-        List<DevoxxUserDto> usersDtoList = new ArrayList<DevoxxUserDto>();
-        DevoxxUserDto userDto;
-        for (DevoxxUser devoxxUser : userServices.getPlayersTop10()) {
-            userDto = new DevoxxUserDto();            
-            userDto.setUserId(devoxxUser.getUserId());
-            userDto.setUserEmail(devoxxUser.getUserEmail());
-            userDto.setMailHash(devoxxUser.getMailHash());
-            userDto.setUserForname(devoxxUser.getUserForname());
-            userDto.setEnabled(devoxxUser.isEnabled());
-            userDto.setScore(devoxxUser.getScore());
-            userDto.setTotalTime(devoxxUser.getTotalTime());
-            usersDtoList.add(userDto);
-        }        
-        return usersDtoList;
+    public @ResponseBody List<RankedUserViewBean> updateRanking(Model model) {
+        return adaptTop10(userServices.getPlayersTop10());
+    }
+
+    private List<RankedUserViewBean> adaptTop10(List<DevoxxUser> playersTop10) {
+        List<RankedUserViewBean> players = new ArrayList<RankedUserViewBean>();
+        
+        for(DevoxxUser currentUser : playersTop10) {
+            players.add(new RankedUserViewBean(currentUser));
+        }
+
+        populateTop10ToHaveAlways10Players(players);
+
+        return players;
+    }
+
+    private void populateTop10ToHaveAlways10Players(List<RankedUserViewBean> players) {
+        while(players.size() < 10) {
+            players.add(new RankedUserViewBean());
+        }
     }
 
     private void addUserInformationToModel(UserGameInformation userGameInformation, Model model) {

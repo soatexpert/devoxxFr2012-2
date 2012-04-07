@@ -43,19 +43,17 @@ public class UserQuestionsGenerator {
 
         if (nbOfIndexes > 0 && maxValue > 0 && maxValue >= nbOfIndexes) {
 
-            int indexesLeftTogenerate = nbOfIndexes;
+            int indexesLeftToGenerate = nbOfIndexes;
 
             Random randomizer = new Random();
-            while(indexesLeftTogenerate > 0) {
+            while(indexesLeftToGenerate > 0) {
                 final Integer randomIndex = randomizer.nextInt(maxValue);
                 if(!indexes.contains(randomIndex)) {
                     indexes.add(randomIndex);
-                    indexesLeftTogenerate--;
+                    indexesLeftToGenerate--;
                 }
             }
         } 
         return indexes;
     }
-
-
 }

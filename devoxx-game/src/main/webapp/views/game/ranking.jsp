@@ -26,10 +26,10 @@
 			<tbody>
 			<c:forEach items="${players}" var="player" varStatus="status">
 				<tr id="player${status.count}" class="${status.count % 2 == 0 ? 'even' : 'odd'}">
-					<td id="picture"><img src="http://www.gravatar.com/avatar/${player.mailHash}?d=mm&s=64" /></td>
-					<td id="name">${player.userForname}</td>
-					<td id="score">${player.score}pts</td>
-					<td id="time">${player.totalTime}s</td>
+					<td id="picture"><c:if test="${not empty player.name}"><img src="${player.avatarUrl}" /></c:if></td>
+					<td id="name">${player.name}</td>
+					<td id="score"><c:if test="${not empty player.name}">${player.score}pts</c:if></td>
+					<td id="time"><c:if test="${not empty  player.name}">${player.totalTime}s</c:if></td>
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -46,16 +46,21 @@
             var clone = $('#ranking').clone();
 
             for(var cmp = 0; cmp < players.length; cmp++) {
-                clone.find("#player" + (cmp+1) + " > #name").text(players[cmp].userForname);
-                clone.find("#player" + (cmp+1) + " > #picture > img").attr("src","http://www.gravatar.com/avatar/" + players[cmp].mailHash + "?d=mm&s=64");
-                clone.find("#player" + (cmp+1) + " > #score").text(players[cmp].score +"pts");
-                clone.find("#player" + (cmp+1) + " > #time").text(players[cmp].totalTime +"s");
+                if(!jQuery.isEmptyObject(players[cmp].name)) {
+                    clone.find("#player" + (cmp+1) + " > #name").text(players[cmp].name);
+                    var avatarParent = clone.find("#player" + (cmp+1) + " > #picture");
+                    if(avatarParent.has("img")) {
+                        avatarParent.children("img").attr("src", players[cmp].avatarUrl);
+                    } else {
+                        avatarParent.append("<img src='" + players[cmp].avatarUrl + "'/>");
+                    }
+                    clone.find("#player" + (cmp+1) + " > #score").text(players[cmp].score +"pts");
+                    clone.find("#player" + (cmp+1) + " > #time").text(players[cmp].totalTime +"s");
+                }
             }
 
             $('#ranking').replaceWith(clone);
         }).error(function(jqXHR, textStatus, errorThrown) {
-        	alert("error " + textStatus);
-        alert("incoming Text " + jqXHR.responseText);
     });
     }
 </script>
