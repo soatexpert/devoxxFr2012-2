@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  */
@@ -26,16 +27,16 @@ public class RankingController {
     private UserServices userServices;
 
     @RequestMapping("")
-    public String ranking(Model model) {
+    public String ranking(Map model) {
 
-        model.addAttribute("players", adaptTop10(userServices.getPlayersTop10()));
+        model.put("players", adaptTop10(userServices.getPlayersTop10()));
 
         return TilesUtil.DFR_GAME_RANKING_PAGE;
     }
 
     @RequestMapping(value="/update", headers="Accept=*/*", method= RequestMethod.GET)
     public @ResponseBody
-    List<RankedUserViewBean> updateRanking(Model model) {
+    List<RankedUserViewBean> updateRanking() {
         return adaptTop10(userServices.getPlayersTop10());
     }
 
@@ -57,4 +58,7 @@ public class RankingController {
         }
     }
 
+    public void setUserServices(UserServices userServices) {
+        this.userServices = userServices;
+    }
 }
