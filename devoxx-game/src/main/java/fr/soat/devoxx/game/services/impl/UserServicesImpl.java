@@ -94,6 +94,6 @@ public class UserServicesImpl implements UserServices  {
 
     @Override
     public List<DevoxxUser> findUsersByFornameOrEmail(String term) {
-        return userRepo.findUsersByFornameOrEmail(term);
+        return userRepo.findUsersByForNameOrEmail(term);
     }
 }

@@ -11,15 +11,14 @@ import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
-import fr.soat.devoxx.game.viewbeans.RankedUserViewBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value = "/")
@@ -113,14 +112,6 @@ public class GameController {
         }
     }
 
-    private void updatePlayerScore(Long answer, DevoxxUser currentUser, UserQuestion question) {
-        if(answer.equals(question.getCorrectAnswer().getQuestionChoiceId())) {
-            currentUser.addToScore(1);
-        }
-        currentUser.addToTime(question.getAnsweringTimeInSeconds());
-        userServices.updateUser(currentUser);
-    }
-
     @RequestMapping(value = "/pause")
     public String pause(Model model) {
         return index(model);
@@ -136,35 +127,12 @@ public class GameController {
         return TilesUtil.DFR_GAME_ABOUT_PAGE;
     }
 
-    @RequestMapping("/ranking")
-    public String ranking(Model model) {
-        
-        model.addAttribute("players", adaptTop10(userServices.getPlayersTop10()));
-        
-        return TilesUtil.DFR_GAME_RANKING_PAGE;
-    }
-
-    @RequestMapping(value="/updateRanking", headers="Accept=*/*", method=RequestMethod.GET)
-    public @ResponseBody List<RankedUserViewBean> updateRanking(Model model) {
-        return adaptTop10(userServices.getPlayersTop10());
-    }
-
-    private List<RankedUserViewBean> adaptTop10(List<DevoxxUser> playersTop10) {
-        List<RankedUserViewBean> players = new ArrayList<RankedUserViewBean>();
-        
-        for(DevoxxUser currentUser : playersTop10) {
-            players.add(new RankedUserViewBean(currentUser));
+    private void updatePlayerScore(Long answer, DevoxxUser currentUser, UserQuestion question) {
+        if(answer.equals(question.getCorrectAnswer().getQuestionChoiceId())) {
+            currentUser.addToScore(1);
         }
-
-        populateTop10ToHaveAlways10Players(players);
-
-        return players;
-    }
-
-    private void populateTop10ToHaveAlways10Players(List<RankedUserViewBean> players) {
-        while(players.size() < 10) {
-            players.add(new RankedUserViewBean());
-        }
+        currentUser.addToTime(question.getAnsweringTimeInSeconds());
+        userServices.updateUser(currentUser);
     }
 
     private void addUserInformationToModel(UserGameInformation userGameInformation, Model model) {

@@ -41,7 +41,7 @@
     });
 
     function updateRanking() {
-        $.getJSON("updateRanking", { }, function(players) {
+        $.getJSON("ranking/update", { }, function(players) {
 
             var clone = $('#ranking').clone();
 

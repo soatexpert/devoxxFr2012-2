@@ -14,7 +14,7 @@
     <security:http pattern="/rules" security="none" />
     <security:http pattern="/about" security="none" />
     <security:http pattern="/ranking" security="none" />
-    <security:http pattern="/updateRanking" security="none" />
+    <security:http pattern="/ranking/update" security="none"/>
     <security:http pattern="/error/**" security="none" />
 	<security:http pattern="/css/**" security="none" />
 	<security:http pattern="/index/**" security="none" />
