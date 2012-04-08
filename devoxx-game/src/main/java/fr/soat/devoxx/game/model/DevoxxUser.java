@@ -31,7 +31,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     String userEmail;
 
     @Column(name = "REGLEMENT_ACCEPTED")
-    boolean reglementAccepted;
+    boolean rulesApproved;
 
     @Column(name = "COMMERCIAL_ACCEPTED")
     boolean commercialEmailAccepted;
@@ -138,12 +138,12 @@ public class DevoxxUser implements Serializable, UserDetails {
         this.userRoles.add(userRole);
     }
 
-    public void setReglementAccepted(boolean reglementAccepted) {
-        this.reglementAccepted = reglementAccepted;
+    public void setRulesApproved(boolean rulesApproved) {
+        this.rulesApproved = rulesApproved;
     }
 
-    public boolean isReglementAccepted() {
-        return reglementAccepted;
+    public boolean isRulesApproved() {
+        return rulesApproved;
     }
     
     @Transient
@@ -158,7 +158,7 @@ public class DevoxxUser implements Serializable, UserDetails {
         int result = 1;
         result = prime * result + (commercialEmailAccepted ? 1231 : 1237);
         result = prime * result + (enabled ? 1231 : 1237);
-        result = prime * result + (reglementAccepted ? 1231 : 1237);
+        result = prime * result + (rulesApproved ? 1231 : 1237);
         result = prime * result + ((userEmail == null) ? 0 : userEmail.hashCode());
         result = prime * result + ((userForname == null) ? 0 : userForname.hashCode());
         result = prime * result + ((userRoles == null) ? 0 : userRoles.hashCode());
@@ -179,7 +179,7 @@ public class DevoxxUser implements Serializable, UserDetails {
             return false;
         if (enabled != other.enabled)
             return false;
-        if (reglementAccepted != other.reglementAccepted)
+        if (rulesApproved != other.rulesApproved)
             return false;
         if (userEmail == null) {
             if (other.userEmail != null)
@@ -206,8 +206,8 @@ public class DevoxxUser implements Serializable, UserDetails {
 
     @Override
     public String toString() {
-        return "DevoxxUser [userId=" + userId + ", username=" + username + ", userForname=" + userForname + ", userEmail=" + userEmail + ", reglementAccepted="
-                + reglementAccepted + ", commercialEmailAccepted=" + commercialEmailAccepted + ", nextEventsAccepted=" + nextEventsAccepted
+        return "DevoxxUser [userId=" + userId + ", username=" + username + ", userForname=" + userForname + ", userEmail=" + userEmail + ", rulesApproved="
+                + rulesApproved + ", commercialEmailAccepted=" + commercialEmailAccepted + ", nextEventsAccepted=" + nextEventsAccepted
                 + ", isAcceptedQrCode=" + isAcceptedQrCode + ", enabled=" + enabled + ", userRoles=" + userRoles + "]";
     }
 

@@ -4,7 +4,7 @@ import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
 import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.forms.AnswerForm;
-import fr.soat.devoxx.game.forms.UserGameInformation;
+import fr.soat.devoxx.game.forms.QuestionsProgressTracker;
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.QuestionChoice;
 import fr.soat.devoxx.game.model.UserQuestion;
@@ -13,18 +13,19 @@ import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/")
-@SessionAttributes("userGameInfos")
+@SessionAttributes("questionsProgressTracker")
 public class GameController {
 
     @Autowired
@@ -33,90 +34,93 @@ public class GameController {
     @Autowired
     private QuestionServices questionServices;
 
-    @RequestMapping(value = {"/", "/home","/index", ""})
-    public String index(Map model) {
-        final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @RequestMapping(value = {"", "/", "/home","/index", "/pause"})
+    public String index(final Map model, final Principal principal) {
 
-        if(!currentUser.isReglementAccepted()) {
+        final DevoxxUser user = convertPrincipalToDevoxxUser(principal);
+
+        return processIndexPageForUser(model, user);
+    }
+
+    private String processIndexPageForUser(final Map model, final DevoxxUser user) {
+        if(!user.isRulesApproved()) {
             return TilesUtil.DFR_GAME_RULES_APPROVAL;
         }
 
+        final QuestionsProgressTracker questionsProgressTracker = new QuestionsProgressTracker(
+                questionServices.getPendingQuestionsForUser(user));
 
-        UserGameInformation userGameInformation  = new UserGameInformation(
-                userServices.getPosition(currentUser),
-                userServices.nbOfUsers(),
-                questionServices.getPendingQuestionsForUser(currentUser));
-        model.put("userGameInfos",userGameInformation);
+        model.put("questionsProgressTracker", questionsProgressTracker);
 
-        model.put("approuved",currentUser.isEnabled());
-        model.put("username",currentUser.getUserForname());
+        model.put("approved", user.isEnabled());
+        model.put("username", user.getUserForname());
 
-        model.put("rank",userGameInformation.getCurrentRanking());
-        model.put("nbUsers",userGameInformation.getNbOfPlayers());
-        model.put("waitingQuestions",userGameInformation.getNbOfQuestionsToAnswer());
+        model.put("rank", userServices.getPosition(user));
+        model.put("nbUsers", userServices.nbOfUsers());
+        model.put("waitingQuestions", questionsProgressTracker.getNbOfQuestionsToAnswer());
 
 
         return TilesUtil.DFR_GAME_INDEX_PAGE;
     }
 
     @RequestMapping("/approveRules")
-    public String approveRules(Map model) {
-        final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String approveRules(final Map model, final Principal principal) {
+        final DevoxxUser user = convertPrincipalToDevoxxUser(principal);
 
-        userServices.approveRules(currentUser);
+        userServices.approveRules(user);
         
-        return index(model);
+        return processIndexPageForUser(model, user);
     }
-    
-    @RequestMapping("/play")
-    public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Map model) {
 
+    @RequestMapping("/play")
+    public String play(@ModelAttribute("questionsProgressTracker") final QuestionsProgressTracker questionsProgressTracker, 
+                       final Map model, 
+                       final Principal principal) {
         try {
-            UserQuestion nextQuestion = userGameInformation.nextQuestion();
+            final UserQuestion nextQuestion = questionsProgressTracker.nextQuestion();
 
             nextQuestion.setStartQuestion(System.currentTimeMillis());
 
             questionServices.updateUserQuestion(nextQuestion);
 
-            model.put("questionStartDate",nextQuestion.getStartQuestion());
-            model.put("answerForm",new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
+            model.put("answerForm", new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
             model.put("question", nextQuestion.getQuestion());
-            addUserInformationToModel(userGameInformation, model);
+            addQuestionsProgressInformationToModel(questionsProgressTracker, model);
+
             return TilesUtil.DFR_GAME_PLAY_PAGE;
         } catch(NoMoreQuestionException e) {
-            return index(model);
+            return index(model, principal);
         }
     }
 
     @RequestMapping(value = "/next")
-    public String nextQuestion(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
+    public String nextQuestion(@ModelAttribute("questionsProgressTracker") QuestionsProgressTracker questionsProgressTracker,
                                @RequestParam("questionId") Long questionId,
                                @RequestParam("answer") Long answer,
-                               Map model) {
+                               Map model, Principal principal) {
         try {
             final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            addUserInformationToModel(userGameInformation, model);
+            addQuestionsProgressInformationToModel(questionsProgressTracker, model);
 
-            UserQuestion question = answerQuestion(questionId, answer, userGameInformation);
+            final UserQuestion question = questionsProgressTracker.findQuestionById(questionId);
+
+            checkQuestionNotAlreadyAnswered(question);
+
+            updateQuestionWithAnswer(answer, question);
 
             updatePlayerScore(answer, currentUser, question);
 
-            model.put("answerDelayInSeconds",question.getAnsweringTimeInSeconds());
-            model.put("isAnswerCorrect",question.isAnswerCorrect());
+            model.put("answerDelayInSeconds", question.getAnsweringTimeInSeconds());
+            model.put("isAnswerCorrect", question.isAnswerCorrect());
             model.put("rightAnswer", question.getCorrectAnswer());
 
             return TilesUtil.DFR_GAME_ANSWER_PAGE;
         } catch(AlreadyAnsweredException e) {
-            return index(model);
+            return index(model, principal);
         } catch (InvalidQuestionException e) {
-            return index(model);
+            return index(model, principal);
         }
-    }
-
-    @RequestMapping(value = "/pause")
-    public String pause(Map model) {
-        return index(model);
     }
 
     @RequestMapping("/rules")
@@ -129,6 +133,10 @@ public class GameController {
         return TilesUtil.DFR_GAME_ABOUT_PAGE;
     }
 
+    private DevoxxUser convertPrincipalToDevoxxUser(Principal principal) {
+        return (DevoxxUser)((OpenIDAuthenticationToken)principal).getPrincipal();
+    }
+
     private void updatePlayerScore(Long answer, DevoxxUser currentUser, UserQuestion question) {
         if(answer.equals(question.getCorrectAnswer().getQuestionChoiceId())) {
             currentUser.addToScore(1);
@@ -137,24 +145,12 @@ public class GameController {
         userServices.updateUser(currentUser);
     }
 
-    private void addUserInformationToModel(UserGameInformation userGameInformation, Map model) {
-        model.put("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
-        model.put("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
-        model.put("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
+    private void addQuestionsProgressInformationToModel(QuestionsProgressTracker questionsProgressTracker, Map model) {
+        model.put("nbOfQuestionsAnswered", questionsProgressTracker.getNbOfQuestionAnswered());
+        model.put("nbOfQuestionsTotal", questionsProgressTracker.getNbOfQuestionsInProgress());
+        model.put("nbOfQuestionLeft", questionsProgressTracker.getNbOfQuestionsToAnswer());
     }
 
-    private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {
-       for (UserQuestion userQuestion : userGameInformation.getQuestionsInProgress()) {
-            if(userQuestion.getQuestion().getIdQuestion().equals(questionId))  {
-                checkQuestionNotAlreadyAnswered(userQuestion);
-
-                updateQuestionWithAnswer(answer, userQuestion);
-
-                return userQuestion;
-            }
-        }
-        throw new InvalidQuestionException();
-    }
 
     private void updateQuestionWithAnswer(Long answer, UserQuestion userQuestion) {
         for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
@@ -170,5 +166,13 @@ public class GameController {
         if(userQuestion.getResponse() != null) {
             throw new AlreadyAnsweredException();
         }
+    }
+
+    public void setUserServices(UserServices userServices) {
+        this.userServices = userServices;
+    }
+
+    public void setQuestionServices(QuestionServices questionServices) {
+        this.questionServices = questionServices;
     }
 }

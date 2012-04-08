@@ -82,7 +82,7 @@ public class UserServicesImpl implements UserServices  {
 
     @Override
     public void approveRules(DevoxxUser user) {
-        user.setReglementAccepted(true);
+        user.setRulesApproved(true);
         updateUser(user);
     }
 
