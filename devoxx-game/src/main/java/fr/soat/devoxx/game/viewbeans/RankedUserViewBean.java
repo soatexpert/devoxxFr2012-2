@@ -18,7 +18,7 @@ public class RankedUserViewBean {
         this.email = player.getUserEmail();
         this.score = player.getScore();
         this.totalTime = player.getTotalTime();
-        this.avatarUrl = "http://www.gravatar.com/avatar/" + player.getMailHash() + "?d=mm&s=64";
+        this.avatarUrl = "http://www.gravatar.com/avatar/" + player.getMailHash() + "?d=mm&s=50";
     }
 
     public RankedUserViewBean() {

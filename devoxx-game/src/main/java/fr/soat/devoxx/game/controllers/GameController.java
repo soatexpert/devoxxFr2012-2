@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping(value = "/")
 @SessionAttributes("userGameInfos")
@@ -32,7 +34,7 @@ public class GameController {
     private QuestionServices questionServices;
 
     @RequestMapping(value = {"/", "/home","/index", ""})
-    public String index(Model model) {
+    public String index(Map model) {
         final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if(!currentUser.isReglementAccepted()) {
@@ -44,21 +46,21 @@ public class GameController {
                 userServices.getPosition(currentUser),
                 userServices.nbOfUsers(),
                 questionServices.getPendingQuestionsForUser(currentUser));
-        model.addAttribute("userGameInfos",userGameInformation);
+        model.put("userGameInfos",userGameInformation);
 
-        model.addAttribute("approuved",currentUser.isEnabled());
-        model.addAttribute("username",currentUser.getUserForname());
+        model.put("approuved",currentUser.isEnabled());
+        model.put("username",currentUser.getUserForname());
 
-        model.addAttribute("rank",userGameInformation.getCurrentRanking());
-        model.addAttribute("nbUsers",userGameInformation.getNbOfPlayers());
-        model.addAttribute("waitingQuestions",userGameInformation.getNbOfQuestionsToAnswer());
+        model.put("rank",userGameInformation.getCurrentRanking());
+        model.put("nbUsers",userGameInformation.getNbOfPlayers());
+        model.put("waitingQuestions",userGameInformation.getNbOfQuestionsToAnswer());
 
 
         return TilesUtil.DFR_GAME_INDEX_PAGE;
     }
 
     @RequestMapping("/approveRules")
-    public String approveRules(Model model) {
+    public String approveRules(Map model) {
         final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         userServices.approveRules(currentUser);
@@ -67,7 +69,7 @@ public class GameController {
     }
     
     @RequestMapping("/play")
-    public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Model model) {
+    public String play(@ModelAttribute("userGameInfos")UserGameInformation userGameInformation, Map model) {
 
         try {
             UserQuestion nextQuestion = userGameInformation.nextQuestion();
@@ -76,9 +78,9 @@ public class GameController {
 
             questionServices.updateUserQuestion(nextQuestion);
 
-            model.addAttribute("questionStartDate",nextQuestion.getStartQuestion());
-            model.addAttribute("answerForm",new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
-            model.addAttribute("question", nextQuestion.getQuestion());
+            model.put("questionStartDate",nextQuestion.getStartQuestion());
+            model.put("answerForm",new AnswerForm(nextQuestion.getQuestion().getIdQuestion()));
+            model.put("question", nextQuestion.getQuestion());
             addUserInformationToModel(userGameInformation, model);
             return TilesUtil.DFR_GAME_PLAY_PAGE;
         } catch(NoMoreQuestionException e) {
@@ -90,7 +92,7 @@ public class GameController {
     public String nextQuestion(@ModelAttribute("userGameInfos") UserGameInformation userGameInformation,
                                @RequestParam("questionId") Long questionId,
                                @RequestParam("answer") Long answer,
-                               Model model) {
+                               Map model) {
         try {
             final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -100,9 +102,9 @@ public class GameController {
 
             updatePlayerScore(answer, currentUser, question);
 
-            model.addAttribute("answerDelayInSeconds",question.getAnsweringTimeInSeconds());
-            model.addAttribute("isAnswerCorrect",question.isAnswerCorrect());
-            model.addAttribute("rightAnswer", question.getCorrectAnswer());
+            model.put("answerDelayInSeconds",question.getAnsweringTimeInSeconds());
+            model.put("isAnswerCorrect",question.isAnswerCorrect());
+            model.put("rightAnswer", question.getCorrectAnswer());
 
             return TilesUtil.DFR_GAME_ANSWER_PAGE;
         } catch(AlreadyAnsweredException e) {
@@ -113,7 +115,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/pause")
-    public String pause(Model model) {
+    public String pause(Map model) {
         return index(model);
     }
 
@@ -135,10 +137,10 @@ public class GameController {
         userServices.updateUser(currentUser);
     }
 
-    private void addUserInformationToModel(UserGameInformation userGameInformation, Model model) {
-        model.addAttribute("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
-        model.addAttribute("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
-        model.addAttribute("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
+    private void addUserInformationToModel(UserGameInformation userGameInformation, Map model) {
+        model.put("nbOfQuestionsAnswered",userGameInformation.getNbOfQuestionAnswered());
+        model.put("nbOfQuestionsTotal",userGameInformation.getNbOfQuestionsInProgress());
+        model.put("nbOfQuestionLeft",userGameInformation.getNbOfQuestionsToAnswer());
     }
 
     private UserQuestion answerQuestion(Long questionId, Long answer, UserGameInformation userGameInformation) throws InvalidQuestionException {

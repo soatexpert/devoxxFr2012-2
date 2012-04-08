@@ -17,7 +17,7 @@ h1 {
 
 h1 img {
 	vertical-align:middle;
-	padding-bottom:20px;
+	padding-bottom:10px;
 	padding-left: 20px;
 }
 
@@ -29,11 +29,11 @@ h1 img {
 	margin-left : 5%;
 	margin-right:0px;
 	margin-top:0px;
-	padding : 1% 0px 2% 2%;	
+	padding : 10px 0px 10px 10px;	
 }
 
 table thead {
-	visibility:hidden;
+	display:none;
 }
 
 td {
@@ -45,7 +45,7 @@ td {
 }
 
 #picture {
-	width:64px;
+	width:40px;
 }
 
 #name {
