@@ -3,7 +3,7 @@ package fr.soat.devoxx.game.controllers;
 import fr.soat.devoxx.game.exceptions.QuestionNotFoundException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.forms.AnswerForm;
-import fr.soat.devoxx.game.forms.QuestionsProgressTracker;
+import fr.soat.devoxx.game.services.QuestionsProgressTracker;
 import fr.soat.devoxx.game.framework.DevoxxUserBuilder;
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.Question;

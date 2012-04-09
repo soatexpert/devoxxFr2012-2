@@ -1,5 +1,6 @@
-package fr.soat.devoxx.game.forms;
+package fr.soat.devoxx.game.services;
 
+import fr.soat.devoxx.game.exceptions.QuestionNotFoundException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.model.UserQuestion;
 
@@ -8,36 +9,20 @@ import java.util.List;
 
 /**
  */
-public class UserGameInformation implements Serializable {
+public class QuestionsProgressTracker implements Serializable {
 
     private static final long serialVersionUID = -1918069635247552059L;
 
-    private long currentRanking;
-    private long nbOfPlayers;
     private List<UserQuestion> questionsInProgress;
 
-    public UserGameInformation(long currentRanking, long nbOfPlayers, List<UserQuestion> questionsInProgress) {
-        this.currentRanking = currentRanking;
-        this.nbOfPlayers = nbOfPlayers;
+    public QuestionsProgressTracker(List<UserQuestion> questionsInProgress) {
         this.questionsInProgress = questionsInProgress;
     }
 
-    public long getCurrentRanking() {
-        return currentRanking;
-    }
-
-    public long getNbOfPlayers() {
-        return nbOfPlayers;
-    }
-
-    public List<UserQuestion> getQuestionsInProgress() {
-        return questionsInProgress;
-    }
-    
     public int getNbOfQuestionsToAnswer() {
         int nbOfQuestionsToAnswer = 0;
         for(UserQuestion question : questionsInProgress) {
-            if(question.getResponse() == null)  {
+            if(question.getAnswer() == null)  {
                 nbOfQuestionsToAnswer++;
             }
         }
@@ -54,10 +39,19 @@ public class UserGameInformation implements Serializable {
 
     public UserQuestion nextQuestion() {
         for(UserQuestion userQuestion : questionsInProgress) {
-            if(userQuestion.getResponse() == null) {
+            if(userQuestion.getAnswer() == null) {
                 return userQuestion;
             }
         }
         throw new NoMoreQuestionException();
+    }
+
+    public UserQuestion findQuestionById(Long questionId) throws QuestionNotFoundException {
+        for (UserQuestion userQuestion : questionsInProgress) {
+            if (userQuestion.getQuestion().getIdQuestion().equals(questionId)) {
+                return userQuestion;
+            }
+        }
+        throw new QuestionNotFoundException();
     }
 }
