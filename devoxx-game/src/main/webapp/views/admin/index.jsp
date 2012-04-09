@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <script type="text/javascript">
@@ -19,6 +20,9 @@ $(document).ready(function() {
 <fieldset class="dlmenu center">
 <legend>Menu</legend>
 <dl>
+    <dd>
+        Time : <%= new Date() %>
+    </dd>
     <dd>
         Search <input type="text" placeholder="Username or Email" id="user_search" />
     </dd>
