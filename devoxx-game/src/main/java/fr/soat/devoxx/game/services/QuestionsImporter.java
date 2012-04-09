@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,14 +98,15 @@ public class QuestionsImporter {
     private String extractCellValueAtIndex(HSSFRow row, int index) {
         final HSSFCell cell = row.getCell(index);
         if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
-            return cell.getNumericCellValue() + "";
+            DecimalFormat df = new DecimalFormat("#.####");
+            return df.format(cell.getNumericCellValue());
         }
         
         return cell.getStringCellValue();
     }
 
     private int extractIntCellValueAtIndex(HSSFRow row, int index) {
-        return (int)row.getCell(index).getNumericCellValue();
+        return (int)Math.floor(row.getCell(index).getNumericCellValue());
     }
 
     public void setQuestionServices(QuestionServices questionServices) {
