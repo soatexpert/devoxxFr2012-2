@@ -1,6 +1,7 @@
 package fr.soat.devoxx.game.services;
 
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
+import fr.soat.devoxx.game.exceptions.QuestionNotFoundException;
 import fr.soat.devoxx.game.model.Question;
 import fr.soat.devoxx.game.model.QuestionChoice;
 import fr.soat.devoxx.game.model.UserQuestion;
@@ -59,24 +60,40 @@ public class QuestionProgressTrackerTest {
     @Test
     public void when_want_NextQuestion_with_FirstAnswered_then_returnSecondQuestion() {
         List<UserQuestion> userQuestions = createUserQuestions(2, true, false);
-        QuestionsProgressTracker questionsProgressTracker = buildUserGameInformation(userQuestions);
+        final QuestionsProgressTracker questionsProgressTracker = buildUserGameInformation(userQuestions);
 
-        UserQuestion userQuestion = questionsProgressTracker.nextQuestion();
+        final UserQuestion userQuestion = questionsProgressTracker.nextQuestion();
 
         Assert.assertEquals(userQuestions.get(1),userQuestion);
     }
 
+    @Test(expected= QuestionNotFoundException.class)
+    public void when_search_a_question_unknown_throw_exception() throws QuestionNotFoundException {
+        List<UserQuestion> userQuestions = createUserQuestions(2, true, false);
+        final QuestionsProgressTracker questionsProgressTracker = buildUserGameInformation(userQuestions);
 
+        questionsProgressTracker.findQuestionById(100l);
+    }
+
+    @Test
+    public void when_search_an_existing_question() throws QuestionNotFoundException {
+        List<UserQuestion> userQuestions = createUserQuestions(2, true, false);
+        final QuestionsProgressTracker questionsProgressTracker = buildUserGameInformation(userQuestions);
+
+        final UserQuestion question = questionsProgressTracker.findQuestionById(1l);
+        Assert.assertEquals(1l,question.getId().longValue());
+    }
 
     private QuestionsProgressTracker buildUserGameInformation(List<UserQuestion> userQuestions) {
         return new QuestionsProgressTracker(userQuestions);
     }
 
     private List<UserQuestion> createUserQuestions(final int nbOfQuestions, boolean... answered) {
-        List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
+        final List<UserQuestion> currentUserPendingQuestions = new ArrayList<UserQuestion>();
 
         for(int currentQuestionIdx = 0; currentQuestionIdx < nbOfQuestions; currentQuestionIdx++) {
             UserQuestion pendingQuestion = new UserQuestion();
+            pendingQuestion.setId(currentQuestionIdx+1l);
             pendingQuestion.setQuestion(createQuestion("Question " + currentQuestionIdx, "rep1", "rep2", "rep3", "rep4"));
             if(answered[currentQuestionIdx]) {
                 pendingQuestion.setAnswer(new QuestionChoice());
