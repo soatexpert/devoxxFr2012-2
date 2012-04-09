@@ -33,15 +33,6 @@ public class DevoxxUser implements Serializable, UserDetails {
     @Column(name = "REGLEMENT_ACCEPTED")
     boolean rulesApproved;
 
-    @Column(name = "COMMERCIAL_ACCEPTED")
-    boolean commercialEmailAccepted;
-
-    @Column(name = "NEWS_ACCEPTED")
-    boolean nextEventsAccepted;
-
-    @Column(name = "QRCODE_ACCPETED")
-    boolean isAcceptedQrCode;
-    
     @Column(name = "IS_ENABLED")
     boolean enabled = false;
 
@@ -156,7 +147,6 @@ public class DevoxxUser implements Serializable, UserDetails {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (commercialEmailAccepted ? 1231 : 1237);
         result = prime * result + (enabled ? 1231 : 1237);
         result = prime * result + (rulesApproved ? 1231 : 1237);
         result = prime * result + ((userEmail == null) ? 0 : userEmail.hashCode());
@@ -175,8 +165,6 @@ public class DevoxxUser implements Serializable, UserDetails {
         if (getClass() != obj.getClass())
             return false;
         DevoxxUser other = (DevoxxUser) obj;
-        if (commercialEmailAccepted != other.commercialEmailAccepted)
-            return false;
         if (enabled != other.enabled)
             return false;
         if (rulesApproved != other.rulesApproved)
@@ -207,8 +195,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     @Override
     public String toString() {
         return "DevoxxUser [userId=" + userId + ", username=" + username + ", userForname=" + userForname + ", userEmail=" + userEmail + ", rulesApproved="
-                + rulesApproved + ", commercialEmailAccepted=" + commercialEmailAccepted + ", nextEventsAccepted=" + nextEventsAccepted
-                + ", isAcceptedQrCode=" + isAcceptedQrCode + ", enabled=" + enabled + ", userRoles=" + userRoles + "]";
+                + rulesApproved + ", enabled=" + enabled + ", userRoles=" + userRoles + "]";
     }
 
     @Transient

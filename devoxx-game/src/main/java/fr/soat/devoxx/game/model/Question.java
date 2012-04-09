@@ -1,6 +1,9 @@
 package fr.soat.devoxx.game.model;
 
+import com.google.common.collect.Lists;
+
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.*;
@@ -45,6 +48,13 @@ public class Question implements Serializable {
 
     public List<QuestionChoice> getChoices() {
         return choices;
+    }
+
+    @Transient
+    public List<QuestionChoice> getShuffledChoices() {
+        final List<QuestionChoice> shuffledChoices = Lists.newArrayList(choices);
+        Collections.shuffle(shuffledChoices);
+        return shuffledChoices;
     }
 
     public void setChoices(List<QuestionChoice> choices) {

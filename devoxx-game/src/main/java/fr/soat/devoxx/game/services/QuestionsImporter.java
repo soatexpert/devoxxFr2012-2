@@ -77,19 +77,20 @@ public class QuestionsImporter {
         question.setQuestionLabel(questionLabel);
 
         List<QuestionChoice> choices = new ArrayList<QuestionChoice>();
-        choices.add(buildChoice(answer1));
-        choices.add(buildChoice(answer2));
-        choices.add(buildChoice(answer3));
-        choices.add(buildChoice(answer4));
+        choices.add(buildChoice(answer1, questionIdAsLong, 1));
+        choices.add(buildChoice(answer2, questionIdAsLong, 2));
+        choices.add(buildChoice(answer3, questionIdAsLong, 3));
+        choices.add(buildChoice(answer4, questionIdAsLong, 4));
         question.setChoices(choices);
 
         question.setCorrectAnswer(choices.get(correctAnswerIndex - 1));
         return question;
     }
 
-    private QuestionChoice buildChoice(String answer1) {
+    private QuestionChoice buildChoice(String answer, long questionId, long answerId) {
         final QuestionChoice choice = new QuestionChoice();
-        choice.setChoiceLabel(answer1);
+        choice.setQuestionChoiceId(questionId*10+answerId);
+        choice.setChoiceLabel(answer);
         return choice;
     }
 

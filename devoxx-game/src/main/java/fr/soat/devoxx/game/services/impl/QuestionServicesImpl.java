@@ -57,7 +57,6 @@ public class QuestionServicesImpl implements QuestionServices {
         }
     }
 
-
     public void updateQuestionWithAnswer(UserQuestion userQuestion, Long answer) {
         for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
             if(choice.getQuestionChoiceId().equals(answer)) {
@@ -66,5 +65,9 @@ public class QuestionServicesImpl implements QuestionServices {
                 updateUserQuestion(userQuestion);
             }
         }
+    }
+
+    public void setUserQuestionRepository(UserQuestionRepository userQuestionRepository) {
+        this.userQuestionRepository = userQuestionRepository;
     }
 }

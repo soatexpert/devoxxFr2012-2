@@ -16,7 +16,6 @@ public class QuestionChoice implements Serializable {
     private static final long serialVersionUID = 2477899775268524275L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
 	Long questionChoiceId;
 

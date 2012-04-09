@@ -26,28 +26,29 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource"
+	<!--bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost/devoxx" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
-	</bean>
+	</bean -->
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="myEmf" />
-        <property name="jpaDialect">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-        </property>
-	</bean>
-
-    <!--bean id="dataSource"
+    <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/devoxx-game" />
         <property name="username" value="soat-devoxx" />
         <property name="password" value="soat" />
-    </bean-->
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="myEmf" />
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+        </property>
+    </bean>
+
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 

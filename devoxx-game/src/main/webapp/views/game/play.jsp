@@ -27,7 +27,7 @@ function refreshElapsedTime() {
 <f:hidden path="questionId"/>
 <fieldset data-role="controlgroup">
 	<legend>${question.questionLabel}</legend>
-	    <c:forEach items="${question.choices}" var="answer" varStatus="status">
+	    <c:forEach items="${question.shuffledChoices}" var="answer" varStatus="status">
                 <f:radiobutton path="answer" id="radio-choice-${status.count}" value="${answer.questionChoiceId}"/>
             <label for="radio-choice-${status.count}">${answer.choiceLabel}</label>
         </c:forEach>
