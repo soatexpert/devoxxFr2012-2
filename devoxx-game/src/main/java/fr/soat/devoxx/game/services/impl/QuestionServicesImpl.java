@@ -1,9 +1,6 @@
 package fr.soat.devoxx.game.services.impl;
 
-import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.Question;
-import fr.soat.devoxx.game.model.QuestionPackType;
-import fr.soat.devoxx.game.model.UserQuestion;
+import fr.soat.devoxx.game.model.*;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.repository.QuestionRepository;
 import fr.soat.devoxx.game.services.repository.UserQuestionRepository;
@@ -61,4 +58,13 @@ public class QuestionServicesImpl implements QuestionServices {
     }
 
 
+    public void updateQuestionWithAnswer(UserQuestion userQuestion, Long answer) {
+        for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
+            if(choice.getQuestionChoiceId().equals(answer)) {
+                userQuestion.setAnswer(choice);
+                userQuestion.setEndQuestion(System.currentTimeMillis());
+                updateUserQuestion(userQuestion);
+            }
+        }
+    }
 }

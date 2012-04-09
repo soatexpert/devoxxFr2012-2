@@ -22,7 +22,7 @@ public class Question implements Serializable {
 	List<QuestionChoice> choices;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	QuestionChoice goodChoice;
+	QuestionChoice correctAnswer;
 
     @Enumerated(EnumType.STRING)
     QuestionPackType pack;
@@ -51,12 +51,12 @@ public class Question implements Serializable {
         this.choices = choices;
     }
 
-    public QuestionChoice getGoodChoice() {
-        return goodChoice;
+    public QuestionChoice getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public void setGoodChoice(QuestionChoice goodChoice) {
-        this.goodChoice = goodChoice;
+    public void setCorrectAnswer(QuestionChoice correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     public QuestionPackType getPack() {

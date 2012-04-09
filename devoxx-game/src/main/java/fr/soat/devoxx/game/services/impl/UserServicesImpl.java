@@ -1,5 +1,6 @@
 package fr.soat.devoxx.game.services.impl;
 
+import fr.soat.devoxx.game.controllers.GameController;
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.QuestionPackType;
 import fr.soat.devoxx.game.model.UserQuestion;
@@ -95,5 +96,13 @@ public class UserServicesImpl implements UserServices  {
     @Override
     public List<DevoxxUser> findUsersByFornameOrEmail(String term) {
         return userRepo.findUsersByForNameOrEmail(term);
+    }
+
+    public void updatePlayerScore(UserQuestion question) {
+        if(question.isAnswerCorrect()) {
+            question.getPlayer().addToScore(1);
+        }
+        question.getPlayer().addToTime(question.getAnsweringTimeInSeconds());
+        updateUser(question.getPlayer());
     }
 }

@@ -25,7 +25,7 @@ public class UserQuestion implements Serializable {
     int hourOfappearence;
 
 	@OneToOne
-	QuestionChoice response;
+	QuestionChoice answer;
 
     @ManyToOne
     DevoxxUser player;
@@ -68,12 +68,12 @@ public class UserQuestion implements Serializable {
         this.endQuestion = endQuestion;
     }
 
-    public QuestionChoice getResponse() {
-        return response;
+    public QuestionChoice getAnswer() {
+        return answer;
     }
 
-    public void setResponse(QuestionChoice response) {
-        this.response = response;
+    public void setAnswer(QuestionChoice answer) {
+        this.answer = answer;
     }
 
     public int getAnsweringTimeInSeconds() {
@@ -84,12 +84,13 @@ public class UserQuestion implements Serializable {
         return endQuestion - startQuestion;
     }
 
+    @Transient
     public boolean isAnswerCorrect() {
-        return getQuestion().getGoodChoice().equals(getResponse());
+        return getQuestion().getCorrectAnswer().equals(getAnswer());
     }
 
     public QuestionChoice getCorrectAnswer() {
-        return getQuestion().getGoodChoice();
+        return getQuestion().getCorrectAnswer();
     }
 
     public UserQuestion() {
@@ -110,5 +111,10 @@ public class UserQuestion implements Serializable {
 
     public void setHourOfappearence(int hourOfappearence) {
         this.hourOfappearence = hourOfappearence;
+    }
+
+    @Transient
+    public boolean isAlreadyAnswered() {
+        return getAnswer() != null;
     }
 }

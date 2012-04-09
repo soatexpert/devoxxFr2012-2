@@ -2,7 +2,9 @@ package fr.soat.devoxx.game.services;
 
 import java.util.List;
 
+import fr.soat.devoxx.game.controllers.GameController;
 import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.UserQuestion;
 
 public interface UserServices {
 
@@ -27,4 +29,6 @@ public interface UserServices {
     public List<DevoxxUser> getPlayersTop10();
     
     public List<DevoxxUser> findUsersByFornameOrEmail(String term);
+
+    void updatePlayerScore(UserQuestion question);
 }

@@ -83,7 +83,7 @@ public class QuestionsImporter {
         choices.add(buildChoice(answer4));
         question.setChoices(choices);
 
-        question.setGoodChoice(choices.get(correctAnswerIndex-1));
+        question.setCorrectAnswer(choices.get(correctAnswerIndex - 1));
         return question;
     }
 

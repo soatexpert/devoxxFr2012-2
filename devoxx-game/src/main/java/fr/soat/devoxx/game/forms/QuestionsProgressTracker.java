@@ -1,6 +1,6 @@
 package fr.soat.devoxx.game.forms;
 
-import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
+import fr.soat.devoxx.game.exceptions.QuestionNotFoundException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.model.UserQuestion;
 
@@ -22,7 +22,7 @@ public class QuestionsProgressTracker implements Serializable {
     public int getNbOfQuestionsToAnswer() {
         int nbOfQuestionsToAnswer = 0;
         for(UserQuestion question : questionsInProgress) {
-            if(question.getResponse() == null)  {
+            if(question.getAnswer() == null)  {
                 nbOfQuestionsToAnswer++;
             }
         }
@@ -39,19 +39,19 @@ public class QuestionsProgressTracker implements Serializable {
 
     public UserQuestion nextQuestion() {
         for(UserQuestion userQuestion : questionsInProgress) {
-            if(userQuestion.getResponse() == null) {
+            if(userQuestion.getAnswer() == null) {
                 return userQuestion;
             }
         }
         throw new NoMoreQuestionException();
     }
 
-    public UserQuestion findQuestionById(Long questionId) throws InvalidQuestionException {
+    public UserQuestion findQuestionById(Long questionId) throws QuestionNotFoundException {
         for (UserQuestion userQuestion : questionsInProgress) {
             if (userQuestion.getQuestion().getIdQuestion().equals(questionId)) {
                 return userQuestion;
             }
         }
-        throw new InvalidQuestionException();
+        throw new QuestionNotFoundException();
     }
 }

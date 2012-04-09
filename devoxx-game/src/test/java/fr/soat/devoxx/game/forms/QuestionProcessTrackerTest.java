@@ -78,7 +78,7 @@ public class QuestionProcessTrackerTest {
             UserQuestion pendingQuestion = new UserQuestion();
             pendingQuestion.setQuestion(createQuestion("Question " + currentQuestionIdx, "rep1", "rep2", "rep3", "rep4"));
             if(answered[currentQuestionIdx]) {
-                pendingQuestion.setResponse(new QuestionChoice());
+                pendingQuestion.setAnswer(new QuestionChoice());
             }
             currentUserPendingQuestions.add(pendingQuestion);
         }
@@ -100,7 +100,7 @@ public class QuestionProcessTrackerTest {
             questionAnswers.add(choice1);
         }
 
-        question.setGoodChoice(questionAnswers.get(0));
+        question.setCorrectAnswer(questionAnswers.get(0));
 
         question.setChoices(questionAnswers);
 

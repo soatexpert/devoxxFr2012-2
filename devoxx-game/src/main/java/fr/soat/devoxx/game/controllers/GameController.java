@@ -1,18 +1,15 @@
 package fr.soat.devoxx.game.controllers;
 
-import fr.soat.devoxx.game.exceptions.AlreadyAnsweredException;
-import fr.soat.devoxx.game.exceptions.InvalidQuestionException;
+import fr.soat.devoxx.game.exceptions.QuestionNotFoundException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
 import fr.soat.devoxx.game.forms.AnswerForm;
 import fr.soat.devoxx.game.forms.QuestionsProgressTracker;
 import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.QuestionChoice;
 import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserServices;
 import fr.soat.devoxx.game.tools.TilesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -96,29 +93,29 @@ public class GameController {
     @RequestMapping(value = "/next")
     public String nextQuestion(@ModelAttribute("questionsProgressTracker") QuestionsProgressTracker questionsProgressTracker,
                                @RequestParam("questionId") Long questionId,
-                               @RequestParam("answer") Long answer,
+                               @RequestParam("answer") Long answerId,
                                Map model, Principal principal) {
         try {
-            final DevoxxUser currentUser = (DevoxxUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            final DevoxxUser currentUser = convertPrincipalToDevoxxUser(principal);
 
             addQuestionsProgressInformationToModel(questionsProgressTracker, model);
 
             final UserQuestion question = questionsProgressTracker.findQuestionById(questionId);
 
-            checkQuestionNotAlreadyAnswered(question);
+            if(question.isAlreadyAnswered()) {
+                return index(model, principal);
+            }
 
-            updateQuestionWithAnswer(answer, question);
+            questionServices.updateQuestionWithAnswer(question, answerId);
 
-            updatePlayerScore(answer, currentUser, question);
+            userServices.updatePlayerScore(question);
 
             model.put("answerDelayInSeconds", question.getAnsweringTimeInSeconds());
             model.put("isAnswerCorrect", question.isAnswerCorrect());
             model.put("rightAnswer", question.getCorrectAnswer());
 
             return TilesUtil.DFR_GAME_ANSWER_PAGE;
-        } catch(AlreadyAnsweredException e) {
-            return index(model, principal);
-        } catch (InvalidQuestionException e) {
+        } catch (QuestionNotFoundException e) {
             return index(model, principal);
         }
     }
@@ -137,35 +134,10 @@ public class GameController {
         return (DevoxxUser)((OpenIDAuthenticationToken)principal).getPrincipal();
     }
 
-    private void updatePlayerScore(Long answer, DevoxxUser currentUser, UserQuestion question) {
-        if(answer.equals(question.getCorrectAnswer().getQuestionChoiceId())) {
-            currentUser.addToScore(1);
-        }
-        currentUser.addToTime(question.getAnsweringTimeInSeconds());
-        userServices.updateUser(currentUser);
-    }
-
     private void addQuestionsProgressInformationToModel(QuestionsProgressTracker questionsProgressTracker, Map model) {
         model.put("nbOfQuestionsAnswered", questionsProgressTracker.getNbOfQuestionAnswered());
         model.put("nbOfQuestionsTotal", questionsProgressTracker.getNbOfQuestionsInProgress());
         model.put("nbOfQuestionLeft", questionsProgressTracker.getNbOfQuestionsToAnswer());
-    }
-
-
-    private void updateQuestionWithAnswer(Long answer, UserQuestion userQuestion) {
-        for(QuestionChoice choice : userQuestion.getQuestion().getChoices()) {
-            if(choice.getQuestionChoiceId().equals(answer)) {
-                userQuestion.setResponse(choice);
-                userQuestion.setEndQuestion(System.currentTimeMillis());
-                questionServices.updateUserQuestion(userQuestion);
-            }
-        }
-    }
-
-    private void checkQuestionNotAlreadyAnswered(UserQuestion userQuestion) {
-        if(userQuestion.getResponse() != null) {
-            throw new AlreadyAnsweredException();
-        }
     }
 
     public void setUserServices(UserServices userServices) {

@@ -1,9 +1,13 @@
 package fr.soat.devoxx.game.controllers;
 
+import fr.soat.devoxx.game.exceptions.QuestionNotFoundException;
 import fr.soat.devoxx.game.exceptions.NoMoreQuestionException;
+import fr.soat.devoxx.game.forms.AnswerForm;
 import fr.soat.devoxx.game.forms.QuestionsProgressTracker;
 import fr.soat.devoxx.game.framework.DevoxxUserBuilder;
 import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.Question;
+import fr.soat.devoxx.game.model.QuestionChoice;
 import fr.soat.devoxx.game.model.UserQuestion;
 import fr.soat.devoxx.game.services.QuestionServices;
 import fr.soat.devoxx.game.services.UserServices;
@@ -95,6 +99,112 @@ public class GameControllerTest {
         final String result = controller.play(questionTracker, model, principal);
 
         assertIndexPageRedirectionOk(model, result);
+    }
+    
+    @Test
+    public void whenPlayWithQuestionsRemainingRedirectToPlayPageWithNextQuestion() {
+        final GameController controller = buildGameController();
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
+        final DevoxxUser user = DevoxxUserBuilder.newBuilder()
+                .rulesApproved()
+                .approved()
+                .withName("test")
+                .build();
+        when(principal.getPrincipal()).thenReturn(user);
+
+        final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
+        final UserQuestion userQuestion = new UserQuestion();
+        final Question question = new Question();
+        question.setIdQuestion(111l);
+        userQuestion.setQuestion(question);
+        when(questionTracker.nextQuestion()).thenReturn(userQuestion);
+
+        final Map model = new HashMap();
+        final String result = controller.play(questionTracker, model, principal);
+        
+        assertEquals(TilesUtil.DFR_GAME_PLAY_PAGE,result);
+        
+        final Question nextQuestion = (Question)model.get("question");
+        assertEquals(question, nextQuestion);
+        assertTrue(userQuestion.getStartQuestion() > 0);
+        
+        final AnswerForm form = (AnswerForm )model.get("answerForm");
+        assertNotNull(form);
+        assertEquals(111l,form.getQuestionId());
+
+    }
+    
+    @Test
+    public void whenNextAlreadyAnsweredRedirectToIndex() throws QuestionNotFoundException {
+        final GameController controller = buildGameController();
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
+        final DevoxxUser user = DevoxxUserBuilder.newBuilder()
+                .rulesApproved()
+                .approved()
+                .withName("test")
+                .build();
+        when(principal.getPrincipal()).thenReturn(user);
+
+        final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
+        final UserQuestion answeredQuestion = new UserQuestion();
+        answeredQuestion.setAnswer(new QuestionChoice());
+        when(questionTracker.findQuestionById(any(Long.class))).thenReturn(answeredQuestion);
+
+        final Map model = new HashMap();
+        final String result = controller.nextQuestion(questionTracker,0l,0l, model, principal);
+
+        assertIndexPageRedirectionOk(model, result);
+    }
+
+    @Test
+    public void whenNextInvalidQuestionRedirectToIndex() throws QuestionNotFoundException {
+        final GameController controller = buildGameController();
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
+        final DevoxxUser user = DevoxxUserBuilder.newBuilder()
+                .rulesApproved()
+                .approved()
+                .withName("test")
+                .build();
+        when(principal.getPrincipal()).thenReturn(user);
+
+        final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
+        when(questionTracker.findQuestionById(any(Long.class))).thenThrow(new QuestionNotFoundException());
+
+        final Map model = new HashMap();
+        final String result = controller.nextQuestion(questionTracker, 0l, 0l, model, principal);
+
+        assertIndexPageRedirectionOk(model, result);
+    }
+
+    @Test
+    public void whenNextQuestionRedirectToAnswerPage() throws QuestionNotFoundException {
+        final GameController controller = buildGameController();
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
+        final DevoxxUser user = DevoxxUserBuilder.newBuilder()
+                .rulesApproved()
+                .approved()
+                .withName("test")
+                .build();
+        when(principal.getPrincipal()).thenReturn(user);
+
+        final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
+        final UserQuestion expectedQuestion = new UserQuestion();
+        final Question question = new Question();
+        question.setIdQuestion(1l);
+        final QuestionChoice answer = new QuestionChoice();
+        answer.setQuestionChoiceId(1l);
+        question.setCorrectAnswer(answer);
+        expectedQuestion.setQuestion(question);
+        when(questionTracker.findQuestionById(any(Long.class))).thenReturn(expectedQuestion);
+
+        final Map model = new HashMap();
+        final String result = controller.nextQuestion(questionTracker, 1l, 1l, model, principal);
+
+        assertEquals(TilesUtil.DFR_GAME_ANSWER_PAGE,result);
     }
 
     private GameController buildGameController() {
