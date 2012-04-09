@@ -43,11 +43,9 @@ public class UserServicesImpl implements UserServices  {
 
 	@Override
 	public void createUser(DevoxxUser user) {
-	    userRepo.save(user);
-
-        List<UserQuestion> userQuestions = userQuestionsGenerator.generateQuestionsListForUser(user);
-
-        questionServices.saveBundleOfUserQuestions(userQuestions);
+        final List<UserQuestion> userQuestions = userQuestionsGenerator.generateQuestionsListForUser(user);
+        user.setUserQuestions(userQuestions);
+        userRepo.save(user);
     }
 	
 	@Override
