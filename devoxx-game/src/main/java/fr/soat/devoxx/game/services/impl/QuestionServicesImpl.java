@@ -1,18 +1,23 @@
 package fr.soat.devoxx.game.services.impl;
 
-import fr.soat.devoxx.game.model.*;
-import fr.soat.devoxx.game.services.QuestionServices;
-import fr.soat.devoxx.game.services.repository.QuestionRepository;
-import fr.soat.devoxx.game.services.repository.UserQuestionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-@Controller
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.Question;
+import fr.soat.devoxx.game.model.QuestionChoice;
+import fr.soat.devoxx.game.model.QuestionPackType;
+import fr.soat.devoxx.game.model.UserQuestion;
+import fr.soat.devoxx.game.services.QuestionServices;
+import fr.soat.devoxx.game.services.repository.QuestionRepository;
+import fr.soat.devoxx.game.services.repository.UserQuestionRepository;
+
+
+@Component
 public class QuestionServicesImpl implements QuestionServices {
 
     @Autowired
