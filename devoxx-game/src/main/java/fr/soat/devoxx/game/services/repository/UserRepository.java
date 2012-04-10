@@ -23,21 +23,23 @@
  */
 package fr.soat.devoxx.game.services.repository;
 
-import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.QuestionPackType;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.QuestionPackType;
 
 @Transactional
 public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     
     @Query("FROM DevoxxUser u where u.username=?1")
-    public DevoxxUser findUserByName(String username);
+    DevoxxUser findUserByName(String username);
 
     @Query("FROM DevoxxUser u where u.enabled = true order by u.userScores[?1].score DESC, u.userScores[?1].totalTime ASC, u.userForname ASC")
     Page<DevoxxUser> findTopTen(QuestionPackType questionPack, Pageable page);
@@ -47,4 +49,8 @@ public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     
     @Query("FROM DevoxxUser u where lower(u.userForname) like lower(concat('%',?1,'%')) or lower(u.userEmail) like lower(concat('%',?1,'%'))")
     List<DevoxxUser> findUsersByForNameOrEmail(String term);
+    
+    @Modifying
+    @Query("update DevoxxUser u set u.enabled = ?1")
+    void updateIsEnabledUser(boolean isEnabled);
 }
