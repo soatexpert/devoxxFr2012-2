@@ -30,6 +30,9 @@
         <jackson.version>1.9.6</jackson.version>
         <poi.version>3.8</poi.version>
         <commons-lang.version>2.1</commons-lang.version>
+        <mockito.version>1.9.0</mockito.version>
+        <commons-fileupload.version>1.2.2</commons-fileupload.version>
+        <commons-io.version>2.2</commons-io.version>
 	</properties>
 
 	<dependencies>
@@ -317,8 +320,22 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>1.9.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Apache Commons Upload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons-fileupload.version}</version>
+        </dependency>
+    
+        <!-- Apache Commons Upload -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
 	</dependencies>
