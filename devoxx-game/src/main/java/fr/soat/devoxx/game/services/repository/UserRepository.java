@@ -51,6 +51,6 @@ public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     List<DevoxxUser> findUsersByForNameOrEmail(String term);
     
     @Modifying
-    @Query("update DevoxxUser u set u.enabled = ?1")
-    void updateIsEnabledUser(boolean isEnabled);
+    @Query("update DevoxxUser u set u.enabled = ?2 where u.userId = ?1")
+    void updateIsEnabledUser(Long userId, boolean isEnabled);
 }

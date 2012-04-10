@@ -53,7 +53,7 @@ public class UserServicesImpl implements UserServices  {
 	
 	@Override
     public void updateIsEnabledUser(DevoxxUser user) {
-        userRepo.updateIsEnabledUser(user.isEnabled());        
+        userRepo.updateIsEnabledUser(user.getUserId(), user.isEnabled());        
     }
 
     @Override
