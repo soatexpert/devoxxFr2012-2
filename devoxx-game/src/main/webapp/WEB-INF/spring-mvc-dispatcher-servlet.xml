@@ -50,6 +50,13 @@
 <!-- 	</bean> -->
     <bean id="localeResolver"
         class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+        
+    <!-- Configure the multipart resolver -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes (25M) -->
+        <property name="maxUploadSize" value="3276800" />
+    </bean>
 
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor"

@@ -24,13 +24,17 @@ $(document).ready(function() {
         Time : <%= new Date() %>
     </dd>
     <dd>
-        Search <input type="text" placeholder="Username or Email" id="user_search" />
+        <spring:message code="admin.label.search" text="Search" /> <input type="text" placeholder="Username or Email" id="user_search" />
     </dd>
     <dt></dt>
 	<dd>
-		<a href="<c:url value='/admin/user' />" class="ui-btn"><spring:message code="admin.btn.showalluser" text="Back" /></a>
+		<a href="<c:url value='/admin/user' />" class="ui-btn"><spring:message code="admin.btn.showalluser" text="Show All Users" /></a>
 	</dd>
 	<dt></dt>
+	<dd>
+        <a href="<c:url value='/admin/question/import' />" class="ui-btn"><spring:message code="admin.btn.importquestions" text="Import Questions" /></a>
+    </dd>
+    <dt></dt>
 	<dd>
 	   <a href="<c:url value='/' />" class="ui-btn"><spring:message code="global.btn.back" text="Back" /></a>
 	</dd>

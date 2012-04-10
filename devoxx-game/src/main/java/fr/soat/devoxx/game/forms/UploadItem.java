@@ -21,28 +21,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fr.soat.devoxx.game.services;
+package fr.soat.devoxx.game.forms;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
-import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.Question;
-import fr.soat.devoxx.game.model.QuestionPackType;
-import fr.soat.devoxx.game.model.UserQuestion;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public interface QuestionServices {
+public class UploadItem {
+    
+    @NotNull
+    private CommonsMultipartFile fileData;
 
-    void updateUserQuestion(UserQuestion nextQuestion);
+    public CommonsMultipartFile getFileData() {
+        return fileData;
+    }
 
-    Question getQuestionById(Long questionId);
-
-    void saveQuestion(Question question);
-
-    List<Question> getQuestionsByPack(QuestionPackType currentPack);
-
-    List<UserQuestion> getPendingQuestionsForUser(DevoxxUser currentUser);
-
-    void saveBundleOfUserQuestions(List<UserQuestion> userQuestions);
-
-    void updateQuestionWithAnswer(UserQuestion userQuestion, Long answer);
+    public void setFileData(CommonsMultipartFile fileData) {
+        this.fileData = fileData;
+    }
 }

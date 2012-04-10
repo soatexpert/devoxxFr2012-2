@@ -1,34 +1,40 @@
 package fr.soat.devoxx.game.services;
 
-import fr.soat.devoxx.game.exceptions.QuestionImportingError;
-import fr.soat.devoxx.game.model.QuestionPackType;
-import fr.soat.devoxx.game.model.Question;
-import fr.soat.devoxx.game.model.QuestionChoice;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import fr.soat.devoxx.game.exceptions.QuestionImportingError;
+import fr.soat.devoxx.game.model.Question;
+import fr.soat.devoxx.game.model.QuestionChoice;
+import fr.soat.devoxx.game.model.QuestionPackType;
 
 public class QuestionsImporter {
 
-    private String questionFile;
+    private InputStream questionsInputStream;
     private final int startingRow;
 
     private QuestionServices questionServices;
-
-    public QuestionsImporter(String questionFile, int startingRow) {
-        this.questionFile = questionFile;
+    
+    public QuestionsImporter(InputStream inputStream, int startingRow) {
+        this.questionsInputStream = inputStream;
         this.startingRow = startingRow;
     }
 
+    public QuestionsImporter(String questionFile, int startingRow) {
+        this(QuestionsImporter.class.getResourceAsStream(questionFile), startingRow);
+    }   
+
     public void importQuestions() throws QuestionImportingError {
         try {
-            HSSFWorkbook wb = new HSSFWorkbook(QuestionsImporter.class.getResourceAsStream(questionFile));
+            HSSFWorkbook wb = new HSSFWorkbook(questionsInputStream);
 
             final HSSFSheet sheet = wb.getSheetAt(0);
 
@@ -112,4 +118,8 @@ public class QuestionsImporter {
     public void setQuestionServices(QuestionServices questionServices) {
         this.questionServices = questionServices;
     }
+
+    public QuestionServices getQuestionServices() {
+        return questionServices;
+    }    
 }
