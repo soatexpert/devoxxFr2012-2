@@ -1,17 +1,18 @@
 package fr.soat.devoxx.game.services;
 
-import fr.soat.devoxx.game.model.DevoxxUser;
-import fr.soat.devoxx.game.model.Question;
-import fr.soat.devoxx.game.model.QuestionPackType;
-import fr.soat.devoxx.game.model.UserQuestion;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Controller
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import fr.soat.devoxx.game.model.DevoxxUser;
+import fr.soat.devoxx.game.model.Question;
+import fr.soat.devoxx.game.model.QuestionPackType;
+import fr.soat.devoxx.game.model.UserQuestion;
+
+@Component
 public class UserQuestionsGenerator {
     
     @Autowired

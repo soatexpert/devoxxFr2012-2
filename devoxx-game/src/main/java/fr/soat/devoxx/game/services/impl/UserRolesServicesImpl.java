@@ -26,13 +26,13 @@ package fr.soat.devoxx.game.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import fr.soat.devoxx.game.model.UserRole;
 import fr.soat.devoxx.game.services.UserRoleServices;
 import fr.soat.devoxx.game.services.repository.UserRoleRepository;
 
-@Repository
+@Component
 public class UserRolesServicesImpl implements UserRoleServices {
 
     @Autowired
