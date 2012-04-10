@@ -19,7 +19,7 @@ public class QuestionImporterTest {
     @Test
     @Ignore
     public void testImport() throws QuestionImportingError {
-        QuestionsImporter importer = new QuestionsImporter("/test.xls",0);
+        QuestionsImporter importer = new QuestionsImporter("/media/documents/projets java/test.xls",0);
         importer.setQuestionServices((QuestionServices)applicationContext.getBean(QuestionServices.class));
 
         importer.importQuestions();

@@ -1,5 +1,7 @@
 package fr.soat.devoxx.game.services;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -28,8 +30,13 @@ public class QuestionsImporter {
         this.startingRow = startingRow;
     }
 
-    public QuestionsImporter(String questionFile, int startingRow) {
-        this(QuestionsImporter.class.getResourceAsStream(questionFile), startingRow);
+    public QuestionsImporter(String questionFile, int startingRow) throws QuestionImportingError {
+        try {
+            this.questionsInputStream = new FileInputStream(questionFile);
+        } catch (FileNotFoundException e) {
+            throw new QuestionImportingError(e.getMessage(), e);
+        }
+        this.startingRow = startingRow;
     }   
 
     public void importQuestions() throws QuestionImportingError {
