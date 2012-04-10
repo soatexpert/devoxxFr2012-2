@@ -11,27 +11,30 @@
 	            </div>
 	        </td>
 			<td>
-				<div>
-					<spring:message code="admin.user.name" text="Username" /> : ${username}
-				</div>
-				<div>
-					<spring:message code="admin.user.fullname" text="Name" /> :
-					<form:input path="userForname" />
-				</div>
-				<div>
-					<spring:message code="admin.user.mail" text="Email" /> :
-					<form:input path="userEmail" />
-				</div>
-				<div>
-                    <spring:message code="admin.label.enabled" text="Enabled" /> :
-                    <form:checkbox path="userActive" cssErrorClass="error" />Yes
-                    <form:errors path="userActive" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" />
-                </div>
-				<div>
-					<spring:message code="admin.label.roles" text="Roles" /> :
-					<form:checkboxes items="${allUserRoles}" path="userRoles" cssErrorClass="error"/>
-					<form:errors path="userRoles" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" />
-				</div>				
+				<table>
+					<tr>
+						<td><spring:message code="admin.user.name" text="Username" /></td><td>:</td>
+						<td>${username}</td>
+					</tr>
+					<tr>
+						<td><spring:message code="admin.user.fullname" text="Name" /><td>:</td>
+						<td><form:input path="userForname" /></td>
+					</tr>
+					<tr>
+						<td><spring:message code="admin.user.mail" text="Email" /><td>:</td>
+						<td><form:input path="userEmail" /></td>
+					</tr>
+					<tr>
+	                    <td><spring:message code="admin.label.enabled" text="Enabled" /><td>:</td>
+	                    <td><form:checkbox path="userActive" cssErrorClass="error" /><spring:message code="admin.label.yes" text="Yes" />
+	                    <form:errors path="userActive" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" /></td>
+	                </tr>
+					<tr>
+						<td><spring:message code="admin.label.roles" text="Roles" /><td>:</td>
+						<td><form:checkboxes items="${allUserRoles}" path="userRoles" cssErrorClass="error"/>
+						<form:errors path="userRoles" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" /></td>
+					</tr>
+				</table>			
 			</td>
 		</tr>
 		<tr>

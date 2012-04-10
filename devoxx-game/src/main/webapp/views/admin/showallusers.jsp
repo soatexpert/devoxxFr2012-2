@@ -14,7 +14,11 @@
 				<td>${userResponse.username}</td>
 				<td>${userResponse.userForname}</td>
 				<td>${userResponse.userEmail}</td>
-				<td><span class="ui-icon ${userResponse.enabled ? 'ui-icon-check' : 'ui-icon-close'} center"></span></td>
+				<td>
+				    <a href='<c:url value="/admin/user/${userResponse.userId}/update/enabled" />' title="Change enabled state">
+				    <span class="ui-icon ${userResponse.enabled ? 'ui-icon-check' : 'ui-icon-close'} center"></span>
+				    </a>
+				</td>
 				
 				<td>
 				<a href='<c:url value="/admin/user/${userResponse.userId}" />' class="ui-btn"
