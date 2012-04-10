@@ -95,22 +95,31 @@ public class AdminUserController {
     
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public String updateUser(@PathVariable Long userId, Model model) {
-        DevoxxUser user = userServices.getUser(userId);
-        UserForm userForm = new UserForm();
-        userForm.setUserEmail(user.getUserEmail());
-        userForm.setUserForname(user.getUserForname());
-        userForm.setUserActive(user.isEnabled());
-        
-        
-        userForm.setUserRoles(getUserRolesStringList(user.getUserRoles()));
-        //userForm.setUserRoles(joinUserRoles(user));
-        List<String> allUserRoles = getUserRolesStringList(userRoleServices.getAllUserRoles());
-        model.addAttribute("mailHash", user.getMailHash());
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("allUserRoles", allUserRoles);
-        model.addAttribute("userForm", userForm);
-        
-        return TilesUtil.DFR_ADMIN_UPDATEUSER_PAGE;
+        String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
+        try {
+            DevoxxUser user = userServices.getUser(userId);
+            UserForm userForm = new UserForm();
+            userForm.setUserEmail(user.getUserEmail());
+            userForm.setUserForname(user.getUserForname());
+            userForm.setUserActive(user.isEnabled());
+            
+            
+            userForm.setUserRoles(getUserRolesStringList(user.getUserRoles()));
+            //userForm.setUserRoles(joinUserRoles(user));
+            List<String> allUserRoles = getUserRolesStringList(userRoleServices.getAllUserRoles());
+            model.addAttribute("mailHash", user.getMailHash());
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("allUserRoles", allUserRoles);
+            model.addAttribute("userForm", userForm);
+            
+            forward = TilesUtil.DFR_ADMIN_UPDATEUSER_PAGE;
+        } catch (RuntimeException e) {
+            //TODO RuntimeException :( gérer des exceptions métiers coté userServices
+            model.addAttribute("error", "admin.error.user.get");
+            model.addAttribute("errorParams", userId);
+            LOGGER.info("Error while fetching user for update view", e);
+        }        
+        return forward;
     }
     
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
@@ -145,6 +154,23 @@ public class AdminUserController {
             LOGGER.info("Error while updating user", e);
         }
         
+        return forward;
+    }
+    
+    @RequestMapping(value = "/{userId}/update/enabled", method = RequestMethod.GET)
+    public String updateIsEnabledUser(@PathVariable Long userId, Model model) {
+        String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
+        try {
+            DevoxxUser user = userServices.getUser(userId);
+            user.setEnabled(user.isEnabled() ? false : true);
+            userServices.updateIsEnabledUser(user);
+            forward = "redirect:/admin/user/";
+        } catch (RuntimeException e) {
+          //TODO RuntimeException :( gérer des exceptions métiers coté userServices
+            model.addAttribute("error", "admin.error.user.update");
+            model.addAttribute("errorParams", userId);
+            LOGGER.info("Error while updating enabled user state", e);
+        }
         return forward;
     }
 

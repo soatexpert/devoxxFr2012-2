@@ -2,7 +2,6 @@ package fr.soat.devoxx.game.services;
 
 import java.util.List;
 
-import fr.soat.devoxx.game.controllers.GameController;
 import fr.soat.devoxx.game.model.DevoxxUser;
 import fr.soat.devoxx.game.model.UserQuestion;
 
@@ -13,6 +12,8 @@ public interface UserServices {
     public void createUser(DevoxxUser user);
 
     public void updateUser(DevoxxUser user);
+    
+    public void updateIsEnabledUser(DevoxxUser user);
 
     public void deleteUser(DevoxxUser user);
 
