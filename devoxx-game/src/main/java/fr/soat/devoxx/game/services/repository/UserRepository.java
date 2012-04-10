@@ -42,7 +42,7 @@ public interface UserRepository extends CrudRepository<DevoxxUser, Long> {
     @Query("FROM DevoxxUser u where u.enabled = true order by u.userScores[?1].score DESC, u.userScores[?1].totalTime ASC, u.userForname ASC")
     Page<DevoxxUser> findTopTen(QuestionPackType questionPack, Pageable page);
 
-    @Query("FROM DevoxxUser u where u.enabled = true and ( (u.userScores[?3].score > ?1) or (u.userScores[?3].score = ?2 and u.userScores[?3].totalTime < ?2))")
+    @Query("FROM DevoxxUser u where u.enabled = true and ( (u.userScores[?3].score > ?1) or (u.userScores[?3].score = ?1 and u.userScores[?3].totalTime < ?2))")
     List<DevoxxUser> getUsersWithScoreLessThan(long score,long totalTime,QuestionPackType questionPack);
     
     @Query("FROM DevoxxUser u where lower(u.userForname) like lower(concat('%',?1,'%')) or lower(u.userEmail) like lower(concat('%',?1,'%'))")

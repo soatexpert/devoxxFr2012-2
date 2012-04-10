@@ -30,5 +30,5 @@ public interface UserServices {
     
     public List<DevoxxUser> findUsersByFornameOrEmail(String term);
 
-    void updatePlayerScore(UserQuestion question);
+    void updatePlayerScore(UserQuestion question, DevoxxUser user);
 }

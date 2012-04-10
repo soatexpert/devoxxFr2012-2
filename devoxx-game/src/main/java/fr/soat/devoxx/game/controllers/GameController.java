@@ -108,7 +108,7 @@ public class GameController {
 
             questionServices.updateQuestionWithAnswer(question, answerId);
 
-            userServices.updatePlayerScore(question);
+            userServices.updatePlayerScore(question, currentUser);
 
             model.put("answerDelayInSeconds", question.getAnsweringTimeInSeconds());
             model.put("isAnswerCorrect", question.isAnswerCorrect());

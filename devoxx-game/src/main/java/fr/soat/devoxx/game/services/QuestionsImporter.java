@@ -9,6 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -28,7 +29,9 @@ public class QuestionsImporter {
 
     public void importQuestions() throws QuestionImportingError {
         try {
-            HSSFWorkbook wb = new HSSFWorkbook(QuestionsImporter.class.getResourceAsStream(questionFile));
+
+            final FileInputStream fis = new FileInputStream(questionFile);
+            HSSFWorkbook wb = new HSSFWorkbook(fis);
 
             final HSSFSheet sheet = wb.getSheetAt(0);
 
