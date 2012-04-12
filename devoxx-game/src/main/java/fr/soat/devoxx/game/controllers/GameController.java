@@ -131,7 +131,8 @@ public class GameController {
     }
 
     private DevoxxUser convertPrincipalToDevoxxUser(Principal principal) {
-        return (DevoxxUser)((OpenIDAuthenticationToken)principal).getPrincipal();
+        final DevoxxUser sessionUser = (DevoxxUser)((OpenIDAuthenticationToken)principal).getPrincipal();
+        return userServices.getUser(sessionUser.getUserId());
     }
 
     private void addQuestionsProgressInformationToModel(QuestionsProgressTracker questionsProgressTracker, Map model) {
