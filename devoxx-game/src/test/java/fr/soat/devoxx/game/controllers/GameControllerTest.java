@@ -37,8 +37,14 @@ public class GameControllerTest {
     public void whenRulesNotYetApprovedRedirectToApprobationScreen() {
         final GameController controller = new GameController();
 
+        DevoxxUser devoxxUser = DevoxxUserBuilder.newBuilder().build();
+
+        final UserServices userServices = mock(UserServices.class);
+        when(userServices.getUser(any(Long.class))).thenReturn(devoxxUser);
+        controller.setUserServices(userServices);
+
         final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
-        when(principal.getPrincipal()).thenReturn(DevoxxUserBuilder.newBuilder().build());
+        when(principal.getPrincipal()).thenReturn(devoxxUser);
         
         final String result = controller.index(null,principal);
 
@@ -47,14 +53,14 @@ public class GameControllerTest {
 
     @Test
     public void whenRulesApprovedBuildQuestionTrackerAndRedirectToIndex() {
-        final GameController controller = buildGameController();
-        
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
-                                .rulesApproved()
-                                .approved()
-                                .withName("test")
-                                .build();
+                .rulesApproved()
+                .approved()
+                .withName("test")
+                .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final Map model = new HashMap();
@@ -65,13 +71,13 @@ public class GameControllerTest {
 
     @Test
     public void whenApproveRulesUpdateUserAndRedirectToIndex() {
-        final GameController controller = buildGameController();
-
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
                 .approved()
                 .withName("test")
                 .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final Map model = new HashMap();
@@ -82,14 +88,14 @@ public class GameControllerTest {
     
     @Test
     public void whenPlayAndNoMoreQuestionsRedirectToIndex() {
-        final GameController controller = buildGameController();
-
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
                 .rulesApproved()
                 .approved()
                 .withName("test")
                 .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
@@ -103,14 +109,14 @@ public class GameControllerTest {
     
     @Test
     public void whenPlayWithQuestionsRemainingRedirectToPlayPageWithNextQuestion() {
-        final GameController controller = buildGameController();
-
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
                 .rulesApproved()
                 .approved()
                 .withName("test")
                 .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
@@ -137,14 +143,14 @@ public class GameControllerTest {
     
     @Test
     public void whenNextAlreadyAnsweredRedirectToIndex() throws QuestionNotFoundException {
-        final GameController controller = buildGameController();
-
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
                 .rulesApproved()
                 .approved()
                 .withName("test")
                 .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
@@ -160,14 +166,14 @@ public class GameControllerTest {
 
     @Test
     public void whenNextInvalidQuestionRedirectToIndex() throws QuestionNotFoundException {
-        final GameController controller = buildGameController();
-
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
                 .rulesApproved()
                 .approved()
                 .withName("test")
                 .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
@@ -181,14 +187,14 @@ public class GameControllerTest {
 
     @Test
     public void whenNextQuestionRedirectToAnswerPage() throws QuestionNotFoundException {
-        final GameController controller = buildGameController();
-
-        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         final DevoxxUser user = DevoxxUserBuilder.newBuilder()
                 .rulesApproved()
                 .approved()
                 .withName("test")
                 .build();
+        final GameController controller = buildGameController(user);
+
+        final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(user);
 
         final QuestionsProgressTracker questionTracker = mock(QuestionsProgressTracker.class);
@@ -207,7 +213,7 @@ public class GameControllerTest {
         assertEquals(TilesUtil.DFR_GAME_ANSWER_PAGE,result);
     }
 
-    private GameController buildGameController() {
+    private GameController buildGameController(DevoxxUser devoxxUser) {
         final GameController controller = new GameController();
 
         final UserServices userServices = mock(UserServices.class);
@@ -222,6 +228,7 @@ public class GameControllerTest {
                 return null;
             }
         }).when(userServices).approveRules(any(DevoxxUser.class));
+        when(userServices.getUser(any(Long.class))).thenReturn(devoxxUser);
         controller.setUserServices(userServices);
 
         final QuestionServices questionServices = mock(QuestionServices.class);
