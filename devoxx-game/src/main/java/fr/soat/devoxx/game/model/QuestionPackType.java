@@ -9,9 +9,9 @@ import java.util.Date;
 
 public enum QuestionPackType {
     JOUR_0("09/04/2012",8,16),
-    JOUR_1("10/04/2012",8,16),
-    JOUR_2("11/04/2012",8,16),
-    JOUR_3("12/04/2012",8,12);
+    JOUR_1("13/04/2012",8,16),
+    JOUR_2("14/04/2012",8,16),
+    JOUR_3("15/04/2012",8,12);
 
     private Date packDate;
     private int startHour;
