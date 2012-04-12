@@ -26,13 +26,13 @@
 
 <c:if test="${waitingQuestions > 0}">
     <div class="center-wrapper">
-        <a id="play-btn" href="<c:url value='/play' />" data-role="button" data-inline="true" data-iconpos="top" data-icon="play">
+        <a id="play-btn" href="<c:url value='/play' />" data-ajax="false" data-role="button" data-inline="true" data-iconpos="top" data-icon="play">
             <spring:message code="game.index.playNow" text="Jouez Maintenant!" />
         </a>
     </div>
 </c:if>
 <div class="center-wrapper">
-    <a id="logout-btn" rel="external" href="<c:url value='/auth/logout' />" data-role="button" data-inline="true" data-iconpos="top" data-icon="play">
+    <a id="logout-btn" href="<c:url value='/auth/logout' />" data-ajax="false" data-role="button" data-inline="true" data-iconpos="top" data-icon="play">
         <spring:message code="global.btn.logout" text="Logout" />
     </a>
 </div>
