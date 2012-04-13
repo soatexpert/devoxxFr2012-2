@@ -14,8 +14,8 @@
             <properties>
                 <spring.profiles>prod</spring.profiles>
                 <dburl>jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/devoxx-game</dburl>
-                <dbusername>soat-devoxx</dbusername>
-                <dbpassword>soat</dbpassword>
+                <dbusername>user</dbusername>
+                <dbpassword>mdp</dbpassword>
             </properties>
         </profile>
     </profiles>
