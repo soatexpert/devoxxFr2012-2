@@ -33,6 +33,9 @@ public class GameController {
 
     @RequestMapping(value = {"", "/", "/home","/index", "/pause"})
     public String index(final Map model, final Principal principal) {
+        if (principal == null) {
+            return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
+        }
 
         final DevoxxUser user = convertPrincipalToDevoxxUser(principal);
 
@@ -40,6 +43,10 @@ public class GameController {
     }
 
     private String processIndexPageForUser(final Map model, final DevoxxUser user) {
+        if(user == null) {
+            return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
+        }
+
         if(!user.isRulesApproved()) {
             return TilesUtil.DFR_GAME_RULES_APPROVAL;
         }
