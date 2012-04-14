@@ -69,6 +69,10 @@ public class GameController {
 
     @RequestMapping("/approveRules")
     public String approveRules(final Map model, final Principal principal) {
+        if (principal == null) {
+            return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
+        }
+
         final DevoxxUser user = convertPrincipalToDevoxxUser(principal);
 
         userServices.approveRules(user);
@@ -80,6 +84,10 @@ public class GameController {
     public String play(@ModelAttribute("questionsProgressTracker") final QuestionsProgressTracker questionsProgressTracker, 
                        final Map model, 
                        final Principal principal) {
+        if (principal == null) {
+            return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
+        }
+
         try {
             final UserQuestion nextQuestion = questionsProgressTracker.nextQuestion();
 
@@ -102,6 +110,10 @@ public class GameController {
                                @RequestParam("questionId") Long questionId,
                                @RequestParam("answer") Long answerId,
                                Map model, Principal principal) {
+        if (principal == null) {
+            return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
+        }
+
         try {
             final DevoxxUser currentUser = convertPrincipalToDevoxxUser(principal);
 
