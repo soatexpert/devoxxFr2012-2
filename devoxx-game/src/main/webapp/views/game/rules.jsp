@@ -1,20 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 
-<p>
+<div id="rules">
 
 <h1>REGLEMENT JEU SOAT</h1>
 
 <h2>ARTICLE 1 : ORGANISATION :</h2>
-La société SO@T, société anonyme au capital de 65.000 euros inscrite au RCS de PARIS sous le numéro 433 353 760 00039 dont le siège social est 104bis rue de REUILLY à 75012 PARIS, société de service en informatique, sponsorise la conférence technique « devoxx France » organisée par l’association « Paris Java User Group » (http://www.devoxx.fr) (association loi 1901).
+La société <span class="soat">SO@T</span>, société anonyme au capital de 65.000 euros inscrite au RCS de PARIS sous le numéro 433 353 760 00039 dont le siège social est 104bis rue de REUILLY à 75012 PARIS, société de service en informatique, sponsorise la conférence technique « devoxx France » organisée par l’association « Paris Java User Group » (http://www.devoxx.fr) (association loi 1901).
 Cet événement est une suite de conférences destinée aux informaticiens passionnés par la technologie JAVA.
-So@t disposera à cette occasion d’un stand sponsor et organise un jeu par la mise à disposition d’un questionnaire à choix multiples technique (QCM.
+<span class="soat">SO@T</span> disposera à cette occasion d’un stand sponsor et organise un jeu par la mise à disposition d’un questionnaire à choix multiples technique (QCM.
 Ce document a pour but de décrire le déroulement et le règlement de ce jeu.
 Le jeu est gratuit.
 <h2>ARTICLE 2 : PARTICIPATION</h2>
 Peut participer à ce jeu gratuit, toute personne majeure et capable disposant d’un badge nominatif autorisant l’accès au Salon DEVOXX et d’un appareil permettant un accès à Internet, à l'exclusion du personnel de la société SOAT et des membres de leur famille.
 Les joueurs devront s’inscrire sur le site http://devoxx.soat.fr via la technologie « openID » hébergé par la solution « cloudBees » sécurisé, au moyen de leur appareil permettant un accès sur Internet autonome.
-Les personnes souhaitant jouer devront ensuite confirmer leur inscription via leur badge Devoxx sur le stand so@t.
+Les personnes souhaitant jouer devront ensuite confirmer leur inscription via leur badge Devoxx sur le stand <span class="soat">SO@T</span>.
 Pour que sa participation soit valide, le joueur doit avoir indiqué impérativement sa civilité, ses nom et prénom et ses coordonnées complètes : date de naissance, ville, code postal et numéro de téléphone. Une adresse email est requise.
 Ces informations servant à identifier le participant en cas de gain, en cas d’absence d’information ou d’erreur de la part du participant, la société organisatrice ne pourra être tenue pour responsable.
 Toute information communiquée par un candidat, entraînera l’invalidation de ce dernier si elle comporte une inexactitude ou parait incomplète, erronée, falsifiée, illisible ou incompréhensible.
@@ -34,14 +34,14 @@ vendredi 20 avril de 9h00 à 14h00
 Le jeu consiste à répondre à questionnaire à choix multiples (ci-après dénommé QCM) qui est un procédé d'évaluation dans lequel sont proposées plusieurs réponses pour chaque question. Une de ces propositions de réponse est correcte. Les autres sont des réponses erronées.
 
 
-Les questions ,élaborées par quatre experts du domaine de la société so@t (Francois Ostyn, Khanh Tuong Maudoux, Mathieu Parisot, et Antoine Berthelin), porteront sur la technologie Java.
+Les questions ,élaborées par quatre experts du domaine de la société <span class="soat">SO@T</span> (Francois Ostyn, Khanh Tuong Maudoux, Mathieu Parisot, et Antoine Berthelin), porteront sur la technologie Java.
 Une série de 20 questions sera proposée chaque jour.
 La participation de chaque joueur est limitée à une série de questions dans le créneau horaire prévu, à savoir
 Série 1 : mercredi 18 avril de 9h00 à 18h00
 Série 2 : jeudi 19 avril de 9h00 à 18h00
 Série 3 : vendredi 20 avril de 9h00 à 14h00
 Le temps mis pour répondre à une série complète est chronométré.
-Les temps de réponse prennent en compte le délai de communication entre le client et le serveur. La société so@t ne pourra pas être tenue responsable en cas de problème réseau.
+Les temps de réponse prennent en compte le délai de communication entre le client et le serveur. La société <span class="soat">SO@T</span> ne pourra pas être tenue responsable en cas de problème réseau.
 Les questions seront posées par le système de façon aléatoire parmi une base de 90 questions.
 Après chaque série, le classement sera calculé à l’aide de deux critères :
 Premier critère : le nombre de bonnes réponses.
@@ -54,7 +54,7 @@ Les deux gagnants de la série 1 et 2 pourront choisir un lot parmi les lots :
 1 licence dropBox Pro 100 GO d’un an d’une valeur de 199 dollars (https://www.dropbox.com/plans)
 Le lot choisi sera adressé par courrier électronique au gagnant, dans un délai de trois semaines suivant le jeu.
 Le gagnant de la série 3 gagnera la tablette Samsung GALAXY Tab d’une valeur de 439,90 euros sans abonnement (http://www.samsung.com/fr/consumer/mobile-phones/tablets/tablets/GT-P7500UWDXEF)
-La tablette sera remise au gagnant le vendredi 20 avril entre 14h00 et 14h25 sur le stand so@t.
+La tablette sera remise au gagnant le vendredi 20 avril entre 14h00 et 14h25 sur le stand <span class="soat">SO@T</span>.
 Les gagnants seront prévenus par mail pendant le salon.
 En aucun cas un lot ne pourra être échangé contre d’autres objets, quelle que soit leur valeur, ni même contre une somme en espèces. Si le gagnant ne voulait pas prendre possession de son lot, ou aurait communiqué une adresse mail erronée, il perdrait son droit à son gain et il n’aurait droit à aucune compensation.
 <h2>ARTICLE 6 : DEPOT ET CONSULTATION DU REGLEMENT DU JEU </h2>
@@ -71,8 +71,8 @@ L’organisateur ne peut être tenu pour responsable en cas d’erreur volontair
 
 <h2>ARTICLE 9 : PUBLICITE DES RESULTATS </h2>
 En choisissant de participer à ce jeu, les gagnants acceptent le présent règlement, la diffusion du résultat, et en conséquence la diffusion de son nom et de reproductions photographiques à des fins publicitaires par la société organisatrice sans entrainer le versement de droits d’aucune sorte.
-Les noms des participants et des gagnants seront publiés sur le stand so@t, par mail aux vainqueurs et sur le site www.soat.fr.
-Le classement des joueurs sera diffusé en direct sur le stand so@t.
+Les noms des participants et des gagnants seront publiés sur le stand <span class="soat">SO@T</span>, par mail aux vainqueurs et sur le site www.soat.fr.
+Le classement des joueurs sera diffusé en direct sur le stand <span class="soat">SO@T</span>.
 <h2>ARTICLE 10 : ACCEPTATION </h2>
 Le participant est réputé avoir pris connaissance du règlement du jeu. Le fait de participer à ce jeu implique l’acceptation pure et simple du présent règlement dans son intégralité.
 Toute modification du présent règlement donnera lieu au dépôt d’un avenant au présent règlement en l’Etude de S.C.P. Bernard VENEZIA- Jean VENEZIA - Fabienne LAVAL - Frédérine LODIEU - Huissiers de Justice à NEUILLY SUR SEINE (92200) 130 avenue Charles de Gaulle - Téléphone : 01.46.24.15.21 Télécopie : 01.46.24.44.49.
@@ -85,4 +85,4 @@ Tout litige sera tranché souverainement par la société organisatrice, au rega
 Seuls les tribunaux de Paris seront compétents pour en connaître.
 En aucun cas, la société organisatrice ne pourra être tenue responsable d’un quelconque préjudice de quelque nature que ce soit, prétendument survenu à l’occasion du jeu.
 
-</p>
+</div>

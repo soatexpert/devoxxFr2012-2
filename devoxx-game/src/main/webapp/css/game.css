@@ -151,3 +151,23 @@ div #openid_highlight {
 .ui-header #about {
 	top: 0.9em;
 }
+
+#rules {
+    font-size:8pt;
+    text-align: justify;
+}
+
+#rules h1 {
+    color: #515151;
+    text-align: center;
+}
+
+#rules h2 {
+    color: #8AAB1E;
+    font-size:10pt;
+}
+
+#rules .soat {
+    color: #8AAB1E;
+    font-weight: bold;
+}
