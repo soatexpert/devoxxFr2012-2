@@ -9,7 +9,7 @@
 <tiles:insertAttribute name="rules" />
 
 <div class="center-wrapper">
-    <a id="approve-btn" href="<c:url value='/approveRules' />" data-ajax="false" data-role="button" data-inline="true" data-iconpos="top" data-icon="check">
+    <a id="approve-btn" href="<c:url value='/approveRules' />" data-role="button" data-inline="true" data-iconpos="top" data-icon="check">
             <spring:message code="game.approval.ok" text="Je suis d'accord" />
     </a>
 </div>
