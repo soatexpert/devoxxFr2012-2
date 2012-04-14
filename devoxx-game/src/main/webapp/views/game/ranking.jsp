@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1><img src="<c:url value='/img/soat.png'/>"/><span>Quizz - Classement</span></h1>
+        <div class="devoxx"><img src="<c:url value="/img/devoxx.png"/> "></div>
         <div id="ranking">
             <table style="width: 100%;">
 			<thead>
@@ -27,7 +28,7 @@
 			<c:forEach items="${players}" var="player" varStatus="status">
 				<tr id="player${status.count}" class="${status.count % 2 == 0 ? 'even' : 'odd'}">
 					<td id="picture"><c:if test="${not empty player.name}"><img src="${player.avatarUrl}" /></c:if></td>
-					<td id="name">${player.name}</td>
+					<td id="name">${status.count}. ${player.name}</td>
 					<td id="score"><c:if test="${not empty player.name}">${player.score}pts</c:if></td>
 					<td id="time"><c:if test="${not empty  player.name}">${player.totalTime}s</c:if></td>
 				</tr>
@@ -45,19 +46,27 @@
 
             var clone = $('#ranking').clone();
 
-            for(var cmp = 0; cmp < players.length; cmp++) {
-                if(!jQuery.isEmptyObject(players[cmp].name)) {
-                    clone.find("#player" + (cmp+1) + " > #name").text(players[cmp].name);
-                    var avatarParent = clone.find("#player" + (cmp+1) + " > #picture");
+            for(var cmp = 0; cmp < 10; cmp++) {
+                var player = players[cmp];
+                var rank = cmp+1;
+
+                if(!jQuery.isEmptyObject(player.name)) {
+                    clone.find("#player" + rank + " > #name").text(rank + ". " + player.name);
+                    var avatarParent = clone.find("#player" + rank + " > #picture");
                     var avatarImg = avatarParent.children("img");
 
                     if(avatarImg.length != 0) {
-                        avatarImg.attr("src", players[cmp].avatarUrl);
+                        avatarImg.attr("src", player.avatarUrl);
                     } else {
-                        avatarParent.append("<img src='" + players[cmp].avatarUrl + "'/>");
+                        avatarParent.append("<img src='" + player.avatarUrl + "'/>");
                     }
-                    clone.find("#player" + (cmp+1) + " > #score").text(players[cmp].score +"pts");
-                    clone.find("#player" + (cmp+1) + " > #time").text(players[cmp].totalTime +"s");
+                    clone.find("#player" + rank + " > #score").text(player.score +"pts");
+                    clone.find("#player" + rank + " > #time").text(player.totalTime +"s");
+                } else {
+                    clone.find("#player" + rank + " > #name").text(rank + ". ");
+                    clone.find("#player" + rank + " > #picture").text("");
+                    clone.find("#player" + rank + " > #score").text("");
+                    clone.find("#player" + rank + " > #time").text("");
                 }
             }
 

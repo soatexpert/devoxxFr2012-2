@@ -6,7 +6,10 @@ import org.apache.commons.lang.StringUtils;
 /**
  */
 public class RankedUserViewBean {
-    
+
+    private static int GRAVATA_PIC_SIZE = 64;
+
+
     private String name;
     private String email;
     private long score;
@@ -18,7 +21,7 @@ public class RankedUserViewBean {
         this.email = player.getUserEmail();
         this.score = player.getScore();
         this.totalTime = player.getTotalTime();
-        this.avatarUrl = "http://www.gravatar.com/avatar/" + player.getMailHash() + "?d=mm&s=50";
+        this.avatarUrl = "http://www.gravatar.com/avatar/" + player.getMailHash() + "?d=mm&s=" + GRAVATA_PIC_SIZE;
     }
 
     public RankedUserViewBean() {

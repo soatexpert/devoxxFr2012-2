@@ -1,23 +1,23 @@
 body {
 	background:#f7f7f7 url(../img/bg.png) repeat;
-	margin:0px;
+	margin:0;
 	font-size: 14px;
 }
 
 h1 {
 	color:#8AAB1E;
-	font-weight:400;
 	letter-spacing: 0.05em;
-	font-size:3em;
+	font-size:3.5em;
 	font-weight: bold;
 	margin-left : 5%;
 	margin-top:1%;
-	margin-bottom:0px;
+	margin-bottom:0;
+    float:left;
 }
 
 h1 img {
 	vertical-align:middle;
-	padding-bottom:10px;
+	padding-bottom:20px;
 	padding-left: 20px;
 }
 
@@ -25,11 +25,13 @@ h1 img {
 #ranking {
 	border: 2px solid #cccccc;
 	border-right-style:none;
-	border-radius:20px 0px 0px 20px;
-	margin-left : 5%;
-	margin-right:0px;
-	margin-top:0px;
-	padding : 10px 0px 10px 10px;	
+	border-radius: 20px 0 0 20px;
+	margin-left : 70px;
+	margin-right:0;
+	margin-top:0;
+    margin-bottom: 60px;
+	padding : 20px 0 20px 20px;
+    clear:both;
 }
 
 table thead {
@@ -37,7 +39,7 @@ table thead {
 }
 
 td {
-
+    height: 64px;
 }
 
 .odd {
@@ -46,12 +48,13 @@ td {
 
 #picture {
 	width:40px;
+    vertical-align: middle;
 }
 
 #name {
 	color:#8AAB1E;
 	letter-spacing: 0.05em;
-	font-size:1.8em;
+	font-size:2.5em;
 	font-weight: bold;
 	padding-left:2%;
 	width:80%;
@@ -73,4 +76,17 @@ td {
 	font-size:1.5em;
 	text-align:right;	
 	padding:10px;
+}
+
+.devoxx {
+    float: right;
+    margin-bottom: 0;
+    padding-bottom:0;
+    margin-top: 0px;
+}
+
+.devoxx img {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    vertical-align: bottom;
 }
