@@ -8,10 +8,11 @@ import java.util.Date;
 
 
 public enum QuestionPackType {
-    JOUR_0("09/04/2012",8,16),
-    JOUR_1("13/04/2012",8,16),
-    JOUR_2("14/04/2012",8,16),
-    JOUR_3("15/04/2012",8,12);
+    TEST_1("16/04/2012",8,16),
+    TEST_2("17/04/2012",8,16),
+    DEVOXX_1("18/04/2012",7,16),
+    DEVOXX_2("19/04/2012", 7, 16),
+    DEVOXX_3("20/04/2012", 7, 12);
 
     private Date packDate;
     private int startHour;
@@ -36,7 +37,7 @@ public enum QuestionPackType {
             }
         }
 
-        return JOUR_1;
+        return values()[0];
     }
 
     public static QuestionPackType packForToday() {
@@ -47,7 +48,7 @@ public enum QuestionPackType {
             }
         }
 
-        return JOUR_1;
+        return values()[0];
     }
 
     public int getNbOfQuestionsToGenerate() {
