@@ -36,6 +36,7 @@
 			</tbody>
 	        </table>
         </div>
+        <div class="cloudbees"><img src="<c:url value="/img/Button-Powered-by-CB.png"/> "></div>
 <script type="text/javascript">
     $(document).ready(function() {
         setInterval("updateRanking()",10000);
@@ -75,6 +76,5 @@
     });
     }
 </script>
-
     </body>
 </html>
