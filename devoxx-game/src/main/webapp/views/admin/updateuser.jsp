@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <form:form method="post" modelAttribute="userForm">
 	<form:errors path="*" element="div" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" />
-	<table class="center" style="width: 400px;">
+	<table class="center" style="width: 600px; table-layout: fixed;">
 	    <tr>
 	        <td style="width: 120px; padding-right: 10px;">
 	            <div>
