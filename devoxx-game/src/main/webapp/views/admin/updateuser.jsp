@@ -25,13 +25,14 @@
 						<td><form:input path="userEmail" /></td>
 					</tr>
 					<tr>
+					    <spring:message code="admin.label.yes" text="Yes" var="labelEnabled" />
 	                    <td><spring:message code="admin.label.enabled" text="Enabled" /><td>:</td>
-	                    <td><form:checkbox path="userActive" cssErrorClass="error" /><spring:message code="admin.label.yes" text="Yes" />
+	                    <td><form:checkbox id="userActive" path="userActive" cssErrorClass="error" label="${labelEnabled}" />
 	                    <form:errors path="userActive" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" /></td>
 	                </tr>
 					<tr>
 						<td><spring:message code="admin.label.roles" text="Roles" /><td>:</td>
-						<td><form:checkboxes items="${allUserRoles}" path="userRoles" cssErrorClass="error"/>
+						<td><div id="allUserRoles"><form:checkboxes items="${allUserRoles}" path="userRoles" cssErrorClass="error"/></div>
 						<form:errors path="userRoles" cssClass="ui-state-error ui-corner-all" cssStyle="padding: 0 .7em;" element="div" /></td>
 					</tr>
 				</table>			
