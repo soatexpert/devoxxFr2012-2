@@ -14,6 +14,7 @@
         <script type="text/javascript">
 		$(function() {
 		    $(".ui-btn, input:submit").button();
+		    $(".ui-btn-disabled").button({ disabled: true });
 			
 		    $(".jtable th").each(function() {
 		        $(this).addClass("ui-state-default");

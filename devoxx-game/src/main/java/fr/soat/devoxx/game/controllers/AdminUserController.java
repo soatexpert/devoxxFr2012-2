@@ -23,6 +23,7 @@
  */
 package fr.soat.devoxx.game.controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -70,8 +71,9 @@ public class AdminUserController {
 	private static Logger LOGGER = LoggerFactory.getLogger(AdminUserController.class);
 
 	@RequestMapping(value = "/admin/user")
-	public String showAllUser(Model model) {
+	public String showAllUser(Model model, Principal principal) {
 		model.addAttribute("allUserResponses", userServices.getAllUsers());
+		model.addAttribute("currentUserName", principal.getName());
 		return TilesUtil.DFR_ADMIN_SHOWALLUSERS_PAGE;
 	}
 
@@ -88,6 +90,7 @@ public class AdminUserController {
             //TODO RuntimeException :( gérer des exceptions métiers coté userServices
             model.addAttribute("error", "admin.error.user.get");
             model.addAttribute("errorParams", userId);
+            model.addAttribute("refererPath", "/admin/user");
             LOGGER.info("Error while fetching user", e);
         }
         return forward;
@@ -117,6 +120,7 @@ public class AdminUserController {
             //TODO RuntimeException :( gérer des exceptions métiers coté userServices
             model.addAttribute("error", "admin.error.user.get");
             model.addAttribute("errorParams", userId);
+            model.addAttribute("refererPath", "/admin/user");
             LOGGER.info("Error while fetching user for update view", e);
         }        
         return forward;
@@ -151,6 +155,7 @@ public class AdminUserController {
             //TODO RuntimeException :( gérer des exceptions métiers coté userServices
             model.addAttribute("error", "admin.error.user.update");
             model.addAttribute("errorParams", userId);
+            model.addAttribute("refererPath", "/admin/user");
             LOGGER.info("Error while updating user", e);
         }
         
@@ -169,22 +174,26 @@ public class AdminUserController {
           //TODO RuntimeException :( gérer des exceptions métiers coté userServices
             model.addAttribute("error", "admin.error.user.update");
             model.addAttribute("errorParams", userId);
+            model.addAttribute("refererPath", "/admin/user");
             LOGGER.info("Error while updating enabled user state", e);
         }
         return forward;
     }
 
     @RequestMapping(value = "/{userId}/delete")
-    public String removeUser(@PathVariable Long userId, Model model) {
+    public String removeUser(@PathVariable Long userId, Model model, Principal principal) {
         String forward = TilesUtil.DFR_ERRORS_ERRORMSG_PAGE;
         try {
             DevoxxUser user = userServices.getUser(userId);
+            if(null != principal && null != user && user.getUsername().equals(principal.getName()))
+                throw new RuntimeException("User cannot delete himself !");
             userServices.deleteUser(user);
             forward = "redirect:/admin/user/";
         } catch (RuntimeException e) {
             //TODO RuntimeException :( gérer des exceptions métiers coté userServices
             model.addAttribute("error", "admin.error.user.delete");
             model.addAttribute("errorParams", userId);
+            model.addAttribute("refererPath", "/admin/user");
             LOGGER.info("Error while deleting user", e);
         }
         return forward;

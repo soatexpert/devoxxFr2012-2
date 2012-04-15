@@ -29,10 +29,17 @@
                 title='<spring:message code="admin.btn.modify" text="Modify" />'>
                     <span class="ui-icon ui-icon-pencil"></span>
                 </a>
-				<a href='<c:url value="/admin/user/${userResponse.userId}/delete" />' class="ui-btn"
-	            title='<spring:message code="admin.btn.delete" text="Remove" />' onclick="return confirm('Are you sure ?');">
-	               <span class="ui-icon ui-icon-closethick"></span>
-	            </a>
+                <c:choose>
+                    <c:when test="${currentUserName eq userResponse.username}">
+                        <span class="ui-btn-disabled"><span class="ui-icon ui-icon-closethick"></span></span>
+                    </c:when>
+                    <c:otherwise>
+                        <a href='<c:url value="/admin/user/${userResponse.userId}/delete" />' class="ui-btn"
+                        title='<spring:message code="admin.btn.delete" text="Remove" />' onclick="return confirm('Are you sure ?');">
+                            <span class="ui-icon ui-icon-closethick"></span>
+                        </a>
+                    </c:otherwise>
+                </c:choose>			
 				</td>
 			</tr>
 		</c:forEach>
