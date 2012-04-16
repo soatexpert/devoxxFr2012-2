@@ -101,7 +101,7 @@ public class UserServicesImpl implements UserServices  {
         if(question.isAnswerCorrect()) {
             user.addToScore(1);
         }
-        user.addToTime(question.getAnsweringTimeInSeconds());
+        user.addToTime(question.getAnsweringTimeInMilliSeconds());
         updateUser(user);
     }
 }

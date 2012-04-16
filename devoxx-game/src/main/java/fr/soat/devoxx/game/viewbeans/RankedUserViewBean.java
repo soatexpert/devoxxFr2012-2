@@ -3,25 +3,29 @@ package fr.soat.devoxx.game.viewbeans;
 import fr.soat.devoxx.game.model.DevoxxUser;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.DecimalFormat;
+
 /**
  */
 public class RankedUserViewBean {
 
-    private static int GRAVATA_PIC_SIZE = 64;
+    private static int GRAVATAR_PIC_SIZE = 64;
+    private DecimalFormat df = new DecimalFormat("#.##");
 
 
     private String name;
     private String email;
     private long score;
-    private long totalTime;
+    private double totalTime;
     private String avatarUrl;
+
 
     public RankedUserViewBean(final DevoxxUser player) {
         this.name = player.getUserForname();
         this.email = player.getUserEmail();
         this.score = player.getScore();
         this.totalTime = player.getTotalTime();
-        this.avatarUrl = "http://www.gravatar.com/avatar/" + player.getMailHash() + "?d=mm&s=" + GRAVATA_PIC_SIZE;
+        this.avatarUrl = "http://www.gravatar.com/avatar/" + player.getMailHash() + "?d=mm&s=" + GRAVATAR_PIC_SIZE;
     }
 
     public RankedUserViewBean() {
@@ -38,8 +42,8 @@ public class RankedUserViewBean {
         return score;
     }
 
-    public long getTotalTime() {
-        return totalTime;
+    public String getTotalTime() {
+        return df.format(totalTime/1000);
     }
 
     public String getAvatarUrl() {

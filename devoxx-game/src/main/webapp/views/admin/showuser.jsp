@@ -23,6 +23,16 @@
                     <td>${userResponse.userEmail}</td>
                 </tr>
                 <tr>
+                    <td><spring:message code="admin.user.score" text="Score"/></td>
+                    <td>:</td>
+                    <td>${userResponse.score}</td>
+                </tr>
+                <tr>
+                    <td><spring:message code="admin.user.time" text="Total time (ms)"/></td>
+                    <td>:</td>
+                    <td>${userResponse.totalTime}</td>
+                </tr>
+                <tr>
                     <td><spring:message code="admin.label.rules.accepted" text="Rules accepted" /></td><td>:</td>
                     <td><spring:message code="admin.label.${userResponse.rulesApproved ? 'yes' : 'no'}" text="Yes/No ?" /></td>
                 </tr>

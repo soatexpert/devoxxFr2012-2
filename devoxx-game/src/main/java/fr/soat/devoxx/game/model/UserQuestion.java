@@ -76,6 +76,10 @@ public class UserQuestion implements Serializable {
         this.answer = answer;
     }
 
+    public long getAnsweringTimeInMilliSeconds() {
+        return getAnsweringTimeInMs();
+    }
+
     public int getAnsweringTimeInSeconds() {
         return Math.round(getAnsweringTimeInMs() / 1000);
     }
