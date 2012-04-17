@@ -23,16 +23,16 @@ public class UserQuestionsGenerator {
 
         
         for(QuestionPackType currentPack : QuestionPackType.values()) {
-            int nbOfQuestionsToGenerate = currentPack.getNbOfQuestionsToGenerate();
+            //int nbOfQuestionsToGenerate = currentPack.getNbOfQuestionsToGenerate();
             
             List<Question> questionsForTheCurrentPack = questionServices.getQuestionsByPack(currentPack);
             
-            List<Integer> indexes = getRandomIndexes(nbOfQuestionsToGenerate,questionsForTheCurrentPack.size());
+            List<Integer> indexes = getRandomIndexes(questionsForTheCurrentPack.size(),questionsForTheCurrentPack.size());
 
-            int hourOfAppearence = currentPack.getStartHour();
+            //int hourOfAppearence = currentPack.getStartHour();
             for(Integer index : indexes) {
-                questions.add(new UserQuestion(questionsForTheCurrentPack.get(index),user,hourOfAppearence));
-                hourOfAppearence++;
+                questions.add(new UserQuestion(questionsForTheCurrentPack.get(index),user/**, hourOfAppearence **/));
+                /** hourOfAppearence++; **/
             }
         }
         

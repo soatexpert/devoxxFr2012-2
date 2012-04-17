@@ -30,6 +30,11 @@ public class UserQuestion implements Serializable {
     @ManyToOne
     DevoxxUser player;
 
+    public UserQuestion(Question question, DevoxxUser user) {
+        this.question = question;
+        this.player = user;
+    }
+
     public UserQuestion(Question question, DevoxxUser user, int hourOfAppearence) {
         this.question = question;
         this.player = user;
