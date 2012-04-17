@@ -49,10 +49,9 @@ public class QuestionServicesImpl implements QuestionServices {
 
     @Override
     public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser currentUser) {
-        return userQuestionRepository.findRemainingQuestionsByPackAndUserIdLimitedByHour(
+         return userQuestionRepository.findRemainingQuestionsByPackAndUserId(
                 QuestionPackType.packForToday(),
-                currentUser.getUserId(),
-                Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                currentUser.getUserId());
     }
 
     @Override

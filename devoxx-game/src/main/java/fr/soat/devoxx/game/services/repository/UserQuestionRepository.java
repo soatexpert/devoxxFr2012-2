@@ -12,4 +12,7 @@ public interface UserQuestionRepository extends CrudRepository<UserQuestion, Lon
     @Query("FROM UserQuestion uq where uq.question.pack=?1 and uq.answer is null and uq.player.userId=?2 and uq.hourOfappearence <= ?3")
     List<UserQuestion> findRemainingQuestionsByPackAndUserIdLimitedByHour(QuestionPackType questionPackType, Long userId, int hour);
 
+    @Query("FROM UserQuestion uq where uq.question.pack=?1 and uq.answer is null and uq.player.userId=?2")
+    List<UserQuestion> findRemainingQuestionsByPackAndUserId(QuestionPackType questionPackType, Long userId);
+
 }
