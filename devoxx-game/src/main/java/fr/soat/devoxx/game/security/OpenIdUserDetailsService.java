@@ -90,11 +90,15 @@ public class OpenIdUserDetailsService implements UserDetailsService, Authenticat
             user.setUsername(urlId);
             user.setUserForname(fullName);
             user.setUserEmail(email);
+            user.setEnabled(true);
+            user.setRulesApproved(true);
             userServices.createUser(user);
         }
         else {
             user.setUserForname(fullName);
             user.setUserEmail(email);
+            user.setEnabled(true);
+            user.setRulesApproved(true);
             userServices.updateUser(user);
         }
 

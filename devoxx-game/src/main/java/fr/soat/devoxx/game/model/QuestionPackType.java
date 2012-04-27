@@ -16,7 +16,8 @@ public enum QuestionPackType {
     TEST_2("17/04/2012", 8, 16),
     DEVOXX_1("18/04/2012", 7, 16),
     DEVOXX_2("19/04/2012", 7, 16),
-    DEVOXX_3("20/04/2012", 7, 12);
+    DEVOXX_3("20/04/2012", 7, 12),
+    DEVOXX_FULL("",1,1);
 
     private Date packDate;
     private int startHour;
@@ -35,24 +36,25 @@ public enum QuestionPackType {
     }
 
     public static QuestionPackType findPackByName(String packId) {
-        for(QuestionPackType pack : values()) {
+        return QuestionPackType.DEVOXX_FULL;
+        /** for(QuestionPackType pack : values()) {
             if(pack.name().equals(packId)) {
                 return pack;
             }
         }
 
-        return values()[0];
+        return values()[0];**/
     }
 
     public static QuestionPackType packForToday() {
-
-        for(QuestionPackType currentPack : values()) {
+        return QuestionPackType.DEVOXX_FULL;
+        /** for(QuestionPackType currentPack : values()) {
             if(DateUtils.isSameDay(new Date(),currentPack.packDate)) {
                 return currentPack;
             }
         }
 
-        return values()[0];
+        return values()[0];**/
     }
 
     public int getNbOfQuestionsToGenerate() {
