@@ -22,6 +22,7 @@
 	<security:http pattern="/js/**" security="none" />
     <security:http pattern="/favicon.ico" security="none" />
     <security:http pattern="/CoconComp-CondBold.ttf" security="none" />
+    <security:http pattern="/*" security="none" />
 
 	<security:http access-denied-page="/error/403" auto-config="false" disable-url-rewriting="true">
 		<security:openid-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/auth/login?error=true">
@@ -33,7 +34,7 @@
 			</security:attribute-exchange>
 		</security:openid-login>
 		<security:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-        <security:intercept-url pattern="/**" access="ROLE_USER" />
+        <!--security:intercept-url pattern="/**" access="" /-->
 		<security:logout invalidate-session="true" logout-success-url="/auth/login" logout-url="/auth/logout" />
         <security:session-management invalid-session-url="/auth/login">
             <security:concurrency-control max-sessions="1" session-registry-ref="sessionRegistry" expired-url="/auth/login" />
@@ -42,7 +43,7 @@
 	</security:http>
 
 	<bean id="openIdUserService" class="fr.soat.devoxx.game.security.OpenIdUserDetailsService" />
-    
+
     <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
 
 <!--     <bean id="sas" -->
@@ -50,7 +51,7 @@
 <!--         <property name="maximumSessions" value="1" /> -->
 <!--         <constructor-arg name="sessionRegistry" ref="sessionRegistry" /> -->
 <!--     </bean> -->
-    
+
 <!-- 	<bean id="tokenRepo" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl" /> -->
 
 	<security:authentication-manager>

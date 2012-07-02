@@ -46,7 +46,7 @@ public class GameControllerTest {
         final OpenIDAuthenticationToken principal = mock(OpenIDAuthenticationToken.class);
         when(principal.getPrincipal()).thenReturn(devoxxUser);
         
-        final String result = controller.index(null,principal);
+        final String result = controller.index(new HashMap(),principal);
 
         assertEquals(TilesUtil.DFR_GAME_RULES_APPROVAL,result);
     }

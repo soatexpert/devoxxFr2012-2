@@ -171,3 +171,11 @@ div #openid_highlight {
     color: #8AAB1E;
     font-weight: bold;
 }
+
+.login_field {
+    margin-bottom: 10px;
+}
+
+#register input {
+    width:200px;
+}

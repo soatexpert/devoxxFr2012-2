@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/")
-@SessionAttributes("questionsProgressTracker")
+@SessionAttributes({"questionsProgressTracker","user"})
 public class GameController {
 
     @Autowired
@@ -33,11 +33,18 @@ public class GameController {
 
     @RequestMapping(value = {"", "/", "/home","/index", "/pause"})
     public String index(final Map model, final Principal principal) {
-        if (principal == null) {
+        /*if (principal == null) {
             return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
-        }
+        }*/
 
-        final DevoxxUser user = convertPrincipalToDevoxxUser(principal);
+        DevoxxUser user = (DevoxxUser)model.get("user");
+
+        if(user == null) {
+            user = convertPrincipalToDevoxxUser(principal);
+            if(user != null) {
+                model.put("user", user);
+            }
+        }
 
         return processIndexPageForUser(model, user);
     }
@@ -69,11 +76,17 @@ public class GameController {
 
     @RequestMapping("/approveRules")
     public String approveRules(final Map model, final Principal principal) {
-        if (principal == null) {
+        /*if (principal == null) {
             return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
-        }
+        }*/
 
-        final DevoxxUser user = convertPrincipalToDevoxxUser(principal);
+
+        DevoxxUser user = (DevoxxUser) model.get("user");
+
+        if (user == null) {
+            user = convertPrincipalToDevoxxUser(principal);
+            model.put("user", user);
+        }
 
         userServices.approveRules(user);
         
@@ -84,9 +97,9 @@ public class GameController {
     public String play(@ModelAttribute("questionsProgressTracker") final QuestionsProgressTracker questionsProgressTracker, 
                        final Map model, 
                        final Principal principal) {
-        if (principal == null) {
+        /*if (principal == null) {
             return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
-        }
+        }*/
 
         try {
             final UserQuestion nextQuestion = questionsProgressTracker.nextQuestion();
@@ -110,12 +123,18 @@ public class GameController {
                                @RequestParam("questionId") Long questionId,
                                @RequestParam("answer") Long answerId,
                                Map model, Principal principal) {
-        if (principal == null) {
+        /*if (principal == null) {
             return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
-        }
+        }*/
 
         try {
-            final DevoxxUser currentUser = convertPrincipalToDevoxxUser(principal);
+
+            DevoxxUser user = (DevoxxUser) model.get("user");
+
+            if (user == null) {
+                user = convertPrincipalToDevoxxUser(principal);
+                model.put("user", user);
+            }
 
             addQuestionsProgressInformationToModel(questionsProgressTracker, model);
 
@@ -127,7 +146,7 @@ public class GameController {
 
             questionServices.updateQuestionWithAnswer(question, answerId);
 
-            userServices.updatePlayerScore(question, currentUser);
+            userServices.updatePlayerScore(question, user);
 
             model.put("answerDelayInSeconds", question.getAnsweringTimeInSeconds());
             model.put("isAnswerCorrect", question.isAnswerCorrect());
@@ -149,9 +168,33 @@ public class GameController {
         return TilesUtil.DFR_GAME_ABOUT_PAGE;
     }
 
+    @RequestMapping("/register")
+    public String register(@RequestParam("playerName") final String playerName,
+                           @RequestParam("playerFirstname") final String playerFirstname,
+                            Map model) {
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return playerName + " " + playerFirstname;
+            }
+        };
+        return index(model,principal);
+
+    }
+
     private DevoxxUser convertPrincipalToDevoxxUser(Principal principal) {
-        final DevoxxUser sessionUser = (DevoxxUser)((OpenIDAuthenticationToken)principal).getPrincipal();
-        return userServices.getUser(sessionUser.getUserId());
+        if(principal instanceof OpenIDAuthenticationToken) {
+            final DevoxxUser sessionUser = (DevoxxUser)((OpenIDAuthenticationToken)principal).getPrincipal();
+            return userServices.getUser(sessionUser.getUserId());
+        } else if(principal != null) {
+            DevoxxUser devoxxUser = new DevoxxUser();
+            devoxxUser.setUsername(principal.getName());
+            devoxxUser.setUserForname(principal.getName());
+            userServices.createUser(devoxxUser);
+            return devoxxUser;
+        }
+        return null;
     }
 
     private void addQuestionsProgressInformationToModel(QuestionsProgressTracker questionsProgressTracker, Map model) {
