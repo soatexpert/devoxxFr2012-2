@@ -37,6 +37,17 @@ public class GameController {
             return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
         }*/
 
+        try {
+            DevoxxUser user = recoverUserFromDbOrSession(model, principal);
+
+            return processIndexPageForUser(model, user);
+        } catch(Exception e) {
+            model.put("invalidUser",true);
+            return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
+        }
+    }
+
+    private DevoxxUser recoverUserFromDbOrSession(Map model, Principal principal) {
         DevoxxUser user = (DevoxxUser)model.get("user");
 
         if(user == null) {
@@ -44,9 +55,10 @@ public class GameController {
             if(user != null) {
                 model.put("user", user);
             }
+        } else {
+            user = userServices.getUser(user.getUserId());
         }
-
-        return processIndexPageForUser(model, user);
+        return user;
     }
 
     private String processIndexPageForUser(final Map model, final DevoxxUser user) {
@@ -81,12 +93,7 @@ public class GameController {
         }*/
 
 
-        DevoxxUser user = (DevoxxUser) model.get("user");
-
-        if (user == null) {
-            user = convertPrincipalToDevoxxUser(principal);
-            model.put("user", user);
-        }
+        final DevoxxUser user = recoverUserFromDbOrSession(model, principal);
 
         userServices.approveRules(user);
         
@@ -129,12 +136,7 @@ public class GameController {
 
         try {
 
-            DevoxxUser user = (DevoxxUser) model.get("user");
-
-            if (user == null) {
-                user = convertPrincipalToDevoxxUser(principal);
-                model.put("user", user);
-            }
+            final DevoxxUser user = recoverUserFromDbOrSession(model, principal);
 
             addQuestionsProgressInformationToModel(questionsProgressTracker, model);
 

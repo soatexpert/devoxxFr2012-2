@@ -49,7 +49,7 @@ public class QuestionServicesImpl implements QuestionServices {
 
     @Override
     public List<UserQuestion> getPendingQuestionsForUser(DevoxxUser currentUser) {
-         return userQuestionRepository.findRemainingQuestionsByPackAndUserId(
+             return userQuestionRepository.findRemainingQuestionsByPackAndUserId(
                 QuestionPackType.packForToday(),
                 currentUser.getUserId());
     }

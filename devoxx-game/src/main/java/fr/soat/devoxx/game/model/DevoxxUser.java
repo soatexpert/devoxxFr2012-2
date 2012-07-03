@@ -34,7 +34,7 @@ public class DevoxxUser implements Serializable, UserDetails {
     boolean rulesApproved;
 
     @Column(name = "IS_ENABLED")
-    boolean enabled = false;
+    boolean enabled = true;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_USER_ROLES", joinColumns = @JoinColumn(name = "ID_USER"), inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))

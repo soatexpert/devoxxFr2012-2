@@ -16,6 +16,15 @@
     </div>
   </div>
 </c:if>
+<div class="errorBox">
+    <div>
+        <p>
+            <span style="float: left; margin-left: 5px;" class="ui-icon ui-icon-alert"></span>
+            <spring:message code="game.index.logout"
+                            text="Si vous quittez, votre progression sera perdu!"/>
+        </p>
+    </div>
+</div>
 
 <div id="infos">
     <c:if test="${approved}">

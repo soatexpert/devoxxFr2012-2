@@ -2,7 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div id="infos">
-    <form method="post" action="register" id="register">
+
+    <c:if test="${invalidUser}">
+        <div class="errorBox">
+            <div>
+                <p>
+                    <span style="float: left; margin-left: 5px;" class="ui-icon ui-icon-alert"></span>
+                    <spring:message code="game.invalid.user"
+                                    text="Nom déjà pris!"/>
+                </p>
+            </div>
+        </div>
+    </c:if>
+
+    <form method="post" action="register" data-ajax="false" id="register">
         <div class="center-wrapper login_field">
             <fieldset><spring:message code="game.nologin.name" text="Nom :"/></fieldset>
             <input type="text" id="playerName" name="playerName"/>
