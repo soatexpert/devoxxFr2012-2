@@ -12,10 +12,8 @@ import fr.soat.devoxx.game.tools.TilesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
@@ -101,7 +99,7 @@ public class GameController {
     }
 
     @RequestMapping("/play")
-    public String play(@ModelAttribute("questionsProgressTracker") final QuestionsProgressTracker questionsProgressTracker, 
+    public String play(@ModelAttribute("questionsProgressTracker") final QuestionsProgressTracker questionsProgressTracker,
                        final Map model, 
                        final Principal principal) {
         /*if (principal == null) {
@@ -182,7 +180,11 @@ public class GameController {
             }
         };
         return index(model,principal);
+    }
 
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public String handleErrors() {
+        return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
     }
 
     private DevoxxUser convertPrincipalToDevoxxUser(Principal principal) {
