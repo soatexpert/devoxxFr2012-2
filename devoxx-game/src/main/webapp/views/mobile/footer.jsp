@@ -1,25 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!-- div data-role="navbar" id="navfooter">
-	<ul>
-		<li>
-		    <a id="home" href="<c:url value='/game/index' />" class="ui-btn" data-icon="home_custom">
-		       Home
-		    </a>
-		</li>
-		<li>
-		    <a id="play" href="<c:url value='/game/play' />" class="ui-btn" data-icon="play">
-		       Jouer
-		    </a>
-		</li>
-		<li>
-		    <a id="rules" href="<c:url value='/game/rules' />" class="ui-btn" data-icon="rules">
-		       R&egrave;gles
-		    </a>
-		</li>
-		<li>
-		    <a id="about" href="<c:url value='/game/about' />" class="ui-btn" data-icon="about">
-		       A propos
-		    </a>
-		</li>
-	</ul>
-</div -->
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<div class="footer-text">
+    <div><spring:message code="game.footer.proposed" text="Quizz proposé par"/></div>
+    <span><spring:message code="game.footer.created" text="Crée par "/></span>
+    <a href="http://www.soat.fr"><img src="<c:url value='/img/soat.png'/>" alt="Soat"/></a>
+    <span><spring:message code="game.footer.collaboration" text=" avec la collaboration de "/></span>
+    <a href="http://www.developpez.com"><img src="<c:url value='/img/logo%20dev.png'/>" alt="developpez.com"></a>
+    <span><spring:message code="game.footer.hosted" text=" hébergé par "/></span>
+    <a href="http://www.cloudbees.org"><img src="<c:url value='/img/cloudbees03.png'/>" alt="cloudbees"></a>
+</div>

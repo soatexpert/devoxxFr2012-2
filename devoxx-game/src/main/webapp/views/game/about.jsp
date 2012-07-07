@@ -1,13 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<div id="rules">
+<div id="about">
+
+    <div class="logo"><a href="http://www.soat.fr"><img src="<c:url value='/img/soat.png'/>" alt="Soat"/></a></div>
 
     <h2><span class="soat">So@t</span> en bref :</h2>
 
     <p>
-        Pour cette première édition de Devoxx France, So@t est reporter de Devoxx pour le compte de Developpez.com :
-        <!--<a href="http://blog.soat.fr/">http://blog.soat.fr/</a></p> -->
+        <p><span class="soat">So@t</span> est une société de conseil spécialisée dans l’accompagnement et le développement de technologies Java.</p>
+
+        <p>Depuis 12 ans, <span class="soat">So@t</span> soutien l’émulation et la capitalisation technologique au sein de la communauté.</p>
+
+        <p>C’est dans ce cadre que la société a créé un partenariat rédactionnel avec Developpez.com.</p>
+    </p>
 
     <h2><span class="soat">So@t</span> c’est quoi ?</h2>
 

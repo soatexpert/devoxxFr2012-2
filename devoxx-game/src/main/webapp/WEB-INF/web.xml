@@ -16,7 +16,13 @@
         <param-value>${spring.profiles}</param-value>
     </context-param>
 
-	<!-- Spring Security (Must be called before any filters !!!) -->
+    <error-page>
+        <exception-type>org.springframework.web.bind.MissingServletRequestParameterException</exception-type>
+        <location>/</location>
+    </error-page>
+
+
+    <!-- Spring Security (Must be called before any filters !!!) -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

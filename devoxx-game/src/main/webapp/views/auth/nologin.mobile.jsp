@@ -15,6 +15,11 @@
         </div>
     </c:if>
 
+    <div class="home-intro">
+        <spring:message code="game.nologin.intro" text="Prénom :"/>
+        <div class="tagline">Que le meilleur gagne !!!</div>
+    </div>
+
     <form method="post" action="register" data-ajax="false" id="register">
         <div class="center-wrapper login_field">
             <fieldset><spring:message code="game.nologin.name" text="Nom :"/></fieldset>

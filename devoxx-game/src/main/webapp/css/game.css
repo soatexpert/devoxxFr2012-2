@@ -111,6 +111,10 @@ div #openid_highlight {
 	color:green;
 }
 
+.ui-content {
+    padding-bottom: 60px;
+}
+
 .ui-content a.ui-btn {
 	margin-top:10px;
 }
@@ -126,7 +130,7 @@ div #openid_highlight {
 
 .ui-header .ui-title {
     color:#8AAB1E;
-    font-weight:1000;
+    font-weight: 900;
     letter-spacing: 0.01em;
     font-size:24px;
 }
@@ -144,20 +148,16 @@ div #openid_highlight {
     padding:2px 2px 2px 5px;
 }
 
-.ui-header #rules {
+.ui-header #rules, .ui-header #about, .ui-header #home  {
 	top: 0.9em;
 }
 
-.ui-header #about {
-	top: 0.9em;
-}
-
-#rules {
+div#rules {
     font-size:8pt;
     text-align: justify;
 }
 
-#rules h1 {
+#rules h1, #about h1 {
     color: #515151;
     text-align: center;
 }
@@ -167,7 +167,7 @@ div #openid_highlight {
     font-size:10pt;
 }
 
-#rules .soat {
+.soat {
     color: #8AAB1E;
     font-weight: bold;
 }
@@ -178,4 +178,56 @@ div #openid_highlight {
 
 #register input {
     width:200px;
+}
+
+.footer-text {
+    font-size: 0.7em;
+    font-weight: bold;
+    margin-left: -110px;
+    padding-bottom: 10px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+}
+
+.footer-text div {
+    text-align: center;
+}
+
+.footer-text img {
+    height:32px;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.footer-text span {
+    display: none;
+}
+
+.home-intro {
+    text-align: center;
+    margin: auto;
+    width: 400px;
+    font-size: 1em;
+}
+
+.home-intro .tagline {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #8AAB1E;
+}
+
+div#about {
+    width: 400px;
+    margin: auto;
+}
+
+div#about .logo {
+    text-align: center;
+}
+
+div#about h2 {
+    color: #8AAB1E;
 }
