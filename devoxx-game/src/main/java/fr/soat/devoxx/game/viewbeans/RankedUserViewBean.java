@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
  */
 public class RankedUserViewBean {
 
-    private static int GRAVATAR_PIC_SIZE = 64;
+    private static int GRAVATAR_PIC_SIZE = 32;
     private DecimalFormat df = new DecimalFormat("#.##");
 
 

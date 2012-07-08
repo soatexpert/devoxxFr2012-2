@@ -12,8 +12,8 @@
 		<script type="text/javascript" src="<c:url value='/js/jquery-ui-1.8.18.custom.min.js'/>"></script>
     </head>
     <body>
-        <h1><img src="<c:url value='/img/soat.png'/>"/><span>Quizz - Classement</span></h1>
-        <div class="devoxx"><img src="<c:url value="/img/devoxx.png"/> "></div>
+        <h1><span>Java Quizz - Classement</span></h1>
+        <div class="devoxx"><img src="<c:url value='/img/soat.png'/>"/></div>
         <div id="ranking">
             <table style="width: 100%;">
 			<thead>
@@ -36,6 +36,7 @@
 			</tbody>
 	        </table>
         </div>
+        <div class="developpez"><img src="<c:url value="/img/logo%20dev.png"/> "></div>
         <div class="cloudbees"><img src="<c:url value="/img/Button-Powered-by-CB.png"/> "></div>
 <script type="text/javascript">
     $(document).ready(function() {
