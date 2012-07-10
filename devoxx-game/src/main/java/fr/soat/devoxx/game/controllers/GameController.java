@@ -170,13 +170,12 @@ public class GameController {
 
     @RequestMapping("/register")
     public String register(@RequestParam("playerName") final String playerName,
-                           @RequestParam("playerFirstname") final String playerFirstname,
                             Map model) {
 
         Principal principal = new Principal() {
             @Override
             public String getName() {
-                return playerName + " " + playerFirstname;
+                return playerName;
             }
         };
         return index(model,principal);
