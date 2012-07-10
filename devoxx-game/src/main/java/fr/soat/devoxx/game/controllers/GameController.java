@@ -181,7 +181,7 @@ public class GameController {
         return index(model,principal);
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ExceptionHandler(Exception.class)
     public String handleErrors() {
         return TilesUtil.DFR_AUTH_MOBILE_LOGIN_PAGE;
     }
