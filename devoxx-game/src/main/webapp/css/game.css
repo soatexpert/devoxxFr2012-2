@@ -112,7 +112,7 @@ div #openid_highlight {
 }
 
 .ui-content {
-    padding-bottom: 60px;
+    padding-bottom: 110px;
 }
 
 .ui-content a.ui-btn {
@@ -136,7 +136,7 @@ div #openid_highlight {
 }
 
 .ui-mobile .ui-page {
-	background:#f7f7f7 url(../img/bg.png) repeat-x;
+	background:#f7f7f7 url(../img/bg.png) repeat;
 }
 
 .errorBox {
@@ -183,7 +183,7 @@ div#rules {
 .footer-text {
     font-size: 0.7em;
     font-weight: bold;
-    margin-left: -110px;
+    margin-left: -193px;
     padding-bottom: 10px;
     position: absolute;
     left: 50%;
@@ -195,10 +195,14 @@ div#rules {
 }
 
 .footer-text img {
-    height:32px;
+    height:48px;
     vertical-align: middle;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+#soatImg {
+    height: 84px;
 }
 
 .footer-text span {
@@ -220,12 +224,17 @@ div#rules {
 }
 
 div#about {
-    width: 400px;
+    width: 600px;
     margin: auto;
+    text-align: justify;
 }
 
 div#about .logo {
     text-align: center;
+}
+
+div#about .logo img {
+    max-height: 80px;
 }
 
 div#about h2 {
