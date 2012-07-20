@@ -3,27 +3,26 @@
 
 <div id="rules">
 
-<h1>REGLEMENT JEU SOAT</h1>
+    <h1>REGLEMENT JEU SOAT</h1>
 
     <h2>ARTICLE 1 : ORGANISATION :</h2>
 
-    La société <span class="soat">SO@T</span>, société anonyme au capital de 65.000 euros inscrite au RCS de PARIS sous le numéro 433 353 760
+    La société <span class="soat">SO@T</span>, société anonyme au capital de 65.000 euros inscrite au RCS de PARIS sous
+    le numéro 433 353 760
     00039 dont le siège
     social est 104 bis rue de Reuilly à 75012 PARIS, société de service en informatique, est partenaire rédactionnel du
     Site « Developpez.com ».
-    <span class="soat">SO@T</span> organise un jeu par la mise à disposition d’un questionnaire à choix multiples technique (QCM). Ce document a
+    <span class="soat">SO@T</span> organise un jeu par la mise à disposition d’un questionnaire à choix multiples
+    technique (QCM). Ce document a
     pour but de décrire
     le déroulement et le règlement de ce jeu.
 
     <h2>ARTICLE 2 : PARTICIPATION</h2>
 
     Peuvent participer à ce jeu, toute personne majeure et capable, ayant un appareil personnel disposant d’un accès à
-    Internet. Les participants
-    devront s’inscrire sur le site http://devoxx.soat.fr via la technologie « openID » hébergé par la solution «
-    cloudBees » sécurisé, au
-    moyen de leur appareil permettant un accès sur Internet autonome. Pour que sa participation soit valide, le
-    participant doit avoir indiqué
-    impérativement son nom et surnom. Ces informations servant à identifier les 10 joueurs ayant obtenus le plus de
+    Internet.
+    Pour que sa participation soit valide, le participant doit avoir indiqué impérativement son nom et surnom. Ces
+    informations servant à identifier les 10 joueurs ayant obtenus le plus de
     points dans un temps
     minimum pour le classement, en cas d’absence d’information ou d’erreur de la part du participant, la société
     organisatrice ne pourra être
@@ -42,11 +41,13 @@
     d'évaluation dans lequel sont
     proposées plusieurs réponses pour chaque question. Une de ces propositions de réponse est correcte. Les autres sont
     des réponses erronées.
-    Les questions élaborées par quatre experts du domaine de la société <span class="soat">SO@T</span> (Francois Ostyn, Khanh Tuong Maudoux,
+    Les questions élaborées par quatre experts du domaine de la société <span class="soat">SO@T</span> (Francois Ostyn,
+    Khanh Tuong Maudoux,
     Mathieu Parisot
     et Antoine Berthelin), porteront sur la technologie Java. Le temps mis pour répondre à une série complète est
     chronométré. Les temps de
-    réponse prennent en compte le délai de communication entre le client et le serveur. La société <span class="soat">SO@T</span> ne pourra pas
+    réponse prennent en compte le délai de communication entre le client et le serveur. La société <span class="soat">SO@T</span>
+    ne pourra pas
     être tenue responsable
     en cas de problème réseau. Les questions seront posées par le système de façon aléatoire parmi une base de 90
     questions. Le classement
@@ -106,7 +107,7 @@
     quelconque préjudice de quelque nature que ce soit, prétendument survenu à l’occasion du jeu.
 
     <h2>ARTICLE 11 : REMBOURSEMENT DES FRAIS DE PARTICIPATION ET DE DEMANDE DE
-    REGLEMENT</h2>
+        REGLEMENT</h2>
 
     Les frais de timbre pour la demande de règlement seront remboursés forfaitairement au tarif lent en vigueur (-20g),
     soit 0.55€ à toute
