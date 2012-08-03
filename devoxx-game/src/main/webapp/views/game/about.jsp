@@ -43,20 +43,12 @@
     <div class="logo"><a href="http://www.developpez.com"><img src="<c:url value='/img/logo-dev2.png'/>" alt="Developpez.com"/></a></div>
     <h2>Developpez.com en quelques mots :</h2>
     <p>
-        Avec plus de 5000 messages quotidiens sur les forums et jusqu'à 200 000 visites par jour, le club Developpez.com
-        est la plus grande communauté internationale des professionnels en informatique de langue française (France,
-        Belgique, Luxembourg, Suisse, Canada, Afrique et Asie francophone, etc.).</p>
-
-        <p>
-        C’est la raison pour laquelle il nous
-        est impossible de répondre à tous vos emails : nous ne répondrons pas par emails à vos questions techniques, car
-        vous devez utiliser le <a href="http://www.developpez.net/forums/index.php?c=1">forum d'entraide des professionnels en informatique</a> qui a été spécialement créé pour
-        cela.</p>
-
-        <p>
-        Afin de faciliter votre orientation pour nous contacter, utilisez les forums ou reportez-vous à la liste
-        ci-dessus pour déterminer rapidement l'interlocuteur que vous recherchez. Le <a href="http://club.developpez.com/club/">Club</a>, c'est aussi une équipe de
-        plus de 900 bénévoles hébergés gratuitement par <a href="http://www.developpez.com/">www.developpez.com</a> qui se rendent disponibles pour vous procurer
-        toutes ces ressources gratuitement.
+        Le club Developpez.com est le principal site d'entraide des professionnels de l'informatique francophones fréquenté par 2 millions de lecteurs (développeurs, chefs de projets, DBA, responsables IT, etc.) tous les mois. Le club vous apporte gratuitement une multitude d'avantages :
+    <ul>
+        <li>Le plus grand forum généraliste francophone : lieu d'échange entre professionnels et amateurs, accueillant des débats, sondages, un chat, etc..</li>
+        <li>Un contenu éditorial : actualité thématique, les blogs thématiques, sans oublier la newsletter, le magazine, et la TV des développeurs.</li>
+        <li>Des ressources francophones : cours, articles, FAQs, reportages, tests, comparatifs, etc.</li>
+        <li>Un hébergement gratuit (sites, blogs, etc.)</li>
+    </ul>
     </p>
 </div>
