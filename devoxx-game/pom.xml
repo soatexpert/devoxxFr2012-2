@@ -36,7 +36,7 @@
         <hibernate-em.version>4.1.0.Final</hibernate-em.version>
         <dbunit.version>2.4.8</dbunit.version>
         <mysql.version>5.1.18</mysql.version>
-        <logback.version>1.0.1</logback.version>
+        <logback.version>1.4.3</logback.version>
         <guava.version>10.0.1</guava.version>
         <hibernate-valid.version>4.2.0.Final</hibernate-valid.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
