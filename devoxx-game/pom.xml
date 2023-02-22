@@ -46,7 +46,7 @@
         <poi.version>3.8</poi.version>
         <commons-lang.version>2.1</commons-lang.version>
         <mockito.version>1.9.0</mockito.version>
-        <commons-fileupload.version>1.2.2</commons-fileupload.version>
+        <commons-fileupload.version>1.5</commons-fileupload.version>
         <commons-io.version>2.2</commons-io.version>
     </properties>
 
