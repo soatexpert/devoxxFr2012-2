@@ -29,7 +29,7 @@
         <sl4j.version>1.6.4</sl4j.version>
         <jstl.version>1.2</jstl.version>
         <servlet-api.version>2.5</servlet-api.version>
-        <spring.version>3.1.0.RELEASE</spring.version>
+        <spring.version>5.7.8</spring.version>
         <spring-mobile.version>1.0.0.RC1</spring-mobile.version>
         <spring-data-jpa.version>1.0.3.RELEASE</spring-data-jpa.version>
         <cglib.version>2.2.2</cglib.version>
