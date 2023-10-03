@@ -33,7 +33,7 @@
         <spring-mobile.version>1.0.0.RC1</spring-mobile.version>
         <spring-data-jpa.version>1.0.3.RELEASE</spring-data-jpa.version>
         <cglib.version>2.2.2</cglib.version>
-        <hibernate-em.version>4.1.0.Final</hibernate-em.version>
+        <hibernate-em.version>5.1.17.Final</hibernate-em.version>
         <dbunit.version>2.4.8</dbunit.version>
         <mysql.version>5.1.18</mysql.version>
         <logback.version>1.0.1</logback.version>
